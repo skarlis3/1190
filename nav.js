@@ -61,7 +61,6 @@
         },
         {
           label: "Resources",
-          href: "/resources/index.html",
           children: [
             { label: "Readings", href: "/resources/readings.html" 
               children: [
