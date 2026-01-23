@@ -75,13 +75,7 @@
     { label: "Sample Assignments", href: "/resources/samples.html" }
   ]
 },
-        {
-          label: "Readings",
-          href: "/readings/index.html",
-          children: [{ label: "AI & Energy Use", href: "/readings/ai-and-energy.html" }
-            
-          ]
-        },
+
         {
           label: "Calendars",
           href: "/calendar/index.html",
