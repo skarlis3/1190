@@ -1,0 +1,719 @@
+/* ==========================================================================
+   Course Site Styles — Clean Indented Sidebar (1181 merged)
+   Fonts: Lato (300/400) + Judson (headings)
+   Accent: Teal (kept from 1181)
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap");
+
+/* ==================== Tokens ==================== */
+:root{
+  --bg:#ffffff;
+  --sidebar-bg:#FAFAFA;
+  --text:#141414;
+  --muted:#6a6f77;
+  --border:#e2e3e5;
+  --hover:#f5f1f1;
+  --accent:#041f44;
+  --accent-contrast:#ffffff;
+  --focus:#002e6f;
+  --bright: #1154b2;
+  --accent2: rgb(0, 106, 187);
+
+  --topnav-h:56px;
+  --sidenav-w:clamp(272px,24vw,340px);
+  --maxw:100%;
+  --bottomnav-h:78px;
+
+  /* Drawer header (mobile sidenav) */
+  --drawer-header-bg:var(--accent);
+  --drawer-header-fg:#fff;
+}
+
+/* ==================== Global resets (safe) ==================== */
+html, body { margin: 0 !important; }
+html, body { height: 100%; }
+*,*::before,*::after{ box-sizing:border-box; }
+img,video,canvas,svg{ max-width:100%; height:auto; display:block; }
+iframe{ max-width:100%; display:block; }
+figure{ margin:1.25rem auto; width:min(100%,780px); }
+
+/* Hide the nav toggles accessibly */
+input.nav-toggle{
+  position: fixed !important;
+  left: -9999px !important; top: -9999px !important;
+  width: 1px !important; height: 1px !important;
+  opacity: 0 !important; pointer-events: none !important;
+  margin: 0 !important; padding: 0 !important; border: 0 !important;
+  clip: rect(0 0 0 0) !important; clip-path: inset(50%) !important;
+  white-space: nowrap !important; line-height: 0 !important;
+}
+
+#topnav-toggle, #sidenav-toggle{
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+#genre-video {
+  width: 100%;
+  max-width: 810px;
+  height: 450px !important;
+  display: block;
+}
+
+/* ==================== Base ==================== */
+html,body{
+  background:var(--bg); color:var(--text);
+  font-family:"Lato",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  font-weight:400; line-height:1.5; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+html, body, * {
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  -ms-hyphens: none !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+#page-content{ overflow-wrap:break-word; }
+h1,h2,h3,h4,h5,h6,p,li{ overflow-wrap:normal; word-break:normal; hyphens:auto; }
+a{ 
+  color:var(--bright); 
+  text-decoration: none;
+}
+a:hover{ color:var(--accent2); }
+
+ p > a{ 
+  color:var(--bright); 
+  text-decoration: underline;
+  text-decoration-thickness: .8px;
+  text-underline-offset: 3px; 
+}
+
+li > a{ 
+  color:var(--bright); 
+  text-decoration: underline;
+  text-decoration-thickness: .8px;
+  text-underline-offset: 3px; 
+}
+
+:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+
+/* ===== Sticky footer layout ===== */
+body{
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+.layout{ flex: 1 0 auto; }
+.site-footer{ margin-top: auto; }
+
+/* ==================== Top Navigation (desktop default) ==================== */
+.topnav{
+  position:sticky; top:0; z-index:1000;
+  background: var(--accent); color:#fff;
+  font-weight:400; font-size:1.05em;
+}
+.topnav-inner{
+  display:flex; align-items:center; gap:1rem;
+  padding-inline:1rem; min-height:var(--topnav-h);
+  max-width:var(--maxw); margin-inline:auto;
+}
+.topnav .brand{ color:#fff; font-weight:400; font-size:1.20em; }
+.topnav .menu{ list-style:none; display:flex; gap:.5rem; margin:0 0 0 auto; padding:0;}
+.topnav .menu > li > a{ display:block; padding:.6rem .9rem; border-radius:.4rem; color:#fff; text-decoration: none;}
+.topnav .menu > li > a:hover{ outline:1px solid #fff; }
+.topnav .menu > li > a[aria-current="page"]{ background:var(--focus); text-decoration: none;}
+
+.topnav .brand{ margin-right:auto; }   /* pushes everything else (the menu) to the right */
+.topnav .menu{ margin:0; }             /* remove the old shorthand if present */
+
+/* Kill the TOP-NAV hamburger only  */
+label[for="topnav-toggle"],
+.topnav label[for="topnav-toggle"],
+.topnav .open-topnav-btn { 
+  display: none !important;
+}
+
+
+/* ==================== Layout ==================== */
+.layout{
+  display:grid; grid-template-columns:var(--sidenav-w) 1fr;
+  grid-template-areas:"sidenav content";
+  gap:1.5rem;
+}
+.sidenav{ grid-area:sidenav; padding-right:.5rem; }
+.sidenav ul,.sidenav li,.sidenav ol{ margin:0; padding-left:0; }
+
+.content{
+  grid-area:content; max-width:800px; width:90%;
+  margin:2.5rem auto;
+}
+@media (max-width:900px){
+  .layout{ grid-template-columns:1fr; grid-template-areas:"content"; }
+}
+.layout.centered-layout{ display:flex; justify-content:center; }
+.layout.centered-layout main.content{ max-width:900px; width:100%; padding:2rem; }
+.no-sidenav .sidenav{ display:none !important; }
+.no-sidenav .layout{ grid-template-columns:1fr; }
+
+/* ==================== Simple Grids ==================== */ 
+
+.grid-container-3columns{ 
+  display:grid; 
+  grid-template-columns:repeat(3,1fr); 
+  gap:10px; 
+  border:1px solid #ccc; 
+  padding:10px; } 
+
+.grid-container-2columns, #grid-container-2columns{ 
+  display:grid; 
+  grid-template-columns:20% 80%; 
+  gap:10px; 
+  padding:10px; 
+  box-sizing:border-box; 
+} 
+
+.grid-item{ 
+  background-color:color-mix(in srgb, var(--accent) 10%, white); 
+  padding:15px; text-align:left; 
+  order:1px solid #eee; 
+  box-sizing:border-box; 
+  display:flex; 
+  align-items:center; }
+
+
+
+
+/* ===================== At a glance box ======================== */
+  .glance-accent-box{
+  border: 1px solid var(--border);
+  border-left: 6px solid var(--accent);
+  background: color-mix(in srgb, var(--focus) 7%, white); 
+  padding: 1rem 1.75rem .8rem;
+  margin: 1rem 0 1.75rem;
+  border-radius: 6px;
+}
+.glance-accent-box h2{
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-size: 1.2rem;
+  color: #000;
+}
+
+.glance-accent-box h3{
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-size: 1.2rem;
+}
+
+
+/* ===================  Example Assignments (indented and border) =================== */
+.example-assignment {
+  margin: 2em 3em 5em;
+  border: 1px solid rgba(55,55,55,.5);
+  padding: 1.5em 2.5em;
+}
+
+/* ===================  Indent, no border =================== */
+.indented-text {
+  margin: 1em 0 1em 2em;
+}
+
+
+/* ==================== Examples & Tips Box  ======================== */
+  .tips-accent-box{
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--focus) 7%, white); 
+  padding: .8rem 1.75rem .6rem;
+  margin: 1rem 0 1.25rem;
+  border-radius: 6px;
+}
+.tips-accent-box h2{
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-size: 1.2rem;
+  color: #000;
+}
+
+.tips-accent-box h3{
+  margin-top: 0;
+  margin-bottom: .5em;
+  font-family: "Judson", serif;
+  font-size: 1.2rem;
+}
+
+/* ==================== Transparency Statement, Licensing, & Sources  ======================== */
+.bottom-statement{
+  border-top: 1px solid rgba(55,55,55,.5);
+  margin-top: 5em;
+  padding-top: 1em;
+}
+
+.bottom-statement h2{
+  font-size: 1.2em;
+  color: #373737;
+  margin-top: 0em;
+}
+
+.bottom-statement h3{
+  font-size: 1.1em;
+  color: #373737;
+  margin-top: 0em;
+}
+
+.bottom-statement p{
+  font-size: .9em;
+  color: #242424;
+}
+
+.bottom-statement ul{
+  font-size: .9em;
+  color: #242424;
+}
+
+
+
+/* ==================== Table of Contents Styling ==================== */
+
+.toc {
+  margin: 2rem 0;
+
+}
+
+.toc h2,
+.toc h3 {
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.toc ul {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0 0 0 1.25rem;        /* space between border + items */
+  border-left: 2px solid var(--border);
+}
+
+.toc ul li {
+  margin: 0.6rem 0;
+}
+
+.toc a {
+  text-decoration: none;
+  font-size: 1.05rem;
+}
+
+.toc a:hover,
+.toc a:focus {
+  text-decoration: underline;
+}
+
+/* Offset anchor scroll so headings don't hide behind fixed top nav */
+[id] {
+  scroll-margin-top: var(--topnav-h, 60px);
+}
+
+/* ==================== Sidenav (desktop) ==================== */
+.sidenav{
+  position:sticky; top:var(--topnav-h);
+  height:calc(100dvh - var(--topnav-h));
+  background:var(--sidebar-bg);
+  border-right:1px solid var(--border);
+  overflow-y:auto; overflow-x:hidden;
+  padding:1rem;
+  inline-size:var(--sidenav-w); width:var(--sidenav-w);
+  scrollbar-gutter:stable both-edges;
+  text-decoration: none;
+  
+}
+.sidenav, .sidenav *{ min-width:0; }
+.sidenav ul{ list-style:none; }
+.group{ margin:.2rem 0; }
+
+/* Top-level labels like headings with underline */
+.group-toggle{
+  all:unset; position:relative; display:block; width:100%;
+  font-weight:600; color:var(--text); line-height:1.35;
+  padding:.55rem .6rem .45rem .6rem;
+  border-bottom:1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  margin-bottom:.4rem; cursor:default; white-space:normal;
+}
+
+/* Level-2 always visible */
+.nav-level-2{ display:block !important; margin-left:.6rem; padding-left:.3rem; }
+
+/* Level-2 links & expandable toggles */
+.nav-level-2 > li > a,
+.sub-toggle{
+  all:unset; position:relative; display:flex; align-items:center; justify-content:flex-start; gap:.4rem;
+  width:100%; margin-left:.25rem;
+  padding:.42rem .9rem .42rem .55rem;
+  border-radius:.35rem;
+  font-weight:400; font-size:.98rem; color:var(--text);
+  cursor:pointer;
+  text-decoration: none;
+  color: var(--accent);
+}
+.nav-level-2 > li > a:hover, .sub-toggle:hover{ background:var(--hover); color:var(--accent); }
+
+/* Deeper levels */
+.sidenav .subgroup > ul{ display:none; margin:.25rem 0 .55rem 0; padding-left:1rem; }
+.sidenav .subgroup[data-subopen="true"] > ul{ display:block; }
+
+.nav-level-3{
+  margin:.25rem 0 .55rem 1.3rem; padding-left:.75rem;
+  border-left:.5px solid color-mix(in srgb, var(--accent) 75%, var(--border));
+}
+.nav-level-3 > li > a{
+  display:block; margin-left:.35rem;
+  padding:.34rem .55rem; border-radius:.3rem;
+  font-weight:400; font-size:.95rem; color:var(--text);
+  text-decoration: none;
+  color: var(--accent);
+  
+}
+.nav-level-3 > li > a:hover{ background:var(--hover); color:var(--accent); }
+
+.nav-level-4{ padding-left:1.9rem; border-left:.5px solid color-mix(in srgb, var(--accent) 75%, var(--border)); }
+.nav-level-4 > li > a{ 
+  display:block; 
+  padding:.34rem .55rem; 
+  border-radius:.3rem; 
+  font-weight:400; 
+  font-size:.95rem; 
+  color:var(--text); 
+  text-decoration: none;
+}
+.nav-level-4 > li > a:hover{ background:var(--hover); color:var(--accent); }
+
+.sidenav .nav-level-5{ padding-left:2.6rem; border-left:1px solid color-mix(in srgb, var(--accent) 24%, var(--border)); }
+.sidenav .nav-level-5 > li > a{
+  all:unset; display:block; width:100%;
+  padding:.32rem .55rem; border-radius:.3rem;
+  font-weight:400; font-size:.92rem; color:var(--text); cursor:pointer;
+  text-decoration: none;
+}
+.sidenav .nav-level-5 > li > a:hover{ background:var(--hover); color:var(--accent); }
+.sidenav .nav-level-5 > li > a[aria-current="page"]{ background:color-mix(in srgb, var(--accent) 18%, white); }
+
+/* Active / Focus */
+.sidenav a[aria-current="page"]{ position:relative; background:color-mix(in srgb, var(--accent) 10%, white); font-weight:700; }
+.nav-level-3 .subgroup:has(a[aria-current="page"]) > .sub-toggle{ font-weight:700; color:var(--accent); }
+.group-toggle:focus-visible, .sub-toggle:focus-visible, .sidenav a:focus-visible{
+  outline:2px solid var(--focus); outline-offset:2px; border-radius:.35rem;
+}
+
+/* ==================== Desktop refinements (≥901px) ==================== */
+@media (min-width:901px){
+  .layout{ grid-template-columns:var(--sidenav-w) 1fr !important; grid-template-areas:"sidenav content" !important; }
+  .layout .sidenav{
+    position:sticky !important; top:var(--topnav-h) !important;
+    height:calc(100dvh - var(--topnav-h)) !important;
+    inline-size:var(--sidenav-w) !important; width:var(--sidenav-w) !important;
+    transform:none !important; box-shadow:none !important; z-index:auto !important;
+  }
+}
+
+/* Hide drawer-only affordances on desktop */
+@media (min-width:900px){
+  .sidenav__bar, .sidenav-scrim, .open-sidenav-btn{ display:none !important; }
+}
+
+/* ==================== Mobile drawer (≤900px) ==================== */
+@media (max-width:900px){
+  .sidenav.sidenav--fullscreen{
+    position:fixed !important;
+    top:var(--topnav-h); left:0; right:0; bottom:0;
+    width:100vw !important;
+    height:calc(100dvh - var(--topnav-h)) !important;
+    background:var(--sidebar-bg);
+    overflow-y:auto;
+    z-index:2000 !important;
+    transform:translateY(100%); opacity:0; pointer-events:none;
+    transition:transform .22s ease, opacity .22s ease;
+    padding-bottom: calc(var(--bottomnav-h) + max(env(safe-area-inset-bottom,0px), 16px));
+  }
+  #sidenav-toggle:checked ~ .sidenav.sidenav--fullscreen{
+    transform:translateY(0); opacity:1; pointer-events:auto;
+  }
+
+  .sidenav-scrim{
+    position:fixed; inset:0; top:var(--topnav-h);
+    background:rgba(0,0,0,.35); backdrop-filter:blur(1px);
+    z-index:1050; display:none;
+  }
+  #sidenav-toggle:checked ~ .sidenav-scrim{ display:block; }
+
+  .sidenav__bar{
+    position:sticky; top:0; z-index:2;
+    display:flex; align-items:center; justify-content:space-between; gap:.75rem;
+    padding:.9rem 1rem;
+    background:var(--drawer-header-bg); color:var(--drawer-header-fg);
+    border-bottom:1px solid rgba(255,255,255,.15);
+  }
+  .sidenav__title{ font:700 1rem "Lato", system-ui, sans-serif; }
+  .sidenav-close{
+    display:inline-flex; align-items:center; gap:.5rem;
+    padding:.35rem .65rem; border-radius:999px;
+    color:var(--drawer-header-fg); border:2px solid rgba(255,255,255,.55);
+    text-decoration:none; font:600 .95rem "Lato", system-ui, sans-serif;
+  }
+
+  .sidenav{ padding:0; background:var(--sidebar-bg); }
+  .sidenav > .nav-level-1, .sidenav > ul{ padding:1rem; margin:0; list-style:none; }
+
+  :root{ --nav-row-h: 44px; }
+  .sidenav .nav-level-2 > li,
+  .sidenav .nav-level-3 > li,
+  .sidenav .nav-level-4 > li,
+  .sidenav .nav-level-5 > li{ margin:0; }
+  .sidenav .subgroup > ul{ margin:0; padding-left:.75rem; }
+
+  .sidenav .nav-level-2 > li > a,
+  .sidenav .sub-toggle,
+  .sidenav .nav-level-3 > li > a,
+  .sidenav .nav-level-4 > li > a,
+  .sidenav .nav-level-5 > li > a{
+    display:flex; align-items:center;
+    height:var(--nav-row-h);
+    padding:0 .9rem 0 .55rem;
+    border-radius:.35rem;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1;
+  }
+
+  .open-sidenav-btn{
+    display:inline-flex; align-items:center; gap:.4rem;
+    padding:.48rem .66rem; margin:.5rem 0 1rem;
+    border:1px solid var(--border); border-radius:.55rem;
+    background:var(--focus); color:#fff; cursor:pointer; text-decoration:none;
+    font:600 .95rem "Lato", system-ui, sans-serif;
+  }
+}
+
+/* ==================== Pure-CSS caret ==================== */
+.sidenav .sub-toggle .caret{ display:none !important; }
+.sidenav .sub-toggle::after{
+  content:""; display:inline-block; width:.5rem; height:.5rem;
+  border-right:2px solid currentColor; border-bottom:2px solid currentColor;
+  transform: rotate(-45deg); margin-left:.45rem; pointer-events:none;
+}
+.sidenav .subgroup[data-subopen="true"] > .sub-toggle::after{ transform: rotate(45deg); }
+
+/* ==================== Optional .bottomnav component (not required) ==================== */
+.bottomnav{
+  display:none;
+  position:fixed; left:0; right:0; bottom:0; z-index:1200;
+  background:var(--accent);
+  border-top:1px solid color-mix(in srgb, var(--accent) 70%, black);
+  box-shadow:0 -8px 24px rgba(0,0,0,.18);
+  padding:.35rem clamp(.5rem,3vw,1rem) max(env(safe-area-inset-bottom,0px), .35rem);
+}
+.bottomnav__inner{
+  margin:0; padding:0; list-style:none;
+  display:flex; justify-content:space-around; align-items:flex-end; gap:.25rem;
+  max-width:980px; margin-inline:auto;
+}
+.bn-item{ position:relative; display:grid; place-items:center; gap:.25rem; min-width:58px; text-decoration:none; color:rgba(255,255,255,.9); }
+
+.bn-ico{
+  line-height:0;
+  display:grid;
+  place-items:center;
+  width:50px;      /* match the active circle */
+  height:50px;
+  position:relative;
+  margin-top: -10px; /* lifts icons up by 10px */
+}
+
+.bn-item{ gap:.4rem; } /* optional: gives a little more room between icon and text */
+
+.bn-label{ font:400 .82rem "Lato",system-ui,sans-serif; padding-bottom:6px; color:rgba(255,255,255,.9); }
+
+.bn-item[aria-current="page"] .bn-ico{ color:var(--accent); }
+
+.bn-item[aria-current="page"] .bn-ico::before{
+  content:""; position:absolute; left:50%; top:50%;
+  width:50px; height:50px; transform:translate(-50%,-50%);
+  border-radius:50%; background:#fff;
+  box-shadow: 0 6px 16px rgba(0,0,0,.22), 0 0 0 6px var(--accent);
+  z-index:-1;
+}
+.bn-item[aria-current="page"] .bn-label{ color:#fff; font-weight:600; }
+
+/* ==================== Typography ==================== */
+h1{ font-weight:300; font-size:2.2em; color:var(--text); margin-top:0; margin-bottom:.5em; }
+h2{ font-family:"Judson",serif; font-weight:200; font-size:1.7em; color:var(--text); margin-top:1em; margin-bottom:.1em; }
+h3{ font-weight:400; color:var(--accent); margin-top:1em; margin-bottom:.1em; }
+h1 + h2 {
+  margin-top: -.5em;
+}
+p + ul {
+  margin-top: -.3em;
+}
+p + ol {
+  margin-top: -.3em;
+}
+
+p{ 
+  margin:0 0 1em; 
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
+  }
+h1, h2, h3, h4, h5, h6{
+  hyphens: none !important; -webkit-hyphens: none !important;
+  overflow-wrap: normal !important; word-break: normal !important; white-space: normal !important;
+}
+
+mark {
+  background-color: #ffffcc;
+}
+
+/* ==================== Footer ==================== */
+.site-footer{
+  background:#0b0d0e; color:#e9ecef; margin-top:0;
+  padding:2.5rem 1rem 2.5rem 2rem; border-top:1px solid rgba(255,255,255,.08);
+  position: relative; z-index: 1200;
+  padding-bottom: max(2.5rem, env(safe-area-inset-bottom));
+}
+.site-footer a{ color:#d1e9f9; text-decoration:none; }
+.site-footer a:hover{ color:#a9b8f5; text-decoration:underline; }
+.site-footer__inner{
+  display:grid; grid-template-columns:2.4fr 1fr 1fr; column-gap:1rem;
+  max-width:var(--maxw); margin-inline:auto; align-items:start;
+}
+.site-footer__inner > :first-child{ line-height:1.6; max-width:700px; }
+.site-footer__inner > :last-child{ padding-right:.25rem; }
+@media (min-width:900px){ .site-footer__inner{ grid-template-columns:2.5fr .8fr .9fr; column-gap:1rem; } }
+@media (max-width:800px){ .site-footer__inner{ grid-template-columns:1fr; row-gap:1.5rem; } }
+.site-footer h4{ margin:0 0 .6rem 0; font:600 1rem "Lato",system-ui,sans-serif; color:#fff; }
+.site-footer p,.site-footer li{ margin:0 0 .4rem 0; color:#cfd3d7; font:400 .95rem "Lato",system-ui,sans-serif; }
+.site-footer ul{ list-style:none; padding:0; margin:0; }
+
+/* Ensure overlays don’t cover footer */
+@media (max-width: 900px) {
+  #sidenav-toggle:checked ~ .content::before { z-index: 1000; }
+  .layout, .content { overflow: visible; }
+}
+
+/* ===================================================================== */
+/* ===== DESKTOP RESTORE (≥741px): normal top bar & no bottom space ===== */
+/* ===================================================================== */
+@media (min-width: 741px) {
+  :root { --topnav-h: 56px !important; }
+
+  .topnav {
+    position: sticky !important;
+    top: 0 !important;
+    background: var(--accent) !important;
+    height: auto !important;
+    min-height: var(--topnav-h) !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: visible !important;
+  }
+
+  .topnav-inner {
+    display: flex !important;
+    min-height: var(--topnav-h) !important;
+    padding-inline: 1rem !important;
+  }
+  .topnav .brand { display: inline !important; }
+
+  .topnav .menu {
+    display: flex !important;
+    position: static !important;
+    left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
+    height: auto !important;
+    margin: 0 !important; padding: 0 !important;
+    background: transparent !important;
+    z-index: auto !important;
+    flex-direction: row !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: .5rem !important;
+  }
+
+  body { padding-bottom: 0 !important; }
+}
+/* ===================================================================== */
+/* ===== MOBILE MODE (≤740px): use dedicated .bottomnav component ======= */
+/* ===================================================================== */
+@media (max-width: 740px) {
+  :root { --topnav-h: 0px !important; }
+
+  /* collapse the top header area */
+  .topnav {
+    background: transparent !important;
+    box-shadow: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    position: static !important;
+    overflow: hidden !important;
+  }
+  .topnav-inner,
+  .topnav .brand { display: none !important; }
+
+  /* IMPORTANT: hide the desktop <ul class="menu"> entirely on mobile
+     (we’ll use the injected .bottomnav instead) */
+  .topnav .menu { display: none !important; }
+
+  /* show the real bottom nav injected by nav.js */
+  .bottomnav { display: block !important; }
+
+  /* reserve space so content/footer aren’t covered by bottom bar */
+  body { padding-bottom: calc(var(--bottomnav-h, 78px) + env(safe-area-inset-bottom)) !important; }
+}
+
+
+/* ==================== Calendar Page Override ==================== */
+#page-content > iframe{
+  width:100%;
+  height:700px;   /* override global height:auto */
+  border:0;
+  display:block;
+}
+@media (max-width:740px){
+  #page-content > iframe{ height:600px; }
+}
+
+
+/* ==================== Footer safe area for mobile bottomnav ==================== */
+@media (max-width: 740px){
+  .site-footer {
+    padding-bottom: calc(
+      var(--bottomnav-h, 78px) + env(safe-area-inset-bottom) + 2rem
+    ) !important;
+  }
+}
+
+/* Bottomnav should sit above the footer */
+.bottomnav{
+  z-index: 3000 !important; /* footer is 1200 */
+}
+
+
+/* Ensure the active white circle stays within the icon's own stack */
+.bn-ico{
+  position: relative;
+  z-index: 0;               /* creates a local stacking context */
+}
+.bn-item[aria-current="page"] .bn-ico::before{
+  z-index: -1;              /* stays behind the icon, not the footer */
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
