@@ -1,0 +1,84 @@
+
+
+/* ==================== Home Hero ==================== */
+.home-hero{
+  position:relative; width:100%;
+  min-height:calc(100dvh - var(--topnav-h)); height:auto;
+  overflow:hidden; display:flex; align-items:center; justify-content:flex-start;
+  background:#333; padding-bottom:1px;
+}
+.home-hero__img{ position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; object-position:center; }
+
+.home-hero__card {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.15);
+  padding: 2rem;
+  margin-left: 5%;
+
+  display: inline-block; /* shrink-wraps to its content */
+  width: auto;
+  max-width: 70%;
+}
+
+
+.home-hero__title{ 
+  font-family:"Judson", serif; 
+  font-weight:300; 
+  font-size:clamp(1.8rem,3vw,2.2rem); 
+  margin:0; 
+  color:var(--text); 
+
+  }
+  .home-hero__title{
+  white-space: nowrap;      /* classic */
+  text-wrap: nowrap;        /* overrides any text-wrap: balance/pretty */
+  overflow-wrap: normal;    /* don't insert emergency breaks */
+  word-break: normal;
+  hyphens: manual;
+}
+  
+.home-hero__h2{ 
+  font-family:"Lato",
+  sans-serif; font-weight:400; 
+  font-size:1.3rem; 
+  margin-top:1.2em; 
+  margin-bottom:0; 
+  color:var(--text); 
+
+  }
+    .home-hero__h2{
+  white-space: nowrap;      /* classic */
+  text-wrap: nowrap;        /* overrides any text-wrap: balance/pretty */
+  overflow-wrap: normal;    /* don't insert emergency breaks */
+  word-break: normal;
+  hyphens: manual;
+}
+
+/* If a <br> or block-level span slipped in */
+.home-hero__title br{ display:none; }
+.home-hero__title > *{ display:inline; }
+  
+.home-hero__text,.home-hero__list{ font-family:"Lato",sans-serif; font-weight:400; line-height:1.6; color:var(--muted); margin:0; }
+.home-hero + *{ margin-top:0 !important; }
+@media (max-width:800px){
+  .home-hero{ justify-content:center; min-height:750px; height:90vh;}
+  .home-hero__card{ margin:1rem auto; width:95%; max-width:460px; padding:1.5rem; }
+}
+@media (max-width:600px){
+  .home-hero{
+    justify-content:center;
+    padding-inline:max(12px, env(safe-area-inset-left, 0)) max(12px, env(safe-area-inset-right, 0));
+    min-height:750px; height:90vh;
+  }
+  .home-hero__card{
+    margin-left:auto; margin-right:auto; width:auto; max-width:min(92vw, 460px);
+    padding:clamp(.9rem, 4vw, 1.2rem); box-sizing:border-box;
+  }
+}
+
+

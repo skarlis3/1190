@@ -1,0 +1,320 @@
+/* ========== FOR GRADING POLICY AND PROJECT 2 ASSIGNMENT PAGES ========== */ 
+
+/* ========================= Grading Schemes: Table Layout ==================================== */
+
+.grading-scheme{
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--sidebar-bg);
+}
+
+/* Table container */
+.grade-table{
+  display: grid;
+  grid-template-columns: 70px 1fr;   /* left column width + right column flex */
+  gap: 1rem 1.25rem;                 /* row gap | column gap */
+  align-items: start;
+}
+
+/* Icon column cell */
+.grade-symbol{
+  font-size: 1.55rem;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1;
+  padding: .65rem .5rem;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  width: 60px;
+}
+
+/* Color variations (optional but readable) */
+.symbol-plus  { background: #006f5c; }
+.symbol-check { background: #004739; }
+.symbol-minus { background: #a05f00; }
+.symbol-nc    { background: #555;    }
+
+/* Right column cell */
+.grade-text strong{
+  font-weight: 800;
+  display: block;
+  margin-bottom: .25rem;
+}
+.grade-text{
+  line-height: 1.5;
+}
+
+/* ==================== GRADING CALLOUT (Quick Start) ==================== */
+
+.callout{
+  background: color-mix(in srgb, var(--accent) 6%, white);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  margin: 2rem 0;
+}
+
+.callout h2{
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.callout ul{
+  margin: .75rem 0 0;
+  padding-left: 1.25rem;
+}
+
+
+/* ==================== GRADING LEGEND BLOCK ==================== */
+
+.legend{
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem 1.5rem 1.25rem;
+  margin: 2rem 0;
+}
+
+.legend h2{
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+
+/* ==================== GRADING LEGEND TABLES LAYOUT ==================== */
+
+.legend__tables{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.legend__table h3{
+  font-family: "Judson", serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin: 0 0 .75rem;
+  color: var(--text);
+}
+
+/* stack tables on mobile */
+@media(max-width: 700px){
+  .legend__tables{
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+/* ===== Fix for <table class="grade-table"> layout ===== */
+table.grade-table{
+  /* override the old grid rule */
+  display: table !important;
+  width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  /* vertical space between rows; horizontal gap comes from padding on the text cell */
+  border-spacing: 0 1rem;
+}
+
+/* table.grade-table tbody tr { } */
+
+table.grade-table td{
+  vertical-align: top;
+  padding: 0; /* we'll control spacing per cell */
+}
+
+/* Left column: lock a consistent width and center the symbol */
+table.grade-table td.grade-symbol{
+  width: 60px;            /* matches your original grid column */
+  min-width: 60px;
+  text-align: center;
+  /* keep your existing visual pill styles from .grade-symbol */
+  /* (you already have font-size, padding, background, radius, etc.) */
+}
+
+/* Right column: recreate the old column gap */
+table.grade-table td.grade-text{
+  padding-left: 1.25rem;  /* horizontal gap like your old grid column gap */
+  line-height: 1.5;
+}
+
+/* Optional: keep rows comfy on small screens */
+@media (max-width: 520px){
+  table.grade-table td.grade-text{
+    padding-left: .9rem;
+  }
+}
+
+
+/* === Table grade badge fix === */
+table.grade-table{
+  display: table !important;
+  width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0 1rem;              /* row gap */
+}
+
+table.grade-table td{
+  padding: 0;                           /* reset */
+  vertical-align: middle;               /* center against text block */
+}
+
+table.grade-table td.grade-symbol{
+  width: 60px;                          /* fixed left column */
+  min-width: 60px;
+  text-align: center;
+  background: transparent !important;   /* stop the tall green column */
+  padding: 0;
+}
+
+/* fixed-size badge, not the entire cell */
+.grade-badge{
+  display: inline-grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 800;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+/* recreate the old “column gap” to the right */
+table.grade-table td.grade-text{
+  padding-left: 1.1rem;
+  line-height: 1.5;
+}
+
+/* optional: small-screen comfort */
+@media (max-width: 520px){
+  .grade-badge{ width: 46px; height: 46px; font-size: 1.25rem; }
+  table.grade-table td.grade-text{ padding-left: .9rem; }
+}
+
+
+
+/* ==========================
+   Standard Grading Scale
+   ========================== */
+
+.grade-scale-note {
+  font-size: 0.9rem;
+  color: var(--muted, #666666);
+  margin-bottom: 0.75rem;
+  max-width: 48rem;
+}
+
+.grade-scale-wrapper {
+  margin: 1rem 0 2rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid var(--border, #e2e3e5);
+  background: var(--sidebar-bg, #fafafa);
+  overflow-x: auto; /* safety on very small screens */
+}
+
+.grade-scale-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.grade-scale-table thead th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  background: var(--accent, #041f44);
+  color: var(--accent-contrast, #ffffff);
+  font-weight: 400;
+}
+
+.grade-scale-table tbody td {
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid var(--border, #e2e3e5);
+}
+
+.grade-scale-table tbody tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.0125);
+}
+
+.grade-scale-table tbody tr:hover {
+  background: var(--hover, #f5f1f1);
+}
+
+.grade-scale-table td:first-child,
+.grade-scale-table th:first-child {
+  width: 5rem;
+  white-space: nowrap;
+}
+
+/* Small-screen tweak */
+@media (max-width: 600px) {
+  .grade-scale-wrapper {
+    padding: 0.75rem 0.75rem;
+  }
+
+  .grade-scale-table {
+    font-size: 0.9rem;
+  }
+}
+
+
+
+/* ==================== Museum Placard Styles ==================== */
+.placard-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  justify-content: flex-start;
+}
+
+.museum-placard {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid #333; /* Dark left accent for contrast */
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 350px; /* Constrains width to look like a real card */
+  font-family: "Lato", sans-serif;
+}
+
+.museum-placard h4 {
+  font-family: "Judson", serif; /* Uses your site's heading font */
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: #1a1a1a;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.museum-placard p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin: 0 0 0.5rem 0;
+  color: #444;
+}
+
+.placard-meta {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+  margin-top: 0.75rem;
+}
