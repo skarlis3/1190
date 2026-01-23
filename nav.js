@@ -63,7 +63,11 @@
           label: "Resources",
           href: "/resources/index.html",
           children: [
-            { label: "Readings", href: "/resources/readings.html" },
+            { label: "Readings", href: "/resources/readings.html" 
+              children: [
+                {label: "Intro to Primary Research", href: "readings/intro-to-primary-research.html"}
+              ]
+            },
             { label: "Videos", href: "/resources/videos.html" },
             { label: "Sample Assignments", href: "/resources/samples.html" }
           ]
