@@ -67,8 +67,8 @@
       label: "Readings", 
       href: "/resources/readings.html",
       children: [
-        { label: "Intro to Primary Research", href: "readings/intro-to-primary-research.html" },
-        { label: "AI & Energy Use", href: "/readings/ai-and-energy.html" }
+        { label: "Intro to Primary Research", href: "../readings/intro-to-primary-research.html" },
+        { label: "AI & Energy Use", href: "../readings/ai-and-energy.html" }
       ]
     },
     { label: "Videos", href: "/resources/videos.html" },
