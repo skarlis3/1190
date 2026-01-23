@@ -67,7 +67,7 @@
       label: "Readings", 
       href: "/resources/readings.html",
       children: [
-        { label: "Intro to Primary Research", href: "/readings/intro-to-primary-research.html" }
+        { label: "Intro to Primary Research", href: ".../readings/intro-to-primary-research.html" }
       ]
     },
     { label: "Videos", href: "/resources/videos.html" },
