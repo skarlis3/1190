@@ -15,7 +15,11 @@
     <div>
       <div class="site-footer__brand">ENGL 1190 Class Website</div>
 <hr/>
-      <p>ENGL 1190 website and its individual pages, unless otherwise noted, are created by Sarah Karlis and are licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. </p>
+
+
+
+<p>ENGL 1190 website and its individual pages, unless otherwise noted, are created by Sarah Karlis and are licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. </p>
+
     </div>
 
     <nav aria-label="Footer – Quick Links">
