@@ -126,7 +126,9 @@
         if (isCurrent(href)) return true;
         const cur = new URL(location.href).pathname.toLowerCase().replace(/\/+$/, "");
         const dir = sectionDir(href);
-        return dir === "/" ? cur.endsWith("/index.html") || cur === "/" : cur.startsWith(dir);
+        return dir === "/" 
+          ? (cur === "/" || cur === "/index.html")
+          : cur.startsWith(dir);
       };
       const menuTitleFor = (label) => {
         const L = String(label || "").toLowerCase();
