@@ -191,7 +191,7 @@ label[for="topnav-toggle"],
 /*                            At a glance box                            */
 /* ===================================================================== */
 
-  .glance-accent-box{
+  .glance-accent-box {
   border: 1px solid var(--border);
   border-left: 6px solid var(--accent);
   background: color-mix(in srgb, var(--focus) 7%, white); 
