@@ -12,6 +12,7 @@
         { label: "Home", href: "/index.html" },
         { label: "Calendar", href: "/calendar/index.html" },
         { label: "Assignments", href: "/assignments/index.html" },
+        { label: "Readings", href: "/readings/index.html" },
         { label: "Resources", href: "/resources/index.html" },
         { label: "Policies & Info", href: "/policies/index.html" }
       ];
@@ -59,22 +60,22 @@
             { label: "Final Portfolio", href: "/assignments/final-portfolio.html" }
           ]
         },
-{
-  label: "Resources",
-  href: "/resources/index.html",
-  children: [
-    { 
-      label: "Readings", 
-      href: "/resources/readings.html",
-      children: [
-        { label: "Intro to Primary Research", href: "/readings/intro-to-primary-research.html" },
-        { label: "AI & Energy Use", href: "/readings/ai-and-energy.html" }
-      ]
-    },
-    { label: "Videos", href: "/resources/videos.html" },
-    { label: "Sample Assignments", href: "/resources/samples.html" }
-  ]
-},
+        {
+          label: "Resources",
+          href: "/resources/index.html",
+          children: [
+            { label: "Videos", href: "/resources/videos.html" },
+            { label: "Sample Assignments", href: "/resources/samples.html" }
+          ]
+        },
+        {
+              label: "Readings", 
+              href: "/readings/index.html",
+              children: [
+                { label: "Intro to Primary Research", href: "/readings/intro-to-primary-research.html" },
+                { label: "AI & Energy Use", href: "/readings/ai-and-energy.html" }
+              ]
+        },
 
         {
           label: "Calendars",
