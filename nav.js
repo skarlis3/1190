@@ -64,7 +64,7 @@
           label: "Resources",
           href: "/resources/index.html",
           children: [
-            { label: "Videos", href: "/resources/videos.html" },
+            { label: "In-Class Resources", href: "/resources/in-class.html" },
             { label: "Sample Assignments", href: "/resources/samples.html" }
           ]
         },
