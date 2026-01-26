@@ -169,6 +169,10 @@ label[for="topnav-toggle"],
   border:1px solid #ccc; 
   padding:10px; } 
 
+  .grid-container-3columns .grid-item {
+  display: block;
+}
+
 .grid-container-2columns, #grid-container-2columns{ 
   display:grid; 
   grid-template-columns:20% 80%; 
