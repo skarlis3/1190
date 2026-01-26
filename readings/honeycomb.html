@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Honeycomb Model | ENGL 1190</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="honeycomb.css" />
+  <link rel="icon" href="/1190icon.png" type="image/x-icon">
+</head>
+<body>
+  <div id="page-content">
+    <!-- start of page content -->
+
+    <h1>The Research Honeycomb</h1>
+
+    <div class="honeycomb-intro">
+      <p>Strong research draws from multiple types of sources. Click each cell to learn more about the different voices and perspectives that can strengthen your research on AI's impact on your field.</p>
+    </div>
+
+    <div class="honeycomb-container">
+      <div class="honeycomb-grid" role="list" aria-label="Research source categories">
+
+        <!-- 1. Community Voices (top) -->
+        <button class="hex-cell" role="listitem" data-modal="community" aria-haspopup="dialog">
+          <span class="hex-title">Community Voices</span>
+          <span class="hex-brief">Firsthand perspectives from those affected</span>
+        </button>
+
+        <!-- 2. News Media (upper left) -->
+        <button class="hex-cell" role="listitem" data-modal="news" aria-haspopup="dialog">
+          <span class="hex-title">News Media</span>
+          <span class="hex-brief">Current events &amp; journalism</span>
+        </button>
+
+        <!-- 3. NGO Reports (upper right) -->
+        <button class="hex-cell" role="listitem" data-modal="ngo" aria-haspopup="dialog">
+          <span class="hex-title">NGO Reports</span>
+          <span class="hex-brief">Independent organization research</span>
+        </button>
+
+        <!-- 4. Topic (center) -->
+        <button class="hex-cell hex-center" role="listitem" data-modal="topic" aria-haspopup="dialog">
+          <span class="hex-title">Your Topic</span>
+          <span class="hex-brief">The focus of your research</span>
+        </button>
+
+        <!-- 5. Academic Voices (lower left) -->
+        <button class="hex-cell" role="listitem" data-modal="academic" aria-haspopup="dialog">
+          <span class="hex-title">Academic Voices</span>
+          <span class="hex-brief">Scholarly research &amp; peer review</span>
+        </button>
+
+        <!-- 6. Government Reports (lower right) -->
+        <button class="hex-cell" role="listitem" data-modal="government" aria-haspopup="dialog">
+          <span class="hex-title">Government Reports</span>
+          <span class="hex-brief">Official data &amp; policy</span>
+        </button>
+
+        <!-- 7. Stakeholders and Allies (bottom) -->
+        <button class="hex-cell" role="listitem" data-modal="stakeholders" aria-haspopup="dialog">
+          <span class="hex-title">Stakeholders &amp; Allies</span>
+          <span class="hex-brief">Those indirectly affected</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Modal overlay -->
+    <div class="hex-modal-overlay" id="modalOverlay" role="presentation">
+      <div class="hex-modal" id="hexModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="hex-modal-close" id="modalClose" aria-label="Close dialog">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <line x1="6" y1="6" x2="18" y2="18" />
+            <line x1="6" y1="18" x2="18" y2="6" />
+          </svg>
+        </button>
+        <div class="hex-modal-content">
+          <h2 id="modalTitle"></h2>
+          <p class="modal-examples"></p>
+          <p class="modal-why"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-statement">
+      <h2>About This Model</h2>
+      <p>The Research Honeycomb model helps researchers identify diverse source types to build well-rounded, multi-perspective research. For your AI research project, aim to include sources from several of these categories.</p>
+      <p><strong>Original concept:</strong> Created by Jackie Stapleton, Liaison Librarian, University of Waterloo; Adapted by Aneta Kwak, Mikayla Redden, Jeff Newman, Liaison Librarians, University of Toronto; Modified by Dylan McGlothlin, Humanities Librarian, Western Michigan University. Used under Creative Commons license.</p>
+    </div>
+
+    <!-- end of page content -->
+  </div>
+
+  <!-- main navigation and page scripts -->
+  <script src="/nav.js" defer></script>
+  <script src="/footer.js" defer></script>
+
+  <script>
+    // Modal content data
+    const modalData = {
+      topic: {
+        title: "Your Research Topic",
+        examples: "Your research topic is the central focus connecting all your sources. For this project, you're exploring how AI is impacting your planned major or field.",
+        why: "A well-defined topic helps you determine which voices and perspectives you need for a complete picture. As you research, your topic may evolve—this is normal and often a sign of deepening understanding.",
+        isCenter: true
+      },
+      community: {
+        title: "Community Voices",
+        examples: "<strong>What are they?</strong> People directly affected by or involved in your topic—firsthand perspectives often missing from institutional sources. This includes social media posts sharing lived experiences, interviews with community members, personal blogs or podcasts, testimonials, and letters to editors.",
+        why: "<strong>Why include them?</strong> Community voices provide authenticity and ground-level perspective. They help answer: \"What is this actually like for real people?\" For AI research, these might be workers discussing how AI tools changed their jobs, students sharing experiences with AI tutoring, or professionals posting about AI in their field."
+      },
+      news: {
+        title: "News Media",
+        examples: "<strong>What are they?</strong> Sources that report on current events and provide journalistic perspectives. This includes newspaper and magazine articles (including tech publications like Wired, MIT Technology Review, or Ars Technica), broadcast news segments, documentaries, and investigative journalism.",
+        why: "<strong>Why include them?</strong> For fast-moving fields like AI, news sources are essential for staying current. A journal article about AI published today may have been written 1–2 years ago—an eternity in AI development. News fills that gap, covering breakthroughs and real-world applications months before scholarly articles appear. Just note the difference between news reporting and opinion/editorial content."
+      },
+      academic: {
+        title: "Academic Voices",
+        examples: "<strong>What are they?</strong> Scholarly conversation about your topic—research reviewed and vetted by other experts. This includes peer-reviewed journal articles, scholarly books, conference papers, and dissertations. Use library databases like EBSCO or Google Scholar to find them.",
+        why: "<strong>Why include them?</strong> These sources provide theoretical frameworks, research methodologies, and evidence-based analysis. While they may lag behind current AI developments, they offer depth, rigor, and the broader context that news coverage often lacks."
+      },
+      ngo: {
+        title: "Non-Government Organization Reports",
+        examples: "<strong>What are they?</strong> Research and reports from organizations operating independently of government. This includes advocacy groups (ACLU, Electronic Frontier Foundation), think tanks (Brookings, RAND), professional associations, and nonprofit research organizations.",
+        why: "<strong>Why include them?</strong> NGOs often focus on specific issues in depth. For AI research, organizations like the AI Now Institute or Partnership on AI produce valuable reports. Remember that NGOs typically have missions or agendas—understanding their perspective helps you evaluate their information critically."
+      },
+      government: {
+        title: "Government Reports",
+        examples: "<strong>What are they?</strong> Official data, statistics, policies, and publicly funded research at various levels. This includes agency reports (FTC, EEOC, Department of Labor), congressional hearings and records, executive orders, and international bodies like the EU or UN.",
+        why: "<strong>Why include them?</strong> Government sources provide reliable data and official positions on AI regulation, workforce impacts, and policy directions. They represent institutional perspectives and may reveal how AI is being addressed (or not) at the policy level in your field."
+      },
+      stakeholders: {
+        title: "Stakeholders & Allies",
+        examples: "<strong>What are they?</strong> People or groups not primarily affected by your topic but still invested in or impacted by it. If researching AI in healthcare, stakeholders might include insurance companies, hospital administrators, or medical educators—not just doctors and patients.",
+        why: "<strong>Why include them?</strong> These perspectives reveal the broader impact and context of AI beyond those most directly involved. They help you understand the ecosystem around your topic and anticipate how changes might ripple outward."
+      }
+    };
+
+    // DOM elements
+    const overlay = document.getElementById('modalOverlay');
+    const modal = document.getElementById('hexModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalExamples = modal.querySelector('.modal-examples');
+    const modalWhy = modal.querySelector('.modal-why');
+    const closeBtn = document.getElementById('modalClose');
+    const hexCells = document.querySelectorAll('.hex-cell');
+
+    let lastFocusedElement = null;
+
+    // Open modal
+    function openModal(key) {
+      const data = modalData[key];
+      if (!data) return;
+
+      lastFocusedElement = document.activeElement;
+
+      modalTitle.textContent = data.title;
+      modalExamples.innerHTML = data.examples;
+      modalWhy.innerHTML = data.why;
+
+      // Apply center styling if topic
+      if (data.isCenter) {
+        modal.classList.add('modal-center');
+      } else {
+        modal.classList.remove('modal-center');
+      }
+
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      // Focus the close button after animation
+      setTimeout(() => {
+        closeBtn.focus();
+      }, 100);
+    }
+
+    // Close modal
+    function closeModal() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+
+      // Return focus to the element that opened the modal
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+      }
+    }
+
+    // Event listeners for hex cells
+    hexCells.forEach(cell => {
+      cell.addEventListener('click', () => {
+        const key = cell.getAttribute('data-modal');
+        openModal(key);
+      });
+
+      cell.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const key = cell.getAttribute('data-modal');
+          openModal(key);
+        }
+      });
+    });
+
+    // Close button click
+    closeBtn.addEventListener('click', closeModal);
+
+    // Close on overlay click (but not modal click)
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeModal();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // Trap focus within modal when open
+    modal.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        // Simple focus trap: keep focus on close button since it's the only interactive element
+        e.preventDefault();
+        closeBtn.focus();
+      }
+    });
+  </script>
+</body>
+</html>

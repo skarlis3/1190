@@ -1,0 +1,425 @@
+/* ==========================================================================
+   Research Honeycomb Interactive Component
+   For ENGL 1190 - Macomb Community College
+   ========================================================================== */
+
+/* ========== Intro Section ========== */
+.honeycomb-intro {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 2rem;
+}
+
+.honeycomb-intro p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* ========== Honeycomb Container ========== */
+.honeycomb-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem 3rem;
+}
+
+.honeycomb-grid {
+  position: relative;
+  width: 460px;
+  height: 520px;
+}
+
+/* ========== Hexagon Cells ========== */
+.hex-cell {
+  position: absolute;
+  width: 150px;
+  height: 170px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: linear-gradient(145deg, #f8e8c8 0%, #e8c878 50%, #d4a84b 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  font-family: inherit;
+  box-shadow: 
+    0 4px 12px rgba(180, 140, 60, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.hex-cell::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: linear-gradient(165deg, rgba(255,255,255,0.5) 0%, transparent 40%);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.hex-cell:hover,
+.hex-cell:focus-visible {
+  transform: scale(1.08);
+  background: linear-gradient(145deg, #fffaed 0%, #f5d888 50%, #e8b84b 100%);
+  box-shadow: 
+    0 8px 24px rgba(180, 140, 60, 0.4),
+    0 0 20px rgba(232, 184, 75, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  z-index: 10;
+}
+
+.hex-cell:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.hex-cell .hex-title {
+  font-family: "Judson", serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3d2e0a;
+  line-height: 1.2;
+  margin-bottom: 0.35rem;
+}
+
+.hex-cell .hex-brief {
+  font-size: 0.72rem;
+  color: #5a4520;
+  line-height: 1.35;
+  opacity: 0.9;
+}
+
+/* ========== Center Cell (Topic) - Special Styling ========== */
+.hex-cell.hex-center {
+  background: linear-gradient(145deg, #2c4a6e 0%, #1a365d 50%, #0f2744 100%);
+  box-shadow: 
+    0 6px 16px rgba(26, 54, 93, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.hex-cell.hex-center::before {
+  background: linear-gradient(165deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+}
+
+.hex-cell.hex-center:hover,
+.hex-cell.hex-center:focus-visible {
+  background: linear-gradient(145deg, #3d5f8a 0%, #2a4a70 50%, #1a365d 100%);
+  box-shadow: 
+    0 10px 28px rgba(26, 54, 93, 0.5),
+    0 0 24px rgba(45, 90, 140, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.hex-cell.hex-center .hex-title {
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.hex-cell.hex-center .hex-brief {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ========== Hexagon Positioning (Absolute) ========== */
+/* 
+   Layout reference:
+        [Community]
+   [News]       [NGO]
+        [Topic]
+   [Academic]   [Gov]
+        [Stakeholders]
+*/
+
+/* Horizontal: left=0, center=155px, right=310px */
+/* Vertical spacing: ~130px between row centers */
+
+.hex-cell[data-modal="community"]   { top: 0;     left: 155px; }
+.hex-cell[data-modal="news"]        { top: 88px;  left: 0; }
+.hex-cell[data-modal="ngo"]         { top: 88px;  left: 310px; }
+.hex-cell[data-modal="topic"]       { top: 175px; left: 155px; }
+.hex-cell[data-modal="academic"]    { top: 262px; left: 0; }
+.hex-cell[data-modal="government"]  { top: 262px; left: 310px; }
+.hex-cell[data-modal="stakeholders"]{ top: 350px; left: 155px; }
+
+/* ========== Modal Overlay ========== */
+.hex-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 25, 40, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: 1rem;
+}
+
+.hex-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ========== Modal (Hexagon Shaped) ========== */
+.hex-modal {
+  position: relative;
+  width: min(440px, 90vw);
+  aspect-ratio: 1 / 1.15;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: linear-gradient(160deg, #fffdf5 0%, #fef6e0 40%, #f8e8c8 100%);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    0 0 40px rgba(232, 200, 120, 0.2);
+  transform: scale(0.8) rotate(-5deg);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hex-modal-overlay.active .hex-modal {
+  transform: scale(1) rotate(0deg);
+}
+
+.hex-modal.modal-center {
+  background: linear-gradient(160deg, #1e3a5f 0%, #152d4a 40%, #0f2744 100%);
+}
+
+/* ========== Modal Content ========== */
+.hex-modal-content {
+  padding: 4.5rem 2.5rem 4rem;
+  text-align: center;
+  max-height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.hex-modal-content h2 {
+  font-family: "Judson", serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #2d1f0a;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+
+.hex-modal.modal-center .hex-modal-content h2 {
+  color: #ffffff;
+}
+
+.hex-modal-content .modal-examples {
+  font-size: 0.88rem;
+  color: #5a4a30;
+  margin-bottom: 1.25rem;
+  line-height: 1.55;
+}
+
+.hex-modal.modal-center .modal-examples {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hex-modal-content .modal-examples strong {
+  color: #3d2e0a;
+  font-weight: 600;
+}
+
+.hex-modal.modal-center .modal-examples strong {
+  color: #ffffff;
+}
+
+.hex-modal-content .modal-why {
+  font-size: 0.85rem;
+  color: #6b5a40;
+  line-height: 1.6;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(180, 150, 100, 0.3);
+}
+
+.hex-modal.modal-center .modal-why {
+  color: rgba(255, 255, 255, 0.75);
+  border-top-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ========== Close Button ========== */
+.hex-modal-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffffff 0%, #f0e6d0 100%);
+  border: 3px solid #d4a84b;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.hex-modal-close:hover,
+.hex-modal-close:focus-visible {
+  background: linear-gradient(145deg, #fff8e8 0%, #f8e8c8 100%);
+  border-color: #c49838;
+  transform: scale(1.1);
+  box-shadow: 
+    0 6px 16px rgba(0, 0, 0, 0.25),
+    0 0 12px rgba(232, 184, 75, 0.4);
+}
+
+.hex-modal-close:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.hex-modal-close svg {
+  width: 18px;
+  height: 18px;
+  stroke: #5a4520;
+  stroke-width: 2.5;
+}
+
+/* ========== Screen Reader Only ========== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ========== Attribution ========== */
+.honeycomb-attribution {
+  text-align: center;
+  max-width: 700px;
+  margin: 1rem auto 0;
+  padding: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+/* Medium screens / tablets */
+@media (max-width: 520px) {
+  .honeycomb-grid {
+    width: 340px;
+    height: 390px;
+  }
+
+  .hex-cell {
+    width: 110px;
+    height: 125px;
+    padding: 1rem 0.6rem;
+  }
+
+  .hex-cell .hex-title {
+    font-size: 0.78rem;
+  }
+
+  .hex-cell .hex-brief {
+    font-size: 0.62rem;
+  }
+
+  /* Recalculate positions for smaller hexagons */
+  /* Horizontal: left=0, center=115px, right=230px */
+  .hex-cell[data-modal="community"]   { top: 0;     left: 115px; }
+  .hex-cell[data-modal="news"]        { top: 65px;  left: 0; }
+  .hex-cell[data-modal="ngo"]         { top: 65px;  left: 230px; }
+  .hex-cell[data-modal="topic"]       { top: 130px; left: 115px; }
+  .hex-cell[data-modal="academic"]    { top: 195px; left: 0; }
+  .hex-cell[data-modal="government"]  { top: 195px; left: 230px; }
+  .hex-cell[data-modal="stakeholders"]{ top: 260px; left: 115px; }
+
+  .hex-modal {
+    width: min(340px, 88vw);
+  }
+
+  .hex-modal-content {
+    padding: 3.5rem 1.75rem 3rem;
+  }
+
+  .hex-modal-content h2 {
+    font-size: 1.25rem;
+  }
+
+  .hex-modal-close {
+    width: 40px;
+    height: 40px;
+    top: -10px;
+    right: -10px;
+  }
+}
+
+/* Small screens / phones */
+@media (max-width: 380px) {
+  .honeycomb-grid {
+    width: 280px;
+    height: 330px;
+  }
+
+  .hex-cell {
+    width: 92px;
+    height: 105px;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .hex-cell .hex-title {
+    font-size: 0.7rem;
+  }
+
+  .hex-cell .hex-brief {
+    display: none;
+  }
+
+  /* Recalculate positions for smallest hexagons */
+  /* Horizontal: left=0, center=94px, right=188px */
+  .hex-cell[data-modal="community"]   { top: 0;     left: 94px; }
+  .hex-cell[data-modal="news"]        { top: 54px;  left: 0; }
+  .hex-cell[data-modal="ngo"]         { top: 54px;  left: 188px; }
+  .hex-cell[data-modal="topic"]       { top: 108px; left: 94px; }
+  .hex-cell[data-modal="academic"]    { top: 162px; left: 0; }
+  .hex-cell[data-modal="government"]  { top: 162px; left: 188px; }
+  .hex-cell[data-modal="stakeholders"]{ top: 216px; left: 94px; }
+
+  .hex-modal {
+    width: min(290px, 85vw);
+  }
+
+  .hex-modal-content {
+    padding: 3rem 1.25rem 2.5rem;
+  }
+
+  .hex-modal-content h2 {
+    font-size: 1.1rem;
+  }
+
+  .hex-modal-close {
+    width: 36px;
+    height: 36px;
+    top: -8px;
+    right: -8px;
+  }
+
+  .hex-modal-close svg {
+    width: 14px;
+    height: 14px;
+  }
+}
