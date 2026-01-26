@@ -5,7 +5,7 @@
 
 /* ========== Intro Section ========== */
 .honeycomb-intro {
-  text-align: center;
+  
   max-width: 680px;
   margin: 0 auto 2rem;
 }
@@ -24,6 +24,7 @@
   padding: 2rem 1rem 3rem;
 }
 
+
 .honeycomb-grid {
   position: relative;
   width: 510px;
@@ -37,7 +38,8 @@
   height: 146px;
   /* Flat-top hexagon: horizontal edges on top and bottom */
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  background: linear-gradient(145deg, #f8e8c8 0%, #e8c878 50%, #d4a84b 100%);
+  /* Lightened gold gradient for better readability */
+  background: linear-gradient(145deg, #fff8e0 0%, #f5e4a8 50%, #ecd080 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,7 +51,7 @@
   border: none;
   font-family: inherit;
   /* Use filter drop-shadow since box-shadow gets clipped */
-  filter: drop-shadow(0 4px 8px rgba(120, 90, 40, 0.25));
+  filter: drop-shadow(0 4px 8px rgba(120, 90, 40, 0.3));
 }
 
 .hex-cell::before {
@@ -65,7 +67,7 @@
 .hex-cell:hover,
 .hex-cell:focus-visible {
   transform: scale(1.08);
-  background: linear-gradient(145deg, #fffaed 0%, #f5d888 50%, #e8b84b 100%);
+  background: linear-gradient(145deg, #fffef5 0%, #faf0c0 50%, #f0d890 100%);
   filter: drop-shadow(0 8px 16px rgba(120, 90, 40, 0.4));
   z-index: 10;
 }
@@ -77,18 +79,17 @@
 
 .hex-cell .hex-title {
   font-family: "Judson", serif;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #3d2e0a;
+  color: #1a1505;
   line-height: 1.2;
   margin-bottom: 0.35rem;
 }
 
 .hex-cell .hex-brief {
-  font-size: 0.72rem;
-  color: #5a4520;
-  line-height: 1.35;
-  opacity: 0.9;
+  font-size: 0.85rem;
+  color: #302510;
+  line-height: 1.4;
 }
 
 /* ========== Center Cell (Topic) - Special Styling ========== */
@@ -113,7 +114,7 @@
 }
 
 .hex-cell.hex-center .hex-brief {
-  color: rgba(255, 255, 255, 0.85);
+  color: #f0f0f0;
 }
 
 /* ========== Hexagon Positioning (Absolute, Flat-Top with Gaps) ========== */
@@ -195,10 +196,9 @@
   left: 20px;
   width: 32px;
   height: 28px;
-  background: linear-gradient(145deg, #e8c878 0%, #d4a84b 100%);
+  background: linear-gradient(145deg, #f5e4a8 0%, #e8c878 100%);
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   opacity: 0.9;
-  box-shadow: 0 2px 6px rgba(180, 140, 60, 0.3);
 }
 
 .hex-modal.modal-center::before {
@@ -229,14 +229,14 @@
 }
 
 .hex-modal-content .modal-examples {
-  font-size: 0.88rem;
+  font-size: 1.1rem;
   color: #5a4a30;
   margin-bottom: 1.25rem;
   line-height: 1.55;
 }
 
 .hex-modal.modal-center .modal-examples {
-  color: rgba(255, 255, 255, 0.85);
+  color: #f0f0f0;
 }
 
 .hex-modal-content .modal-examples strong {
@@ -249,15 +249,15 @@
 }
 
 .hex-modal-content .modal-why {
-  font-size: 0.85rem;
-  color: #6b5a40;
+  font-size: 1.1rem;
+  color: #4d3f28;
   line-height: 1.6;
   padding-top: 1rem;
   border-top: 1px solid rgba(180, 150, 100, 0.3);
 }
 
 .hex-modal.modal-center .modal-why {
-  color: rgba(255, 255, 255, 0.75);
+  color: #e5e5e5;
   border-top-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -269,8 +269,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(145deg, #ffffff 0%, #f0e6d0 100%);
-  border: 3px solid #d4a84b;
+  background: linear-gradient(145deg, #ffffff 0%, #f5edd8 100%);
+  border: 3px solid #8a6820;
   box-shadow: 
     0 4px 12px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -284,12 +284,12 @@
 
 .hex-modal-close:hover,
 .hex-modal-close:focus-visible {
-  background: linear-gradient(145deg, #fff8e8 0%, #f8e8c8 100%);
-  border-color: #c49838;
+  background: linear-gradient(145deg, #fff8e8 0%, #f8ecd0 100%);
+  border-color: #6a5018;
   transform: scale(1.1);
   box-shadow: 
     0 6px 16px rgba(0, 0, 0, 0.25),
-    0 0 12px rgba(232, 184, 75, 0.4);
+    0 0 12px rgba(150, 120, 40, 0.3);
 }
 
 .hex-modal-close:focus-visible {
@@ -300,7 +300,7 @@
 .hex-modal-close svg {
   width: 18px;
   height: 18px;
-  stroke: #5a4520;
+  stroke: #4a3810;
   stroke-width: 2.5;
 }
 
@@ -346,11 +346,11 @@
   }
 
   .hex-cell .hex-title {
-    font-size: 0.78rem;
+    font-size: 0.9rem;
   }
 
   .hex-cell .hex-brief {
-    font-size: 0.6rem;
+    font-size: 0.85rem;
   }
 
   /* Recalculate positions for smaller flat-top hexagons with gaps */
@@ -404,7 +404,7 @@
   }
 
   .hex-cell .hex-title {
-    font-size: 0.7rem;
+    font-size: 0.85rem;
   }
 
   .hex-cell .hex-brief {
