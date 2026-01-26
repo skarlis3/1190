@@ -72,8 +72,13 @@
               label: "Readings", 
               href: "/readings/index.html",
               children: [
-                { label: "Intro to Primary Research", href: "/readings/intro-to-primary-research.html" }
-               // { label: "AI & Energy Use", href: "/readings/ai-and-energy.html" }
+                { label: "Intro to Primary Research", href: "/readings/intro-to-primary-research.html" },
+               // { label: "AI & Energy Use", href: "/readings/ai-and-energy.html" },
+               { label: "Research Honeycomb", href: "/readings/honeycomb.html" },
+               { label: "Effectively and Efficiently Reading the Credibility of Online Sources", href: "/readings/effectively.html" },
+               { label: "Reading & Video on Bias", href: "/readings/reading-bias.html" },
+               { label: "Popular vs. Scholarly Sources", href: "/readings/popular-scholarly.html" },
+               { label: "Primary, Secondary, and Tertiary Sources", href: "/readings/primary-secondary.html" }
               ]
         },
 

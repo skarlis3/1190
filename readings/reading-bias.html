@@ -10,7 +10,7 @@
     .reading-section {
       margin: 3em 0;
       padding: 2em 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid var(--border);
     }
 
     .reading-section:first-of-type {
@@ -19,26 +19,23 @@
     }
 
     .bias-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--focus) 5%, white);
       padding: 1.5em;
       margin: 1.5em 0;
-      transition: background 0.2s ease, border-color 0.2s ease;
+      border-radius: 6px;
+      transition: background 0.15s ease, border-color 0.15s ease;
     }
 
     .bias-card:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: color-mix(in srgb, var(--focus) 8%, white);
+      border-color: var(--accent);
     }
 
     .bias-card h3 {
       margin-top: 0;
-      color: #a8c7fa;
-    }
-
-    .bias-card strong {
-      color: #c9b8f5;
+      font-family: "Judson", serif;
+      color: var(--accent);
     }
   </style>
 </head>
