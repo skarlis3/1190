@@ -26,16 +26,17 @@
 
 .honeycomb-grid {
   position: relative;
-  width: 460px;
-  height: 520px;
+  width: 500px;
+  height: 470px;
 }
 
-/* ========== Hexagon Cells ========== */
+/* ========== Hexagon Cells (Flat-Top Orientation) ========== */
 .hex-cell {
   position: absolute;
-  width: 150px;
-  height: 170px;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  width: 175px;
+  height: 152px;
+  /* Flat-top hexagon: horizontal edges on top and bottom */
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   background: linear-gradient(145deg, #f8e8c8 0%, #e8c878 50%, #d4a84b 100%);
   display: flex;
   flex-direction: column;
@@ -56,7 +57,7 @@
   content: '';
   position: absolute;
   inset: 3px;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   background: linear-gradient(165deg, rgba(255,255,255,0.5) 0%, transparent 40%);
   pointer-events: none;
   opacity: 0.6;
@@ -124,26 +125,27 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* ========== Hexagon Positioning (Absolute) ========== */
+/* ========== Hexagon Positioning (Absolute, Flat-Top) ========== */
 /* 
-   Layout reference:
+   Layout reference (flat-top hexagons):
         [Community]
    [News]       [NGO]
         [Topic]
    [Academic]   [Gov]
         [Stakeholders]
+   
+   Hex dimensions: 175px × 152px
+   Horizontal offset between columns: ~131px (width × 0.75)
+   Vertical stagger for offset rows: 76px (height × 0.5)
 */
 
-/* Horizontal: left=0, center=155px, right=310px */
-/* Vertical spacing: ~130px between row centers */
-
-.hex-cell[data-modal="community"]   { top: 0;     left: 155px; }
-.hex-cell[data-modal="news"]        { top: 88px;  left: 0; }
-.hex-cell[data-modal="ngo"]         { top: 88px;  left: 310px; }
-.hex-cell[data-modal="topic"]       { top: 175px; left: 155px; }
-.hex-cell[data-modal="academic"]    { top: 262px; left: 0; }
-.hex-cell[data-modal="government"]  { top: 262px; left: 310px; }
-.hex-cell[data-modal="stakeholders"]{ top: 350px; left: 155px; }
+.hex-cell[data-modal="community"]   { top: 0;     left: 162px; }
+.hex-cell[data-modal="news"]        { top: 76px;  left: 32px; }
+.hex-cell[data-modal="ngo"]         { top: 76px;  left: 293px; }
+.hex-cell[data-modal="topic"]       { top: 152px; left: 162px; }
+.hex-cell[data-modal="academic"]    { top: 228px; left: 32px; }
+.hex-cell[data-modal="government"]  { top: 228px; left: 293px; }
+.hex-cell[data-modal="stakeholders"]{ top: 304px; left: 162px; }
 
 /* ========== Modal Overlay ========== */
 .hex-modal-overlay {
@@ -199,10 +201,10 @@
   position: absolute;
   top: 16px;
   left: 20px;
-  width: 28px;
-  height: 32px;
+  width: 32px;
+  height: 28px;
   background: linear-gradient(145deg, #e8c878 0%, #d4a84b 100%);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   opacity: 0.9;
   box-shadow: 0 2px 6px rgba(180, 140, 60, 0.3);
 }
@@ -341,13 +343,13 @@
 /* Medium screens / tablets */
 @media (max-width: 520px) {
   .honeycomb-grid {
-    width: 340px;
-    height: 390px;
+    width: 370px;
+    height: 350px;
   }
 
   .hex-cell {
-    width: 110px;
-    height: 125px;
+    width: 130px;
+    height: 113px;
     padding: 1rem 0.6rem;
   }
 
@@ -356,18 +358,17 @@
   }
 
   .hex-cell .hex-brief {
-    font-size: 0.62rem;
+    font-size: 0.6rem;
   }
 
-  /* Recalculate positions for smaller hexagons */
-  /* Horizontal: left=0, center=115px, right=230px */
-  .hex-cell[data-modal="community"]   { top: 0;     left: 115px; }
-  .hex-cell[data-modal="news"]        { top: 65px;  left: 0; }
-  .hex-cell[data-modal="ngo"]         { top: 65px;  left: 230px; }
-  .hex-cell[data-modal="topic"]       { top: 130px; left: 115px; }
-  .hex-cell[data-modal="academic"]    { top: 195px; left: 0; }
-  .hex-cell[data-modal="government"]  { top: 195px; left: 230px; }
-  .hex-cell[data-modal="stakeholders"]{ top: 260px; left: 115px; }
+  /* Recalculate positions for smaller flat-top hexagons */
+  .hex-cell[data-modal="community"]   { top: 0;     left: 120px; }
+  .hex-cell[data-modal="news"]        { top: 56px;  left: 22px; }
+  .hex-cell[data-modal="ngo"]         { top: 56px;  left: 218px; }
+  .hex-cell[data-modal="topic"]       { top: 113px; left: 120px; }
+  .hex-cell[data-modal="academic"]    { top: 169px; left: 22px; }
+  .hex-cell[data-modal="government"]  { top: 169px; left: 218px; }
+  .hex-cell[data-modal="stakeholders"]{ top: 226px; left: 120px; }
 
   .hex-modal {
     width: min(400px, 92vw);
@@ -375,7 +376,7 @@
 
   .hex-modal::before {
     width: 24px;
-    height: 28px;
+    height: 21px;
     top: 14px;
     left: 16px;
   }
@@ -400,13 +401,13 @@
 /* Small screens / phones */
 @media (max-width: 380px) {
   .honeycomb-grid {
-    width: 280px;
-    height: 330px;
+    width: 300px;
+    height: 285px;
   }
 
   .hex-cell {
-    width: 92px;
-    height: 105px;
+    width: 105px;
+    height: 91px;
     padding: 0.75rem 0.5rem;
   }
 
@@ -418,15 +419,14 @@
     display: none;
   }
 
-  /* Recalculate positions for smallest hexagons */
-  /* Horizontal: left=0, center=94px, right=188px */
-  .hex-cell[data-modal="community"]   { top: 0;     left: 94px; }
-  .hex-cell[data-modal="news"]        { top: 54px;  left: 0; }
-  .hex-cell[data-modal="ngo"]         { top: 54px;  left: 188px; }
-  .hex-cell[data-modal="topic"]       { top: 108px; left: 94px; }
-  .hex-cell[data-modal="academic"]    { top: 162px; left: 0; }
-  .hex-cell[data-modal="government"]  { top: 162px; left: 188px; }
-  .hex-cell[data-modal="stakeholders"]{ top: 216px; left: 94px; }
+  /* Recalculate positions for smallest flat-top hexagons */
+  .hex-cell[data-modal="community"]   { top: 0;     left: 98px; }
+  .hex-cell[data-modal="news"]        { top: 45px;  left: 19px; }
+  .hex-cell[data-modal="ngo"]         { top: 45px;  left: 177px; }
+  .hex-cell[data-modal="topic"]       { top: 91px;  left: 98px; }
+  .hex-cell[data-modal="academic"]    { top: 136px; left: 19px; }
+  .hex-cell[data-modal="government"]  { top: 136px; left: 177px; }
+  .hex-cell[data-modal="stakeholders"]{ top: 182px; left: 98px; }
 
   .hex-modal {
     width: min(320px, 90vw);
@@ -434,7 +434,7 @@
 
   .hex-modal::before {
     width: 22px;
-    height: 26px;
+    height: 19px;
     top: 12px;
     left: 14px;
   }
