@@ -166,43 +166,64 @@
   visibility: visible;
 }
 
-/* ========== Modal (Hexagon Shaped) ========== */
+/* ========== Modal (Rounded Rectangle) ========== */
 .hex-modal {
   position: relative;
-  width: min(440px, 90vw);
-  aspect-ratio: 1 / 1.15;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  width: min(520px, 90vw);
+  max-height: 85vh;
   background: linear-gradient(160deg, #fffdf5 0%, #fef6e0 40%, #f8e8c8 100%);
+  border-radius: 16px;
   box-shadow: 
     0 20px 60px rgba(0, 0, 0, 0.35),
     0 0 40px rgba(232, 200, 120, 0.2);
-  transform: scale(0.8) rotate(-5deg);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .hex-modal-overlay.active .hex-modal {
-  transform: scale(1) rotate(0deg);
+  transform: scale(1) translateY(0);
+  opacity: 1;
 }
 
 .hex-modal.modal-center {
   background: linear-gradient(160deg, #1e3a5f 0%, #152d4a 40%, #0f2744 100%);
 }
 
+/* ========== Honeycomb Decorative Icon ========== */
+.hex-modal::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  width: 28px;
+  height: 32px;
+  background: linear-gradient(145deg, #e8c878 0%, #d4a84b 100%);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  opacity: 0.9;
+  box-shadow: 0 2px 6px rgba(180, 140, 60, 0.3);
+}
+
+.hex-modal.modal-center::before {
+  background: linear-gradient(145deg, #4a7eb8 0%, #2c5a8c 100%);
+  opacity: 0.8;
+}
+
 /* ========== Modal Content ========== */
 .hex-modal-content {
-  padding: 4.5rem 2.5rem 4rem;
-  text-align: center;
-  max-height: 100%;
+  padding: 2rem 2.25rem 2.25rem;
+  padding-left: 3.5rem; /* Extra space for the honeycomb icon */
+  text-align: left;
   overflow-y: auto;
   scrollbar-width: thin;
 }
 
 .hex-modal-content h2 {
   font-family: "Judson", serif;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #2d1f0a;
   margin: 0 0 1rem;
@@ -249,15 +270,15 @@
 /* ========== Close Button ========== */
 .hex-modal-close {
   position: absolute;
-  top: -12px;
-  right: -12px;
-  width: 44px;
-  height: 44px;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: linear-gradient(145deg, #ffffff 0%, #f0e6d0 100%);
   border: 3px solid #d4a84b;
   box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
   cursor: pointer;
   display: flex;
@@ -349,22 +370,30 @@
   .hex-cell[data-modal="stakeholders"]{ top: 260px; left: 115px; }
 
   .hex-modal {
-    width: min(340px, 88vw);
+    width: min(400px, 92vw);
+  }
+
+  .hex-modal::before {
+    width: 24px;
+    height: 28px;
+    top: 14px;
+    left: 16px;
   }
 
   .hex-modal-content {
-    padding: 3.5rem 1.75rem 3rem;
+    padding: 1.75rem 1.75rem 2rem;
+    padding-left: 3rem;
   }
 
   .hex-modal-content h2 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
 
   .hex-modal-close {
-    width: 40px;
-    height: 40px;
-    top: -10px;
-    right: -10px;
+    width: 36px;
+    height: 36px;
+    top: 10px;
+    right: 10px;
   }
 }
 
@@ -400,22 +429,30 @@
   .hex-cell[data-modal="stakeholders"]{ top: 216px; left: 94px; }
 
   .hex-modal {
-    width: min(290px, 85vw);
+    width: min(320px, 90vw);
+  }
+
+  .hex-modal::before {
+    width: 22px;
+    height: 26px;
+    top: 12px;
+    left: 14px;
   }
 
   .hex-modal-content {
-    padding: 3rem 1.25rem 2.5rem;
+    padding: 1.5rem 1.25rem 1.75rem;
+    padding-left: 2.75rem;
   }
 
   .hex-modal-content h2 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
 
   .hex-modal-close {
-    width: 36px;
-    height: 36px;
-    top: -8px;
-    right: -8px;
+    width: 34px;
+    height: 34px;
+    top: 8px;
+    right: 8px;
   }
 
   .hex-modal-close svg {
