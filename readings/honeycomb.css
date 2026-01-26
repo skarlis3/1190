@@ -26,15 +26,15 @@
 
 .honeycomb-grid {
   position: relative;
-  width: 500px;
-  height: 470px;
+  width: 510px;
+  height: 480px;
 }
 
 /* ========== Hexagon Cells (Flat-Top Orientation) ========== */
 .hex-cell {
   position: absolute;
-  width: 175px;
-  height: 152px;
+  width: 168px;
+  height: 146px;
   /* Flat-top hexagon: horizontal edges on top and bottom */
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
   background: linear-gradient(145deg, #f8e8c8 0%, #e8c878 50%, #d4a84b 100%);
@@ -48,9 +48,8 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   font-family: inherit;
-  box-shadow: 
-    0 4px 12px rgba(180, 140, 60, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  /* Use filter drop-shadow since box-shadow gets clipped */
+  filter: drop-shadow(0 4px 8px rgba(120, 90, 40, 0.25));
 }
 
 .hex-cell::before {
@@ -67,10 +66,7 @@
 .hex-cell:focus-visible {
   transform: scale(1.08);
   background: linear-gradient(145deg, #fffaed 0%, #f5d888 50%, #e8b84b 100%);
-  box-shadow: 
-    0 8px 24px rgba(180, 140, 60, 0.4),
-    0 0 20px rgba(232, 184, 75, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  filter: drop-shadow(0 8px 16px rgba(120, 90, 40, 0.4));
   z-index: 10;
 }
 
@@ -98,9 +94,7 @@
 /* ========== Center Cell (Topic) - Special Styling ========== */
 .hex-cell.hex-center {
   background: linear-gradient(145deg, #2c4a6e 0%, #1a365d 50%, #0f2744 100%);
-  box-shadow: 
-    0 6px 16px rgba(26, 54, 93, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  filter: drop-shadow(0 6px 12px rgba(26, 54, 93, 0.5));
 }
 
 .hex-cell.hex-center::before {
@@ -110,10 +104,7 @@
 .hex-cell.hex-center:hover,
 .hex-cell.hex-center:focus-visible {
   background: linear-gradient(145deg, #3d5f8a 0%, #2a4a70 50%, #1a365d 100%);
-  box-shadow: 
-    0 10px 28px rgba(26, 54, 93, 0.5),
-    0 0 24px rgba(45, 90, 140, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  filter: drop-shadow(0 10px 20px rgba(26, 54, 93, 0.6));
 }
 
 .hex-cell.hex-center .hex-title {
@@ -125,7 +116,7 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* ========== Hexagon Positioning (Absolute, Flat-Top) ========== */
+/* ========== Hexagon Positioning (Absolute, Flat-Top with Gaps) ========== */
 /* 
    Layout reference (flat-top hexagons):
         [Community]
@@ -134,18 +125,19 @@
    [Academic]   [Gov]
         [Stakeholders]
    
-   Hex dimensions: 175px × 152px
-   Horizontal offset between columns: ~131px (width × 0.75)
-   Vertical stagger for offset rows: 76px (height × 0.5)
+   Hex dimensions: 168px × 146px
+   Horizontal offset: ~134px (width × 0.75 + gap)
+   Vertical offset: ~81px (height × 0.5 + gap)
+   Gap between cells: ~8px
 */
 
-.hex-cell[data-modal="community"]   { top: 0;     left: 162px; }
-.hex-cell[data-modal="news"]        { top: 76px;  left: 32px; }
-.hex-cell[data-modal="ngo"]         { top: 76px;  left: 293px; }
-.hex-cell[data-modal="topic"]       { top: 152px; left: 162px; }
-.hex-cell[data-modal="academic"]    { top: 228px; left: 32px; }
-.hex-cell[data-modal="government"]  { top: 228px; left: 293px; }
-.hex-cell[data-modal="stakeholders"]{ top: 304px; left: 162px; }
+.hex-cell[data-modal="community"]   { top: 0;     left: 171px; }
+.hex-cell[data-modal="news"]        { top: 81px;  left: 37px; }
+.hex-cell[data-modal="ngo"]         { top: 81px;  left: 305px; }
+.hex-cell[data-modal="topic"]       { top: 162px; left: 171px; }
+.hex-cell[data-modal="academic"]    { top: 243px; left: 37px; }
+.hex-cell[data-modal="government"]  { top: 243px; left: 305px; }
+.hex-cell[data-modal="stakeholders"]{ top: 324px; left: 171px; }
 
 /* ========== Modal Overlay ========== */
 .hex-modal-overlay {
@@ -343,13 +335,13 @@
 /* Medium screens / tablets */
 @media (max-width: 520px) {
   .honeycomb-grid {
-    width: 370px;
-    height: 350px;
+    width: 380px;
+    height: 360px;
   }
 
   .hex-cell {
-    width: 130px;
-    height: 113px;
+    width: 125px;
+    height: 109px;
     padding: 1rem 0.6rem;
   }
 
@@ -361,14 +353,14 @@
     font-size: 0.6rem;
   }
 
-  /* Recalculate positions for smaller flat-top hexagons */
-  .hex-cell[data-modal="community"]   { top: 0;     left: 120px; }
-  .hex-cell[data-modal="news"]        { top: 56px;  left: 22px; }
-  .hex-cell[data-modal="ngo"]         { top: 56px;  left: 218px; }
-  .hex-cell[data-modal="topic"]       { top: 113px; left: 120px; }
-  .hex-cell[data-modal="academic"]    { top: 169px; left: 22px; }
-  .hex-cell[data-modal="government"]  { top: 169px; left: 218px; }
-  .hex-cell[data-modal="stakeholders"]{ top: 226px; left: 120px; }
+  /* Recalculate positions for smaller flat-top hexagons with gaps */
+  .hex-cell[data-modal="community"]   { top: 0;     left: 128px; }
+  .hex-cell[data-modal="news"]        { top: 60px;  left: 28px; }
+  .hex-cell[data-modal="ngo"]         { top: 60px;  left: 228px; }
+  .hex-cell[data-modal="topic"]       { top: 121px; left: 128px; }
+  .hex-cell[data-modal="academic"]    { top: 181px; left: 28px; }
+  .hex-cell[data-modal="government"]  { top: 181px; left: 228px; }
+  .hex-cell[data-modal="stakeholders"]{ top: 242px; left: 128px; }
 
   .hex-modal {
     width: min(400px, 92vw);
@@ -401,13 +393,13 @@
 /* Small screens / phones */
 @media (max-width: 380px) {
   .honeycomb-grid {
-    width: 300px;
-    height: 285px;
+    width: 310px;
+    height: 295px;
   }
 
   .hex-cell {
-    width: 105px;
-    height: 91px;
+    width: 102px;
+    height: 89px;
     padding: 0.75rem 0.5rem;
   }
 
@@ -419,14 +411,14 @@
     display: none;
   }
 
-  /* Recalculate positions for smallest flat-top hexagons */
-  .hex-cell[data-modal="community"]   { top: 0;     left: 98px; }
-  .hex-cell[data-modal="news"]        { top: 45px;  left: 19px; }
-  .hex-cell[data-modal="ngo"]         { top: 45px;  left: 177px; }
-  .hex-cell[data-modal="topic"]       { top: 91px;  left: 98px; }
-  .hex-cell[data-modal="academic"]    { top: 136px; left: 19px; }
-  .hex-cell[data-modal="government"]  { top: 136px; left: 177px; }
-  .hex-cell[data-modal="stakeholders"]{ top: 182px; left: 98px; }
+  /* Recalculate positions for smallest flat-top hexagons with gaps */
+  .hex-cell[data-modal="community"]   { top: 0;     left: 104px; }
+  .hex-cell[data-modal="news"]        { top: 49px;  left: 22px; }
+  .hex-cell[data-modal="ngo"]         { top: 49px;  left: 186px; }
+  .hex-cell[data-modal="topic"]       { top: 98px;  left: 104px; }
+  .hex-cell[data-modal="academic"]    { top: 147px; left: 22px; }
+  .hex-cell[data-modal="government"]  { top: 147px; left: 186px; }
+  .hex-cell[data-modal="stakeholders"]{ top: 196px; left: 104px; }
 
   .hex-modal {
     width: min(320px, 90vw);
