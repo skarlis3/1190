@@ -26,14 +26,28 @@
 [data-theme="dark"] {
   --cal-today-bg: color-mix(in srgb, var(--accent) 20%, #121212);
   --cal-event-bg: var(--accent);
-  --cal-event-text: #000000;
+  --cal-event-text: #ffffff;
   --cal-due-bg: var(--bright, var(--accent));
   --cal-other-month: #1a1a1a;
-  
+
   /* Urgency backgrounds (dark mode) */
   --cal-urgent-bg: #2d1515;
   --cal-soon-bg: #2d2815;
   --cal-later-bg: #152d1f;
+}
+
+/* System preference detection (when no explicit preference is set) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --cal-today-bg: color-mix(in srgb, var(--accent) 20%, #121212);
+    --cal-event-bg: var(--accent);
+    --cal-event-text: #ffffff;
+    --cal-due-bg: var(--bright, var(--accent));
+    --cal-other-month: #1a1a1a;
+    --cal-urgent-bg: #2d1515;
+    --cal-soon-bg: #2d2815;
+    --cal-later-bg: #152d1f;
+  }
 }
 
 /* ===== Tab Navigation ===== */
@@ -154,6 +168,20 @@
   border-radius: 6px;
   padding: 1rem;
   color: #b91c1c;
+}
+
+[data-theme="dark"] .calendar-error {
+  background: #2d1515;
+  border-color: #dc2626;
+  color: #fca5a5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .calendar-error {
+    background: #2d1515;
+    border-color: #dc2626;
+    color: #fca5a5;
+  }
 }
 
 /* =========================================================
@@ -863,7 +891,12 @@
 
 /* Panel title */
 [data-theme="dark"] .panel-title {
-  color: var(--accent);
+  color: var(--bright);
+}
+
+/* Mini month header */
+[data-theme="dark"] .mini-month-header {
+  color: var(--bright);
 }
 
 /* Popup */
@@ -903,4 +936,16 @@
 
 [data-theme="dark"] .event-popup-desc a {
   color: var(--bright);
+}
+
+/* =========================================================
+   System Preference Detection for Calendar Elements
+   ========================================================= */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .panel-title {
+    color: var(--bright);
+  }
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .mini-month-header {
+    color: var(--bright);
+  }
 }

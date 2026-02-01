@@ -1,9 +1,45 @@
-// nav.js — Top nav (desktop), Bottom nav (mobile), and full-screen mobile sidenav
+// nav.js — Top nav (desktop), Bottom nav (mobile), full-screen mobile sidenav, and dark mode
 // Drop-in: <script src="/nav.js"></script> just before </body>
 
 (() => {
   if (window.__NAV_INITED__) return;
   window.__NAV_INITED__ = true;
+
+  // -------------------- Theme Management (runs immediately) --------------------
+  const THEME_KEY = "theme-preference";
+
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+  const getStoredTheme = () => localStorage.getItem(THEME_KEY);
+
+  const setTheme = (theme) => {
+    if (theme === "system") {
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.removeItem(THEME_KEY);
+    } else {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem(THEME_KEY, theme);
+    }
+  };
+
+  const getCurrentEffectiveTheme = () => {
+    const stored = getStoredTheme();
+    if (stored) return stored;
+    return getSystemTheme();
+  };
+
+  const toggleTheme = () => {
+    const current = getCurrentEffectiveTheme();
+    const next = current === "dark" ? "light" : "dark";
+    setTheme(next);
+  };
+
+  // Apply stored theme immediately to prevent flash
+  const storedTheme = getStoredTheme();
+  if (storedTheme) {
+    document.documentElement.setAttribute("data-theme", storedTheme);
+  }
 
   document.addEventListener("DOMContentLoaded", () => {
     try {
@@ -147,10 +183,17 @@
           <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>`.trim();
 
+      // Theme toggle icons
+      const sunIconSVG = `<svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>`;
+      const moonIconSVG = `<svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
+      // -------------------- Skip Link --------------------
+      const renderSkipLink = () => `<a href="#page-content" class="skip-link">Skip to main content</a>`;
+
       // -------------------- Renderers --------------------
       const renderTopNav = () => `
         <input type="checkbox" id="topnav-toggle" class="nav-toggle" />
-        <nav class="topnav" role="navigation" aria-label="Top">
+        <nav class="topnav" role="navigation" aria-label="Main navigation">
           <div class="topnav-inner">
             <a class="brand" href="/index.html">ENGL 1190</a>
             <label for="topnav-toggle" class="hamburger" aria-label="Toggle main menu">☰</label>
@@ -159,6 +202,10 @@
                 <li><a href="${esc(i.href)}"${isNavActive(i.href) ? ' aria-current="page"' : ''}>${esc(i.label)}</a></li>
               `).join("")}
             </ul>
+            <button type="button" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+              ${sunIconSVG}
+              ${moonIconSVG}
+            </button>
           </div>
         </nav>`;
 
@@ -204,7 +251,7 @@
 
 
       const renderBottomNav = () => `
-        <nav class="bottomnav" role="navigation" aria-label="Primary">
+        <nav class="bottomnav" role="navigation" aria-label="Primary site navigation">
           <ul class="bottomnav__inner">
             ${TOP_NAV.map(i => `
               <li>
@@ -213,6 +260,12 @@
                   <span class="bn-label">${esc(i.label)}</span>
                 </a>
               </li>`).join("")}
+            <li>
+              <button type="button" class="bn-item bn-theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <span class="bn-ico">${sunIconSVG}${moonIconSVG}</span>
+                <span class="bn-label">Theme</span>
+              </button>
+            </li>
           </ul>
         </nav>`;
 
@@ -266,7 +319,9 @@
         <label for="sidenav-toggle" class="sidenav-scrim" aria-hidden="true"></label>`;
 
       // -------------------- Injection --------------------
+      // Top nav first, then skip link (afterbegin prepends, so skip-link ends up first in DOM)
       if (!document.querySelector(".topnav")) document.body.insertAdjacentHTML("afterbegin", renderTopNav());
+      if (!document.querySelector(".skip-link")) document.body.insertAdjacentHTML("afterbegin", renderSkipLink());
       if (!document.querySelector(".bottomnav")) document.body.insertAdjacentHTML("beforeend", renderBottomNav());
 
       let layout = document.querySelector(".layout");
@@ -373,6 +428,24 @@
 
       if (document.body.classList.contains("sidenav-show-all"))
         document.body.classList.add("sidenav-force-open");
+
+      // -------------------- Theme Toggle Behavior --------------------
+      const themeToggleBtns = document.querySelectorAll(".theme-toggle, .bn-theme-toggle");
+      themeToggleBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          toggleTheme();
+        });
+      });
+
+      // Listen for system preference changes
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+        // Only react if user hasn't set a preference
+        if (!getStoredTheme()) {
+          // The CSS handles the actual styling via media query
+          // But we can dispatch an event if needed for other scripts
+        }
+      });
+
     } catch (err) {
       console.error("nav.js initialization error:", err);
     }

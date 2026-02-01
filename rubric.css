@@ -23,7 +23,7 @@
 .rubric-simple{
   border:1px solid var(--border, #e2e3e5);
   border-radius:12px;
-  background:#fff;
+  background:var(--bg);
   margin:1.5rem 0;
   overflow:hidden;
   font:400 .98rem/1.6 "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
@@ -31,7 +31,7 @@
 }
 
 .rsimple__head{
-  background: color-mix(in srgb, var(--accent, #003e32) 6%, #fff);
+  background: var(--accent-box-bg);
   border-bottom:1px solid var(--border, #e2e3e5);
   padding:1rem 1.1rem .9rem;
 }
@@ -40,7 +40,7 @@
   font-family:"Judson", serif;
   font-weight:700;
   font-size:1.25rem;
-  color:#000;
+  color:var(--text);
 }
 .rsimple__note{
   margin:.35rem 0 0;
@@ -55,11 +55,11 @@
 
 /* each criterion block */
 .rcrit{
-  border:1px solid #e8eaee;
+  border:1px solid var(--border);
   border-radius:12px;
   padding:1rem 1rem .9rem;
   margin:0 0 .9rem 0;
-  background:#fff;
+  background:var(--bg);
 }
 .rcrit__head{
   display:flex; flex-wrap:wrap; gap:.5rem .75rem; align-items:center;
@@ -68,16 +68,16 @@
 .rcrit__title{
   margin:0;
   font:700 1.05rem/1.25 "Lato", system-ui, sans-serif;
-  color:var(--accent, #003e32);
+  color:var(--bright);
   flex:1 1 auto;
 }
 .rcrit__pts{
   flex:0 0 auto;
   font-weight:700;
   font-size:.92rem;
-  color:#0b0d0e;
-  background:#eef3f2;
-  border:1px solid #d8e2df;
+  color:var(--text);
+  background:var(--hover);
+  border:1px solid var(--border);
   border-radius:999px;
   padding:.2rem .6rem;
   white-space:nowrap;
@@ -99,7 +99,7 @@
 }
 
 /* subtle zebra for many blocks */
-.rubric-simple .rcrit:nth-child(even){ background:#fbfcfd; }
+.rubric-simple .rcrit:nth-child(even){ background:var(--sidebar-bg); }
 
 /* print-friendly */
 @media print{

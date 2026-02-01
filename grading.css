@@ -50,7 +50,7 @@
 /* ==================== GRADING CALLOUT (Quick Start) ==================== */
 
 .callout{
-  background: color-mix(in srgb, var(--accent) 6%, white);
+  background: var(--accent-box-bg);
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent);
   padding: 1.25rem 1.5rem;
@@ -284,9 +284,9 @@ table.grade-table td.grade-text{
 }
 
 .museum-placard {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-left: 4px solid #333; /* Dark left accent for contrast */
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
   box-shadow: 3px 3px 8px rgba(0,0,0,0.08);
   padding: 1.5rem;
   width: 100%;
@@ -299,8 +299,8 @@ table.grade-table td.grade-text{
   font-size: 1.3rem;
   font-weight: 700;
   margin: 0 0 0.5rem 0;
-  color: #1a1a1a;
-  border-bottom: 1px solid #eee;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
   padding-bottom: 0.5rem;
 }
 
@@ -308,13 +308,13 @@ table.grade-table td.grade-text{
   font-size: 0.95rem;
   line-height: 1.4;
   margin: 0 0 0.5rem 0;
-  color: #444;
+  color: var(--text);
 }
 
 .placard-meta {
   display: block;
   font-size: 0.85rem;
-  color: #666;
+  color: var(--muted);
   font-style: italic;
   margin-top: 0.75rem;
 }
