@@ -149,10 +149,18 @@
         if (!href) return false;
         const h = clean(href);
         const hBare = h.split("#")[0].split("?")[0];
-        if (last === hBare) return true;
-        if (path.endsWith("/" + hBare)) return true;
-        const stem = hBare.endsWith(".html") ? hBare.slice(0, -5) : hBare;
-        return path.endsWith("/" + stem) || path.endsWith("/" + stem + "/") || path.endsWith("/" + stem + "/index.html");
+        // Build full path for comparison
+        const hrefPath = hBare.startsWith("/") ? hBare : "/" + hBare;
+        const normalizedHref = hrefPath.replace(/\/+$/, "");
+        // Exact path match (handles /index.html specifically)
+        if (path === normalizedHref) return true;
+        // Check if paths match without .html extension
+        const pathStem = path.endsWith(".html") ? path.slice(0, -5) : path;
+        const hrefStem = normalizedHref.endsWith(".html") ? normalizedHref.slice(0, -5) : normalizedHref;
+        if (pathStem === hrefStem) return true;
+        // Handle /dir matching /dir/index.html
+        if (path === hrefStem + "/index.html" || path === hrefStem + "/index") return true;
+        return false;
       };
       const containsCurrent = (node) => node && (isCurrent(node.href) || (node.children || []).some(containsCurrent));
       const sectionDir = (href) => {

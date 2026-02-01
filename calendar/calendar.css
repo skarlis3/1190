@@ -874,19 +874,19 @@
 }
 
 [data-theme="dark"] .calendar-tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+  color: var(--bright);
+  border-bottom-color: var(--bright);
 }
 
 /* View button dark mode */
 [data-theme="dark"] .cal-btn--view {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--bright);
+  color: var(--bright);
 }
 
 [data-theme="dark"] .cal-btn--view:hover {
-  background: var(--accent);
-  color: var(--cal-event-text);
+  background: var(--bright);
+  color: #121212;
 }
 
 /* Panel title */
@@ -947,5 +947,17 @@
   }
   :root:not([data-theme="light"]):not([data-theme="dark"]) .mini-month-header {
     color: var(--bright);
+  }
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .calendar-tab.active {
+    color: var(--bright);
+    border-bottom-color: var(--bright);
+  }
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .cal-btn--view {
+    border-color: var(--bright);
+    color: var(--bright);
+  }
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .cal-btn--view:hover {
+    background: var(--bright);
+    color: #121212;
   }
 }

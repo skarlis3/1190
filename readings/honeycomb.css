@@ -73,7 +73,7 @@
 }
 
 .hex-cell:focus-visible {
-  outline: 3px solid var(--focus);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 4px;
 }
 
@@ -293,7 +293,7 @@
 }
 
 .hex-modal-close:focus-visible {
-  outline: 3px solid var(--focus);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
 }
 

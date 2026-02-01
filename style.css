@@ -18,6 +18,7 @@
   --accent:#041f44;
   --accent-contrast:#ffffff;
   --focus:#002e6f;
+  --focus-ring:#002e6f;  /* for focus indicators */
   --bright: #0c4590;  /* WCAG AAA: 7.5:1 contrast on white */
   --accent2: #084080;
   --mark-bg: #ffffcc;
@@ -53,9 +54,9 @@
   --muted: #b8b8b8;  /* 8.3:1 contrast on #121212 */
   --border: #3a3a3a;
   --hover: #2a2a2a;
-  --focus: #6db3f2;  /* bright blue for visible focus in dark mode */
-  --bright: #6db3f2;  /* 7.1:1 contrast on #121212 */
-  --accent2: #8ac4f8;
+  --focus-ring: #6db3f2;  /* bright blue for visible focus indicators */
+  --bright: #8ecbff;  /* lighter blue, 9.5:1 contrast on #1a1a1a */
+  --accent2: #a8d8ff;
   --mark-bg: #4a4a00;
   --mark-text: #f0f0f0;
 
@@ -80,9 +81,9 @@
     --muted: #b8b8b8;  /* WCAG AAA: 8.3:1 contrast on #121212 */
     --border: #3a3a3a;
     --hover: #2a2a2a;
-    --focus: #6db3f2;  /* bright blue for visible focus in dark mode */
-    --bright: #6db3f2;  /* WCAG AAA: 7.1:1 contrast on #121212 */
-    --accent2: #8ac4f8;
+    --focus-ring: #6db3f2;  /* bright blue for visible focus indicators */
+    --bright: #8ecbff;  /* lighter blue, 9.5:1 contrast on #1a1a1a */
+    --accent2: #a8d8ff;
     --mark-bg: #4a4a00;
     --mark-text: #f0f0f0;
     --accent-box-bg: #142638;  /* text 13.5:1, links 7:1 contrast */
@@ -162,7 +163,7 @@ li > a{
   text-underline-offset: 3px; 
 }
 
-:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+:focus-visible{ outline:2px solid var(--focus-ring); outline-offset:2px; }
 
 /* ===== Sticky footer layout ===== */
 body{
@@ -477,7 +478,7 @@ label[for="topnav-toggle"],
 .sidenav a[aria-current="page"]{ position:relative; background:var(--hover); font-weight:700; }
 .nav-level-3 .subgroup:has(a[aria-current="page"]) > .sub-toggle{ font-weight:700; color:var(--accent); }
 .group-toggle:focus-visible, .sub-toggle:focus-visible, .sidenav a:focus-visible{
-  outline:2px solid var(--focus); outline-offset:2px; border-radius:.35rem;
+  outline:2px solid var(--focus-ring); outline-offset:2px; border-radius:.35rem;
 }
 
 /* ==================== Desktop refinements (≥901px) ==================== */
