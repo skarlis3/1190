@@ -210,10 +210,6 @@
                 <li><a href="${esc(i.href)}"${isNavActive(i.href) ? ' aria-current="page"' : ''}>${esc(i.label)}</a></li>
               `).join("")}
             </ul>
-            <button type="button" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-              ${sunIconSVG}
-              ${moonIconSVG}
-            </button>
           </div>
         </nav>`;
 
@@ -268,12 +264,6 @@
                   <span class="bn-label">${esc(i.label)}</span>
                 </a>
               </li>`).join("")}
-            <li>
-              <button type="button" class="bn-item bn-theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-                <span class="bn-ico">${sunIconSVG}${moonIconSVG}</span>
-                <span class="bn-label">Theme</span>
-              </button>
-            </li>
           </ul>
         </nav>`;
 
@@ -362,6 +352,33 @@
       const explicit = document.getElementById("page-content");
       if (explicit && explicit.parentElement !== main) main.appendChild(explicit);
 
+      // -------------------- Floating Theme Toggle Button --------------------
+      if (!document.querySelector('.theme-toggle')) {
+        const btn = document.createElement('button');
+        btn.className = 'theme-toggle';
+        btn.setAttribute('aria-label', 'Toggle dark mode');
+        btn.setAttribute('title', 'Toggle dark mode');
+        btn.style.cssText = 'position:fixed !important; bottom:1.5rem; right:1.5rem; z-index:99999 !important; width:48px; height:48px; border-radius:50%; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); cursor:pointer; display:flex !important; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,.3);';
+        btn.innerHTML = `
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        `;
+        btn.addEventListener('click', toggleTheme);
+        document.body.appendChild(btn);
+      }
+
       // -------------------- Behavior --------------------
       const sidenavEl = document.querySelector(".sidenav");
       const checkbox = document.getElementById("sidenav-toggle");
@@ -437,25 +454,72 @@
       if (document.body.classList.contains("sidenav-show-all"))
         document.body.classList.add("sidenav-force-open");
 
-      // -------------------- Theme Toggle Behavior --------------------
-      const themeToggleBtns = document.querySelectorAll(".theme-toggle, .bn-theme-toggle");
-      themeToggleBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-          toggleTheme();
-        });
-      });
-
       // Listen for system preference changes
       window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
         // Only react if user hasn't set a preference
         if (!getStoredTheme()) {
           // The CSS handles the actual styling via media query
-          // But we can dispatch an event if needed for other scripts
         }
       });
 
     } catch (err) {
       console.error("nav.js initialization error:", err);
+    }
+
+    // Fallback toggle creation in case main code failed
+    if (!document.querySelector('.theme-toggle')) {
+      const btn = document.createElement('button');
+      btn.className = 'theme-toggle';
+      btn.setAttribute('aria-label', 'Toggle dark mode');
+      btn.setAttribute('title', 'Toggle dark mode');
+      btn.style.cssText = 'position:fixed !important; bottom:1.5rem; right:1.5rem; z-index:99999 !important; width:48px; height:48px; border-radius:50%; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); cursor:pointer; display:flex !important; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,.3);';
+      btn.innerHTML = `
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      `;
+      btn.addEventListener('click', toggleTheme);
+      document.body.appendChild(btn);
+    }
+  });
+
+  // Additional fallback on window load
+  window.addEventListener('load', () => {
+    if (!document.querySelector('.theme-toggle')) {
+      const btn = document.createElement('button');
+      btn.className = 'theme-toggle';
+      btn.setAttribute('aria-label', 'Toggle dark mode');
+      btn.setAttribute('title', 'Toggle dark mode');
+      btn.style.cssText = 'position:fixed !important; bottom:1.5rem; right:1.5rem; z-index:99999 !important; width:48px; height:48px; border-radius:50%; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); cursor:pointer; display:flex !important; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,.3);';
+      btn.innerHTML = `
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      `;
+      btn.addEventListener('click', toggleTheme);
+      document.body.appendChild(btn);
     }
   });
 })();
