@@ -358,7 +358,7 @@
         btn.className = 'theme-toggle';
         btn.setAttribute('aria-label', 'Toggle dark mode');
         btn.setAttribute('title', 'Toggle dark mode');
-        btn.style.cssText = 'position:fixed !important; bottom:1.5rem; right:1.5rem; z-index:99999 !important; width:48px; height:48px; border-radius:50%; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); cursor:pointer; display:flex !important; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,.3);';
+        btn.style.cssText = 'z-index:99999 !important; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); box-shadow:0 2px 10px rgba(0,0,0,.3);';
         btn.innerHTML = `
           <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -472,7 +472,7 @@
       btn.className = 'theme-toggle';
       btn.setAttribute('aria-label', 'Toggle dark mode');
       btn.setAttribute('title', 'Toggle dark mode');
-      btn.style.cssText = 'position:fixed !important; bottom:1.5rem; right:1.5rem; z-index:99999 !important; width:48px; height:48px; border-radius:50%; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); cursor:pointer; display:flex !important; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,.3);';
+      btn.style.cssText = 'z-index:99999 !important; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); box-shadow:0 2px 10px rgba(0,0,0,.3);';
       btn.innerHTML = `
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -501,7 +501,7 @@
       btn.className = 'theme-toggle';
       btn.setAttribute('aria-label', 'Toggle dark mode');
       btn.setAttribute('title', 'Toggle dark mode');
-      btn.style.cssText = 'position:fixed !important; bottom:1.5rem; right:1.5rem; z-index:99999 !important; width:48px; height:48px; border-radius:50%; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); cursor:pointer; display:flex !important; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,.3);';
+      btn.style.cssText = 'z-index:99999 !important; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); box-shadow:0 2px 10px rgba(0,0,0,.3);';
       btn.innerHTML = `
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
