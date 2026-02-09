@@ -27,7 +27,7 @@
   --cal-today-bg: color-mix(in srgb, var(--accent) 20%, #121212);
   --cal-event-bg: var(--accent);
   --cal-event-text: #ffffff;
-  --cal-due-bg: var(--bright, var(--accent));
+  --cal-due-bg: #1d4ed8;
   --cal-other-month: #1a1a1a;
 
   /* Urgency backgrounds (dark mode) */
@@ -42,7 +42,7 @@
     --cal-today-bg: color-mix(in srgb, var(--accent) 20%, #121212);
     --cal-event-bg: var(--accent);
     --cal-event-text: #ffffff;
-    --cal-due-bg: var(--bright, var(--accent));
+    --cal-due-bg: #1d4ed8;
     --cal-other-month: #1a1a1a;
     --cal-urgent-bg: #2d1515;
     --cal-soon-bg: #2d2815;
