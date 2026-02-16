@@ -6,32 +6,301 @@
   <title>APA Style &amp; Citations | ENGL 1190</title>
   <link rel="stylesheet" href="/style.css" />
   <link rel="icon" href="/1190icon.png" type="image/x-icon">
-  <meta name="description" content="A guide to APA 7th edition formatting, in-text citations, and References for ENGL 1190, covering social media, news articles, scholarly articles, and more." />
+  <meta name="description" content="A quick-reference guide to APA 7th edition formatting, in-text citations, and reference entries for ENGL 1190." />
   <style>
-    .cite-example {
-      padding: 0.75em 1.25em;
-      margin: 0.75em 0 1.25em 0;
-      border-left: 3px solid var(--bright, #5b8fb9);
-      background: var(--bg-accent, #f5f7fa);
-      border-radius: 0 6px 6px 0;
-      line-height: 1.65;
+    /* ===== Zone Layout ===== */
+    .cite-zone { margin: 2rem 0 2.5rem; }
+    .cite-zone-label {
+      font-family: "Judson", serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--border);
     }
-    .cite-example p {
-      margin: 0.4em 0;
-      padding-left: 2em;
-      text-indent: -2em;
+    .cite-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.7rem;
     }
+
+    /* ===== Compact Card (collapsed) ===== */
+    .cite-card {
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      cursor: pointer;
+      text-align: center;
+      font-family: "Judson", serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.3;
+      transition: box-shadow 0.2s ease, transform 0.15s ease;
+      user-select: none;
+      position: relative;
+    }
+    .cite-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    .cite-card:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+    .cite-card[aria-expanded="true"] {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .cite-card::after {
+      content: "";
+      display: block;
+      width: 18px;
+      height: 18px;
+      margin: 0.35rem auto 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: transform 0.25s ease;
+      opacity: 0.5;
+    }
+    .cite-card[aria-expanded="true"]::after {
+      transform: rotate(180deg);
+    }
+
+    /* ===== Detail Panel (expanded) ===== */
+    .cite-detail {
+      display: none;
+      border-radius: 10px;
+      padding: 1.5rem 1.75rem;
+      margin-top: 0.7rem;
+      grid-column: 1 / -1;
+      animation: detailFadeIn 0.25s ease;
+    }
+    .cite-detail.is-open { display: block; }
+
+    @keyframes detailFadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cite-detail h3 {
+      font-family: "Judson", serif;
+      font-size: 1.15rem;
+      margin: 0 0 0.9rem;
+      line-height: 1.3;
+    }
+    .cite-detail p, .cite-detail ul {
+      font-size: 0.93rem;
+      line-height: 1.6;
+      margin: 0 0 0.7rem;
+    }
+    .cite-detail ul {
+      padding-left: 1.3rem;
+    }
+    .cite-detail li {
+      margin-bottom: 0.35rem;
+    }
+
+    /* Formula */
     .cite-formula {
+      font-size: 0.9rem;
       font-style: italic;
-      color: var(--text-muted, #555);
+      padding: 0.65rem 0.9rem;
+      border-radius: 6px;
+      line-height: 1.55;
+      margin-bottom: 0.9rem;
     }
-    .cite-formula span {
-      font-style: normal;
+
+    /* Example */
+    .cite-ex {
+      font-size: 0.88rem;
+      padding: 0.65rem 0.9rem;
+      padding-left: calc(0.9rem + 2em);
+      text-indent: -2em;
+      border-radius: 6px;
+      line-height: 1.6;
+      margin-bottom: 0.9rem;
     }
-    .inline-note {
-      font-size: 0.92em;
-      color: var(--text-muted, #555);
-      margin-top: 0.25em;
+    .cite-ex-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+
+    /* In-text line */
+    .cite-intext {
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      padding-top: 0.55rem;
+    }
+
+    /* Notes */
+    .cite-notes { font-size: 0.88rem; }
+    .cite-notes-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin: 0.8rem 0 0.3rem;
+    }
+
+    /* ===== Zone 1: Paper Formatting — Light Blue ===== */
+    .zone-format .cite-card {
+      background: #dce9f4;
+      border: 1px solid #bdd1e4;
+      color: #0d2240;
+    }
+    .zone-format .cite-detail {
+      background: #e8f0f8;
+      border: 1px solid #c5d7e8;
+      color: #1a2a3a;
+    }
+    .zone-format .cite-detail h3 { color: #0d2240; }
+    .zone-format .cite-formula { background: rgba(255,255,255,0.55); }
+    .zone-format .cite-ex { background: rgba(255,255,255,0.55); }
+    .zone-format .cite-intext { border-top: 1px solid #b0c8dd; }
+    .zone-format .cite-ex-label,
+    .zone-format .cite-notes-label { color: #2a5080; }
+    .zone-format .cite-card::after {
+      filter: brightness(0) saturate(100%) invert(10%) sepia(30%) saturate(600%) hue-rotate(190deg);
+    }
+
+    /* ===== Zone 2: In-Text Citations — Medium Blue ===== */
+    .zone-intext .cite-card {
+      background: #b0cadf;
+      border: 1px solid #8fb3cf;
+      color: #041f44;
+    }
+    .zone-intext .cite-detail {
+      background: #c8dced;
+      border: 1px solid #a0bcd5;
+      color: #0f1f30;
+    }
+    .zone-intext .cite-detail h3 { color: #041f44; }
+    .zone-intext .cite-formula { background: rgba(255,255,255,0.4); }
+    .zone-intext .cite-ex { background: rgba(255,255,255,0.4); }
+    .zone-intext .cite-intext { border-top: 1px solid #8aabc5; }
+    .zone-intext .cite-ex-label,
+    .zone-intext .cite-notes-label { color: #1a4070; }
+    .zone-intext .cite-card::after {
+      filter: brightness(0) saturate(100%) invert(8%) sepia(40%) saturate(700%) hue-rotate(190deg);
+    }
+
+    /* ===== Zone 3: Reference Entries — Dark Blue ===== */
+    .zone-ref .cite-card {
+      background: #0d2e55;
+      border: 1px solid #1a4070;
+      color: #e0eaf4;
+    }
+    .zone-ref .cite-card::after {
+      filter: brightness(0) invert(1);
+      opacity: 0.45;
+    }
+    .zone-ref .cite-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+    .zone-ref .cite-detail {
+      background: #0a2a52;
+      border: 1px solid #153a65;
+      color: #e8eef4;
+    }
+    .zone-ref .cite-detail h3 { color: #ffffff; }
+    .zone-ref .cite-formula {
+      background: rgba(255,255,255,0.08);
+      color: #d0dce8;
+    }
+    .zone-ref .cite-ex {
+      background: rgba(255,255,255,0.06);
+      color: #e0e8f0;
+    }
+    .zone-ref .cite-intext {
+      border-top: 1px solid rgba(255,255,255,0.18);
+      color: #c0d0e0;
+    }
+    .zone-ref .cite-notes { color: #c8d8e8; }
+    .zone-ref .cite-ex-label,
+    .zone-ref .cite-notes-label { color: #8ab0d8; }
+
+    /* ===== Dark Mode ===== */
+    [data-theme="dark"] .zone-format .cite-card {
+      background: #1a2a3d; border-color: #2a3d52; color: #c8d8e8;
+    }
+    [data-theme="dark"] .zone-format .cite-detail {
+      background: #1e2e42; border-color: #2e4258; color: #dce4ec;
+    }
+    [data-theme="dark"] .zone-format .cite-detail h3 { color: #a8ccf0; }
+    [data-theme="dark"] .zone-format .cite-formula,
+    [data-theme="dark"] .zone-format .cite-ex { background: rgba(255,255,255,0.05); }
+    [data-theme="dark"] .zone-format .cite-intext { border-top-color: #3a4d62; }
+    [data-theme="dark"] .zone-format .cite-ex-label,
+    [data-theme="dark"] .zone-format .cite-notes-label { color: #7aaad4; }
+    [data-theme="dark"] .zone-format .cite-card::after { filter: brightness(0) invert(1); }
+
+    [data-theme="dark"] .zone-intext .cite-card {
+      background: #1e3450; border-color: #2e4868; color: #c8d8e8;
+    }
+    [data-theme="dark"] .zone-intext .cite-detail {
+      background: #223a55; border-color: #325070; color: #dce4ec;
+    }
+    [data-theme="dark"] .zone-intext .cite-detail h3 { color: #8ecbff; }
+    [data-theme="dark"] .zone-intext .cite-formula,
+    [data-theme="dark"] .zone-intext .cite-ex { background: rgba(255,255,255,0.05); }
+    [data-theme="dark"] .zone-intext .cite-intext { border-top-color: #3a5878; }
+    [data-theme="dark"] .zone-intext .cite-ex-label,
+    [data-theme="dark"] .zone-intext .cite-notes-label { color: #6aafe0; }
+    [data-theme="dark"] .zone-intext .cite-card::after { filter: brightness(0) invert(1); }
+
+    [data-theme="dark"] .zone-ref .cite-card {
+      background: #0d1e35; border-color: #1a3050; color: #c0d0e0;
+    }
+    [data-theme="dark"] .zone-ref .cite-detail {
+      background: #0f2240; border-color: #1a3558; color: #dce4ec;
+    }
+    [data-theme="dark"] .zone-ref .cite-detail h3 { color: #8ecbff; }
+    [data-theme="dark"] .zone-ref .cite-formula { background: rgba(255,255,255,0.05); color: #b0c4d8; }
+    [data-theme="dark"] .zone-ref .cite-ex { background: rgba(255,255,255,0.04); color: #c8d8e8; }
+    [data-theme="dark"] .zone-ref .cite-intext { border-top-color: rgba(255,255,255,0.1); color: #a0b8d0; }
+    [data-theme="dark"] .zone-ref .cite-notes { color: #b0c4d8; }
+    [data-theme="dark"] .zone-ref .cite-ex-label,
+    [data-theme="dark"] .zone-ref .cite-notes-label { color: #6a9ec8; }
+
+    /* System dark mode preference */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-format .cite-card { background: #1a2a3d; border-color: #2a3d52; color: #c8d8e8; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-format .cite-detail { background: #1e2e42; border-color: #2e4258; color: #dce4ec; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-format .cite-detail h3 { color: #a8ccf0; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-format .cite-formula,
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-format .cite-ex { background: rgba(255,255,255,0.05); }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-format .cite-intext { border-top-color: #3a4d62; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-format .cite-ex-label,
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-format .cite-notes-label { color: #7aaad4; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-format .cite-card::after { filter: brightness(0) invert(1); }
+
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-intext .cite-card { background: #1e3450; border-color: #2e4868; color: #c8d8e8; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-intext .cite-detail { background: #223a55; border-color: #325070; color: #dce4ec; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-intext .cite-detail h3 { color: #8ecbff; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-intext .cite-formula,
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-intext .cite-ex { background: rgba(255,255,255,0.05); }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-intext .cite-intext { border-top-color: #3a5878; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-intext .cite-ex-label,
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-intext .cite-notes-label { color: #6aafe0; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-intext .cite-card::after { filter: brightness(0) invert(1); }
+
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-ref .cite-card { background: #0d1e35; border-color: #1a3050; color: #c0d0e0; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-ref .cite-detail { background: #0f2240; border-color: #1a3558; color: #dce4ec; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-ref .cite-detail h3 { color: #8ecbff; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-ref .cite-formula { background: rgba(255,255,255,0.05); color: #b0c4d8; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-ref .cite-ex { background: rgba(255,255,255,0.04); color: #c8d8e8; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-ref .cite-intext { border-top-color: rgba(255,255,255,0.1); color: #a0b8d0; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-ref .cite-notes { color: #b0c4d8; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-ref .cite-ex-label,
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .zone-ref .cite-notes-label { color: #6a9ec8; }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 500px) {
+      .cite-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -40,311 +309,315 @@
   <div id="page-content">
 
     <h1>APA Style &amp; Citations</h1>
+    <p>A quick-reference guide for citing sources in APA Style (7th edition). Click any card below to see the formula, an example, and key notes. For the full APA rules, see the <a href="#resources">additional resources</a> at the bottom of this page.</p>
 
-    <p>This page covers how to format your paper and cite sources in APA Style (7th edition) for ENGL 1190. It focuses on the source types you are most likely to use for the <a href="/assignments/research-paper-overview.html">Project 1 research paper</a>, including social media posts, online news articles, and peer-reviewed scholarly articles.</p>
+    <!-- ================================================================ -->
+    <!--  ZONE 1: PAPER FORMATTING                                        -->
+    <!-- ================================================================ -->
 
-    <div class="glance-accent-box">
-      <h2>At a Glance</h2>
-      <ul>
-        <li>Double-space your entire paper; use a readable 11&ndash;12 pt font (e.g., Times New Roman, Calibri, Arial).</li>
-        <li>Set 1&Prime; margins on all sides.</li>
-        <li>Include an APA-formatted title page.</li>
-        <li>Provide in-text citations for all quoted, paraphrased, and summarized material.</li>
-        <li>Include a separate References page at the end with entries for every source cited in your paper.</li>
-      </ul>
+    <div class="cite-zone zone-format" data-zone="format">
+      <h2 class="cite-zone-label">Paper Formatting</h2>
+      <div class="cite-grid">
+
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-page-setup">Page Setup</div>
+        <div class="cite-detail" id="detail-page-setup">
+          <h3>Page Setup</h3>
+          <ul class="cite-notes">
+            <li>Double-space the entire paper (including the References page).</li>
+            <li>Use a readable 11&ndash;12 pt font (e.g., Times New Roman 12 pt, Calibri 11 pt).</li>
+            <li>Set 1&Prime; margins on all sides.</li>
+            <li>Indent the first line of each paragraph by 0.5&Prime;.</li>
+            <li>Include a page number in the upper-right corner of every page.</li>
+          </ul>
+        </div>
+
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-title-page">Title Page</div>
+        <div class="cite-detail" id="detail-title-page">
+          <h3>Title Page</h3>
+          <p>Your title page should include the following, centered on the upper half of the page:</p>
+          <ul class="cite-notes">
+            <li>Paper title (bold)</li>
+            <li>Your name</li>
+            <li>Course name and number</li>
+            <li>Instructor&rsquo;s name</li>
+            <li>Due date</li>
+          </ul>
+        </div>
+
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-ref-page">References Page</div>
+        <div class="cite-detail" id="detail-ref-page">
+          <h3>References Page Setup</h3>
+          <ul class="cite-notes">
+            <li>Start on a new page.</li>
+            <li>Center the word <strong>References</strong> (bold) at the top.</li>
+            <li>List entries alphabetically by the first element (usually the author&rsquo;s last name).</li>
+            <li>Double-space all entries.</li>
+            <li>Use a <strong>hanging indent</strong>: first line flush left, subsequent lines indented 0.5&Prime;.</li>
+            <li>Do <strong>not</strong> add a period after a DOI or URL.</li>
+          </ul>
+        </div>
+
+      </div>
     </div>
 
-    <!-- Table of Contents -->
-    <div class="toc">
-      <h2>Table of Contents</h2>
-      <ul>
-        <li><a href="#formatting">APA Paper Formatting</a></li>
-        <li><a href="#in-text">In-Text Citations</a></li>
-        <li><a href="#references">References Page</a></li>
-        <li><a href="#social-media">Citing Social Media Posts</a></li>
-        <li><a href="#news">Citing Online News Articles</a></li>
-        <li><a href="#scholarly">Citing Scholarly Journal Articles</a></li>
-        <li><a href="#extras">Additional Source Types</a></li>
-        <li><a href="#resources">Additional Resources</a></li>
-      </ul>
+    <!-- ================================================================ -->
+    <!--  ZONE 2: IN-TEXT CITATIONS                                       -->
+    <!-- ================================================================ -->
+
+    <div class="cite-zone zone-intext" data-zone="intext">
+      <h2 class="cite-zone-label">In-Text Citations</h2>
+      <div class="cite-grid">
+
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-parenthetical">Parenthetical</div>
+        <div class="cite-detail" id="detail-parenthetical">
+          <h3>Parenthetical Citation</h3>
+          <p>Place the author and year in parentheses at the end of the sentence, before the period.</p>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">AI grading tools have raised concerns about fairness in higher education (Martinez, 2024).</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>Two authors: use &amp; &mdash; (Chen &amp; Sharma, 2024)</li>
+            <li>Three+ authors: first author + et al. &mdash; (Rodriguez et al., 2023)</li>
+            <li>No author: first few words of title in quotes &mdash; (&ldquo;AI Hiring Tools,&rdquo; 2024)</li>
+          </ul>
+        </div>
+
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-narrative">Narrative</div>
+        <div class="cite-detail" id="detail-narrative">
+          <h3>Narrative Citation</h3>
+          <p>Name the author in the sentence; place the year in parentheses right after the name.</p>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">Martinez (2024) found that AI grading tools have raised concerns about fairness in higher education.</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>Two authors: use &ldquo;and&rdquo; (not &amp;) &mdash; Chen and Sharma (2024)</li>
+            <li>Three+ authors: first author + et al. &mdash; Rodriguez et al. (2023)</li>
+          </ul>
+        </div>
+
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-quotes">Direct Quotes</div>
+        <div class="cite-detail" id="detail-quotes">
+          <h3>Direct Quotes</h3>
+          <p>When quoting exact words, add a locator (page, paragraph, or section) after the year.</p>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">Martinez (2024) argued that the tools &ldquo;lack the nuance of human judgment&rdquo; (p. 12).</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>Page number: (p. 12) or (pp. 12&ndash;14)</li>
+            <li>Paragraph number: (para. 3)</li>
+            <li>No page or paragraph? Use a section heading or other descriptor to help the reader find the passage.</li>
+          </ul>
+        </div>
+
+      </div>
     </div>
 
-    <!-- ============================================================ -->
-    <!--  APA FORMATTING                                              -->
-    <!-- ============================================================ -->
+    <!-- ================================================================ -->
+    <!--  ZONE 3: REFERENCE ENTRIES                                       -->
+    <!-- ================================================================ -->
 
-    <h2 id="formatting">APA Paper Formatting</h2>
-    <ul>
-      <li>Double-space the entire paper (including the References page).</li>
-      <li>Use a clear, readable font in 11&ndash;12 pt (e.g., Times New Roman 12 pt, Calibri 11 pt, or Arial 11 pt).</li>
-      <li>Set 1&Prime; margins on all sides.</li>
-      <li>Indent the first line of each paragraph by 0.5&Prime; (use the Tab key).</li>
-      <li>Include a <strong>title page</strong> with the paper title, your name, the course name and number, the instructor's name, and the due date.</li>
-      <li>Include a <strong>page number</strong> in the upper-right corner of every page (including the title page).</li>
-      <li>Include a <strong>References page</strong> at the end of your paper. Entries should be listed alphabetically by the first element of each entry (usually the author's last name) and formatted with a hanging indent.</li>
-    </ul>
+    <div class="cite-zone zone-ref" data-zone="ref">
+      <h2 class="cite-zone-label">Reference Entries</h2>
+      <div class="cite-grid">
 
-    <h3>Formatting Your Paper</h3>
-    <p>For step-by-step instructions on setting up your paper (including the title page and References), these short videos can help:</p>
-    <ul>
-      <li><a href="https://www.youtube.com/watch?v=lSMPudNgjzs" target="_blank" rel="noopener">APA Formatting in Microsoft Word (7th edition)</a></li>
-      <li><a href="https://www.youtube.com/watch?v=Hfn-MnOAOKA" target="_blank" rel="noopener">APA Formatting in Google Docs (7th edition)</a></li>
-    </ul>
+        <!-- Social Media -->
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-social">Social Media Post</div>
+        <div class="cite-detail" id="detail-social">
+          <h3>Social Media Post</h3>
+          <div class="cite-ex-label">Formula</div>
+          <div class="cite-formula">Author or Username. (Year, Month Day). First 20 words of the post [Format]. Platform. URL</div>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">u/dataworklife. (2024, October 15). Does anyone else feel like AI is being pushed into every part of our workflow without anyone asking if [Online forum post]. Reddit. https://www.reddit.com/r/datascience/comments/example</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>If the author&rsquo;s real name is known: Last Name, F. I. [@username].</li>
+            <li>Describe the format in brackets: [Post], [Video], [Image attached], [Online forum post].</li>
+            <li>Reproduce post text exactly &mdash; including hashtags, emojis, and abbreviations.</li>
+          </ul>
+          <p class="cite-intext">In-text: (u/dataworklife, 2024)</p>
+        </div>
 
-    <!-- ============================================================ -->
-    <!--  IN-TEXT CITATIONS                                           -->
-    <!-- ============================================================ -->
+        <!-- News Article -->
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-news">Online News Article</div>
+        <div class="cite-detail" id="detail-news">
+          <h3>Online News Article</h3>
+          <div class="cite-ex-label">Formula</div>
+          <div class="cite-formula">Author Last Name, F. I. (Year, Month Day). Title of article. <em>Name of Publication</em>. URL</div>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">Metz, C. (2024, September 12). The race to make AI-generated content detectable. <em>The New York Times</em>. https://www.nytimes.com/2024/09/12/technology/example</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>Italicize the publication name, not the article title.</li>
+            <li>Article title in sentence case (capitalize only the first word, the first word after a colon, and proper nouns).</li>
+            <li>No author? Start the entry with the article title.</li>
+          </ul>
+          <p class="cite-intext">In-text: (Metz, 2024)</p>
+        </div>
 
-    <h2 id="in-text">In-Text Citations</h2>
+        <!-- Scholarly Article -->
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-scholarly">Scholarly Journal Article</div>
+        <div class="cite-detail" id="detail-scholarly">
+          <h3>Scholarly Journal Article</h3>
+          <div class="cite-ex-label">Formula</div>
+          <div class="cite-formula">Author, F. I., &amp; Author, F. I. (Year). Title of article. <em>Journal Title, Volume</em>(Issue), pages. https://doi.org/xxxxx</div>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">Chen, L., &amp; Sharma, D. (2024). Artificial intelligence in undergraduate education: A systematic review. <em>Computers &amp; Education, 210</em>, 104&ndash;121. https://doi.org/10.1016/j.compedu.2024.example</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>Always include a DOI when available (formatted as a URL). No period after the DOI.</li>
+            <li>No DOI and found in a database? End after the page range &mdash; do not include the database name or URL.</li>
+            <li>Three+ authors in-text: first author + et al.</li>
+          </ul>
+          <p class="cite-intext">In-text: (Chen &amp; Sharma, 2024)</p>
+        </div>
 
-    <p>Every time you quote, paraphrase, or summarize information from a source, you need an in-text citation. APA uses an author-date system. There are two main patterns:</p>
+        <!-- White Paper -->
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-whitepaper">White Paper / Report</div>
+        <div class="cite-detail" id="detail-whitepaper">
+          <h3>White Paper / Technical Report</h3>
+          <div class="cite-ex-label">Formula</div>
+          <div class="cite-formula">Author or Organization. (Year). <em>Title of report</em> (Report No. if available). Publisher (if different from author). URL</div>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">McKinsey Global Institute. (2023). <em>The economic potential of generative AI: The next productivity frontier</em>. https://www.mckinsey.com/capabilities/example</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>If the author and publisher are the same, list the author only.</li>
+            <li>Include a report number if one exists.</li>
+          </ul>
+          <p class="cite-intext">In-text: (McKinsey Global Institute, 2023)</p>
+        </div>
 
-    <h3>Parenthetical Citation</h3>
-    <p>Place the author's last name and the year of publication in parentheses at the end of the sentence, before the period.</p>
-    <div class="cite-example">
-      <p>AI-powered grading tools have raised concerns about fairness and transparency in higher education (Martinez, 2024).</p>
+        <!-- Government Report -->
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-gov">Government Report</div>
+        <div class="cite-detail" id="detail-gov">
+          <h3>Government Report</h3>
+          <div class="cite-ex-label">Formula</div>
+          <div class="cite-formula">Government Agency. (Year). <em>Title of report</em> (Publication No. if available). URL</div>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">U.S. Government Accountability Office. (2024). <em>Artificial intelligence in health care: Agencies have begun oversight but more action is needed</em> (GAO-24-106780). https://www.gao.gov/products/gao-24-106780</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>First citation: spell out the full agency name.</li>
+            <li>Subsequent citations: you may abbreviate &mdash; (GAO, 2024) &mdash; after establishing it.</li>
+          </ul>
+          <p class="cite-intext">In-text: (U.S. Government Accountability Office, 2024)</p>
+        </div>
+
+        <!-- News Video -->
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-video">News Video</div>
+        <div class="cite-detail" id="detail-video">
+          <h3>News Video (YouTube, etc.)</h3>
+          <div class="cite-ex-label">Formula</div>
+          <div class="cite-formula">Author or Organization. (Year, Month Day). <em>Title of video</em> [Video]. Platform. URL</div>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">CNBC. (2024, March 18). <em>How AI is transforming the hiring process</em> [Video]. YouTube. https://www.youtube.com/watch?v=example</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>The author is the account that uploaded the video.</li>
+            <li>Include [Video] in brackets after the title.</li>
+          </ul>
+          <p class="cite-intext">In-text: (CNBC, 2024)</p>
+        </div>
+
+        <!-- Position Statement -->
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-position">Position Statement</div>
+        <div class="cite-detail" id="detail-position">
+          <h3>Position Statement</h3>
+          <div class="cite-ex-label">Formula</div>
+          <div class="cite-formula">Organization Name. (Year). <em>Title of position statement</em>. URL</div>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">American Nurses Association. (2024). <em>Position statement on the ethical use of artificial intelligence in nursing practice</em>. https://www.nursingworld.org/practice-policy/example</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>First citation: spell out the full organization name.</li>
+            <li>Subsequent citations: you may abbreviate &mdash; (ANA, 2024).</li>
+          </ul>
+          <p class="cite-intext">In-text: (American Nurses Association, 2024)</p>
+        </div>
+
+        <!-- Webpage -->
+        <div class="cite-card" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-webpage">Webpage</div>
+        <div class="cite-detail" id="detail-webpage">
+          <h3>Webpage</h3>
+          <div class="cite-ex-label">Formula</div>
+          <div class="cite-formula">Author or Organization. (Year, Month Day). <em>Title of page</em>. Site Name (if different from author). URL</div>
+          <div class="cite-ex-label">Example</div>
+          <div class="cite-ex">International Society for Technology in Education. (n.d.). <em>AI in education</em>. https://www.iste.org/areas-of-focus/AI-in-education</div>
+          <div class="cite-notes-label">Key Notes</div>
+          <ul class="cite-notes">
+            <li>Use &ldquo;n.d.&rdquo; (no date) if no publication date is provided.</li>
+            <li>Only include a retrieval date if the page content changes regularly and is not archived.</li>
+          </ul>
+          <p class="cite-intext">In-text: (International Society for Technology in Education, n.d.)</p>
+        </div>
+
+      </div>
     </div>
 
-    <h3>Narrative Citation</h3>
-    <p>Name the author in the sentence itself and place the year in parentheses immediately after the name.</p>
-    <div class="cite-example">
-      <p>Martinez (2024) found that AI-powered grading tools have raised concerns about fairness and transparency in higher education.</p>
-    </div>
-
-    <h3>Key Rules</h3>
-    <ul>
-      <li><strong>One or two authors:</strong> Include all names every time you cite the source. For two authors, use an ampersand (&amp;) in parenthetical citations and "and" in narrative citations.</li>
-      <li><strong>Three or more authors:</strong> Use the first author's last name followed by "et al." every time, including the first citation.</li>
-      <li><strong>No author:</strong> Use the first few words of the title in place of the author name. Use quotation marks for article titles; use italics for titles of standalone works.</li>
-      <li><strong>Direct quotes:</strong> Include a page number, paragraph number, or other locator after the year: (Martinez, 2024, p. 12) or (Martinez, 2024, para. 3). If no page or paragraph number is available, you can use a section heading or other descriptor to help the reader locate the passage.</li>
-      <li><strong>Social media and web sources:</strong> If the source has no page numbers (which is common), include a paragraph number or timestamp if you are quoting directly. For paraphrases, the author and year are sufficient.</li>
-    </ul>
-
-    <!-- ============================================================ -->
-    <!--  REFERENCES PAGE                                             -->
-    <!-- ============================================================ -->
-
-    <h2 id="references">References Page</h2>
-
-    <p>Your References page is the last page of your paper. It lists every source you cited in your paper, organized alphabetically.</p>
-
-    <h3>Formatting the References Page</h3>
-    <ul>
-      <li>Center the word <strong>References</strong> (bold) at the top of the page.</li>
-      <li>Double-space all entries.</li>
-      <li>Use a <strong>hanging indent</strong> for each entry: the first line is flush left, and all subsequent lines are indented 0.5&Prime;.</li>
-      <li>List entries alphabetically by the first element (usually the author's last name).</li>
-      <li>Do <strong>not</strong> add a period after a DOI or URL, as it may interfere with the link.</li>
-    </ul>
-
-    <h3>General APA Reference Formula</h3>
-    <div class="cite-example">
-      <p class="cite-formula">Author. (Date). Title of work. Source. <span>URL or DOI</span></p>
-    </div>
-    <p>The specific details change depending on the source type, but this is the underlying logic for every APA reference: who wrote it, when it was published, what it's called, and where to find it.</p>
-
-    <!-- ============================================================ -->
-    <!--  SOCIAL MEDIA                                                -->
-    <!-- ============================================================ -->
-
-    <h2 id="social-media">Citing Social Media Posts</h2>
-
-    <p>Social media posts include Reddit threads, LinkedIn posts, Facebook posts, Instagram posts, TikTok videos, and similar platforms. For your Project 1 paper, these will likely fall under your "public conversations" sources.</p>
-
-    <h3>Reference Format</h3>
-    <div class="cite-example">
-      <p class="cite-formula">Author or Username. (Year, Month Day). First 20 words of the post [Description of format]. Platform Name. <span>URL</span></p>
-    </div>
-
-    <h3>Key Rules for Social Media</h3>
-    <ul>
-      <li>If the author's real name is known, list their name first with the username in brackets: <strong>Last Name, F. I. [@username].</strong></li>
-      <li>If only a username is available, use the username in place of the author name (no brackets).</li>
-      <li>Use the first 20 words of the post as the title. Count hashtags, emojis, links, and @mentions as one word each. Reproduce the text exactly as written, including any abbreviations or unconventional spelling.</li>
-      <li>In brackets after the title, describe the format: [Post], [Video], [Image attached], [Online forum post], [Comment on an article], etc.</li>
-      <li>Include the platform name (e.g., Reddit, LinkedIn, Facebook, Instagram, TikTok) and the URL.</li>
-    </ul>
-
-    <h3>Examples</h3>
-
-    <h4>Reddit Post</h4>
-    <div class="cite-example">
-      <p>u/dataworklife. (2024, October 15). Does anyone else feel like AI is being pushed into every part of our workflow without anyone asking if [Online forum post]. Reddit. https://www.reddit.com/r/datascience/comments/example</p>
-    </div>
-    <p class="inline-note">In-text: (u/dataworklife, 2024)</p>
-
-    <h4>LinkedIn Post (Real Name Known)</h4>
-    <div class="cite-example">
-      <p>Patel, R. [@rajpatel]. (2025, January 8). I've been testing AI writing tools for six months in my marketing team, and here's what I've learned about quality [Post]. LinkedIn. https://www.linkedin.com/posts/example</p>
-    </div>
-    <p class="inline-note">In-text: (Patel, 2025) &mdash; or &mdash; Patel (2025)</p>
-
-    <h4>Facebook Group Post (Username Only)</h4>
-    <div class="cite-example">
-      <p>NursingNerd2024. (2024, November 3). Just saw my hospital is rolling out an AI triage system next month. Has anyone else dealt with this? What [Post]. Facebook. https://www.facebook.com/groups/example/posts/123456</p>
-    </div>
-    <p class="inline-note">In-text: (NursingNerd2024, 2024)</p>
-
-    <!-- ============================================================ -->
-    <!--  NEWS ARTICLES                                               -->
-    <!-- ============================================================ -->
-
-    <h2 id="news">Citing Online News Articles</h2>
-
-    <p>This covers articles from online newspapers and news websites. APA distinguishes between newspapers (e.g., <em>The New York Times</em>, <em>The Washington Post</em>) and news websites (e.g., CNN, BBC News, Reuters), but the format is nearly identical for online versions of either.</p>
-
-    <h3>Reference Format</h3>
-    <div class="cite-example">
-      <p class="cite-formula">Author Last Name, F. I. (Year, Month Day). Title of article. <em>Name of Publication</em>. <span>URL</span></p>
-    </div>
-
-    <h3>Key Rules for News Articles</h3>
-    <ul>
-      <li>Italicize the name of the newspaper or news site.</li>
-      <li>Use sentence case for the article title (capitalize only the first word, the first word after a colon, and proper nouns). Do <strong>not</strong> italicize the article title.</li>
-      <li>If there is no individual author listed, begin the entry with the article title.</li>
-      <li>Include the full date (year, month, and day) when available.</li>
-      <li>For online articles, include the URL at the end. Do not include "Retrieved from" unless the content may change over time (which is rare for published news articles).</li>
-    </ul>
-
-    <h3>Examples</h3>
-
-    <h4>Online Newspaper Article</h4>
-    <div class="cite-example">
-      <p>Metz, C. (2024, September 12). The race to make AI-generated content detectable. <em>The New York Times</em>. https://www.nytimes.com/2024/09/12/technology/example</p>
-    </div>
-    <p class="inline-note">In-text: (Metz, 2024) &mdash; or &mdash; Metz (2024)</p>
-
-    <h4>News Website Article</h4>
-    <div class="cite-example">
-      <p>Duffy, C. (2025, January 22). Hospitals turn to AI for patient intake, but nurses push back. <em>CNN</em>. https://www.cnn.com/2025/01/22/health/example</p>
-    </div>
-    <p class="inline-note">In-text: (Duffy, 2025)</p>
-
-    <h4>News Article with No Author</h4>
-    <div class="cite-example">
-      <p>AI hiring tools face new scrutiny from federal regulators. (2024, August 5). <em>Reuters</em>. https://www.reuters.com/technology/example</p>
-    </div>
-    <p class="inline-note">In-text: ("AI Hiring Tools," 2024) &mdash; use the first few words of the title in quotation marks</p>
-
-    <!-- ============================================================ -->
-    <!--  SCHOLARLY ARTICLES                                          -->
-    <!-- ============================================================ -->
-
-    <h2 id="scholarly">Citing Scholarly Journal Articles</h2>
-
-    <p>Scholarly (peer-reviewed) journal articles are the most standard APA citation type. You will need at least four of these for Project 1.</p>
-
-    <h3>Reference Format</h3>
-    <div class="cite-example">
-      <p class="cite-formula">Author Last Name, F. I., &amp; Author Last Name, F. I. (Year). Title of article. <em>Title of Journal, Volume</em>(Issue), page range. <span>https://doi.org/xxxxx</span></p>
-    </div>
-
-    <h3>Key Rules for Scholarly Articles</h3>
-    <ul>
-      <li>Italicize the journal title and the volume number. The issue number goes in parentheses directly after the volume and is not italicized.</li>
-      <li>Use sentence case for the article title. Use title case for the journal name (capitalize each major word).</li>
-      <li><strong>Always include a DOI</strong> when one is available. Format it as a URL: https://doi.org/xxxxx. Do not put a period after the DOI.</li>
-      <li>If the article does not have a DOI and you found it in an academic database (like the library databases), do <strong>not</strong> include the database name or URL. End the reference after the page range.</li>
-      <li>If the article does not have a DOI and you found it on the open web, include the URL.</li>
-      <li>For three or more authors, list all authors (up to 20) in the reference entry. In the in-text citation, use the first author's last name followed by "et al."</li>
-    </ul>
-
-    <h3>Examples</h3>
-
-    <h4>Journal Article with DOI (Two Authors)</h4>
-    <div class="cite-example">
-      <p>Chen, L., &amp; Sharma, D. (2024). Artificial intelligence in undergraduate education: A systematic review of student and faculty perspectives. <em>Computers &amp; Education, 210</em>, 104&ndash;121. https://doi.org/10.1016/j.compedu.2024.example</p>
-    </div>
-    <p class="inline-note">In-text: (Chen &amp; Sharma, 2024) &mdash; or &mdash; Chen and Sharma (2024)</p>
-
-    <h4>Journal Article with DOI (Three or More Authors)</h4>
-    <div class="cite-example">
-      <p>Rodriguez, A. M., Kim, J., Patel, S., &amp; O'Brien, T. (2023). The impact of AI-assisted diagnostics on clinical decision-making in emergency medicine. <em>Journal of Medical Internet Research, 25</em>(4), Article e44123. https://doi.org/10.2196/44123</p>
-    </div>
-    <p class="inline-note">In-text: (Rodriguez et al., 2023) &mdash; or &mdash; Rodriguez et al. (2023)</p>
-
-    <h4>Journal Article without DOI (from a Database)</h4>
-    <div class="cite-example">
-      <p>Thompson, K. R. (2023). Automation anxiety: How entry-level workers perceive AI threats to job security. <em>Journal of Career Development, 50</em>(2), 312&ndash;329.</p>
-    </div>
-    <p class="inline-note">In-text: (Thompson, 2023). No URL or database name needed.</p>
-
-    <!-- ============================================================ -->
-    <!--  EXTRAS                                                      -->
-    <!-- ============================================================ -->
-
-    <h2 id="extras">Additional Source Types</h2>
-
-    <p>Depending on your topic, you may encounter other types of sources during your research. Below are APA formats for some common extras.</p>
-
-    <h3>White Paper or Technical Report</h3>
-    <div class="cite-example">
-      <p class="cite-formula">Author or Organization. (Year). <em>Title of report</em> (Report No. if available). Publisher (if different from author). <span>URL</span></p>
-    </div>
-    <div class="cite-example">
-      <p>McKinsey Global Institute. (2023). <em>The economic potential of generative AI: The next productivity frontier</em>. https://www.mckinsey.com/capabilities/example</p>
-    </div>
-    <p class="inline-note">In-text: (McKinsey Global Institute, 2023)</p>
-
-    <h3>Government Report</h3>
-    <div class="cite-example">
-      <p class="cite-formula">Government Agency. (Year). <em>Title of report</em> (Publication No. if available). <span>URL</span></p>
-    </div>
-    <div class="cite-example">
-      <p>U.S. Government Accountability Office. (2024). <em>Artificial intelligence in health care: Agencies have begun oversight but more action is needed</em> (GAO-24-106780). https://www.gao.gov/products/gao-24-106780</p>
-    </div>
-    <p class="inline-note">In-text: (U.S. Government Accountability Office, 2024). For subsequent citations, you may abbreviate: (GAO, 2024) after establishing the abbreviation the first time.</p>
-
-    <h3>News Video (e.g., YouTube Upload from a News Organization)</h3>
-    <div class="cite-example">
-      <p class="cite-formula">Author or Organization. (Year, Month Day). <em>Title of video</em> [Video]. Platform Name. <span>URL</span></p>
-    </div>
-    <div class="cite-example">
-      <p>CNBC. (2024, March 18). <em>How AI is transforming the hiring process</em> [Video]. YouTube. https://www.youtube.com/watch?v=example</p>
-    </div>
-    <p class="inline-note">In-text: (CNBC, 2024). The author is the account that uploaded the video. If the uploader is different from the creator, credit the uploader.</p>
-
-    <h3>Position Statement from a Professional Organization</h3>
-    <div class="cite-example">
-      <p class="cite-formula">Organization Name. (Year). <em>Title of position statement</em>. <span>URL</span></p>
-    </div>
-    <div class="cite-example">
-      <p>American Nurses Association. (2024). <em>Position statement on the ethical use of artificial intelligence in nursing practice</em>. https://www.nursingworld.org/practice-policy/example</p>
-    </div>
-    <p class="inline-note">In-text: (American Nurses Association, 2024). For subsequent citations, you may abbreviate: (ANA, 2024) after establishing the abbreviation the first time.</p>
-
-    <h3>Webpage on an Organization's Website</h3>
-    <p>Use this format for content on an organization's website that is not a report, article, or other specific document type. This includes informational pages, "About" sections, FAQ pages, and similar content.</p>
-    <div class="cite-example">
-      <p class="cite-formula">Author or Organization. (Year, Month Day). <em>Title of page</em>. Site Name (if different from author). <span>URL</span></p>
-    </div>
-    <div class="cite-example">
-      <p>International Society for Technology in Education. (n.d.). <em>AI in education</em>. https://www.iste.org/areas-of-focus/AI-in-education</p>
-    </div>
-    <p class="inline-note">In-text: (International Society for Technology in Education, n.d.). Use "n.d." (no date) when no publication date is provided. If the page content may change over time, include a retrieval date: Retrieved February 10, 2026, from [URL].</p>
-
-    <div class="tips-accent-box">
-      <h3>When to Include a Retrieval Date</h3>
-      <p>Most sources do <strong>not</strong> need a retrieval date. Only include one when the source content is designed to change over time and is not archived &mdash; for example, a social media profile page, a wiki, or a website that is regularly updated without a clear publication date. Published articles, reports, and dated web pages do not need retrieval dates.</p>
-    </div>
-
-    <!-- ============================================================ -->
-    <!--  ADDITIONAL RESOURCES                                        -->
-    <!-- ============================================================ -->
+    <!-- ================================================================ -->
+    <!--  ADDITIONAL RESOURCES                                            -->
+    <!-- ================================================================ -->
 
     <h2 id="resources">Additional Resources</h2>
     <ul>
-      <li><a href="https://apastyle.apa.org/style-grammar-guidelines/references/examples" target="_blank" rel="noopener">APA Style Reference Examples</a> &mdash; the official reference examples page from the APA, covering dozens of source types.</li>
-      <li><a href="https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_formatting_and_style_guide/general_format.html" target="_blank" rel="noopener">Purdue OWL: APA General Format</a> &mdash; a thorough overview of APA 7th edition formatting and citation.</li>
-      <li><a href="https://apastyle.apa.org/instructional-aids/reference-guide.pdf" target="_blank" rel="noopener">APA 7th Edition Reference Quick Guide (PDF)</a> &mdash; a printable one-page reference guide from the APA.</li>
+      <li><a href="https://apastyle.apa.org/style-grammar-guidelines/references/examples" target="_blank" rel="noopener">APA Style Reference Examples</a> &mdash; official examples covering dozens of source types.</li>
+      <li><a href="https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_formatting_and_style_guide/general_format.html" target="_blank" rel="noopener">Purdue OWL: APA General Format</a> &mdash; thorough overview of APA 7th edition formatting.</li>
+      <li><a href="https://apastyle.apa.org/instructional-aids/reference-guide.pdf" target="_blank" rel="noopener">APA 7th Edition Quick Reference Guide (PDF)</a> &mdash; printable one-page guide from the APA.</li>
     </ul>
-    <p>If you're unsure how to cite a specific type of source, the <a href="https://apastyle.apa.org/" target="_blank" rel="noopener">APA Style website</a> is the best place to check. You can also ask me during class or office hours.</p>
+    <p>If you&rsquo;re unsure how to cite a specific source, the <a href="https://apastyle.apa.org/" target="_blank" rel="noopener">APA Style website</a> is the best place to check. You can also ask me during class or office hours.</p>
 
   </div>
 
   <!-- main navigation and page scripts -->
   <script src="/nav.js"></script>
   <script src="/footer.js" defer></script>
+
+  <!-- Card interaction -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cards = document.querySelectorAll(".cite-card[aria-controls]");
+
+      cards.forEach(card => {
+        const toggle = () => {
+          const targetId = card.getAttribute("aria-controls");
+          const detail = document.getElementById(targetId);
+          if (!detail) return;
+
+          const isOpen = card.getAttribute("aria-expanded") === "true";
+
+          // Close all other open details in the same zone
+          const zone = card.closest(".cite-zone");
+          zone.querySelectorAll(".cite-card[aria-expanded='true']").forEach(openCard => {
+            if (openCard !== card) {
+              openCard.setAttribute("aria-expanded", "false");
+              const openDetail = document.getElementById(openCard.getAttribute("aria-controls"));
+              if (openDetail) openDetail.classList.remove("is-open");
+            }
+          });
+
+          // Toggle this one
+          if (isOpen) {
+            card.setAttribute("aria-expanded", "false");
+            detail.classList.remove("is-open");
+          } else {
+            card.setAttribute("aria-expanded", "true");
+            detail.classList.add("is-open");
+            // Scroll the detail into view if needed
+            setTimeout(() => {
+              detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }, 50);
+          }
+        };
+
+        card.addEventListener("click", toggle);
+        card.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggle();
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

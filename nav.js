@@ -62,7 +62,7 @@
             {
               label: "Weekly Writing",
               href: "/assignments/weeklywriting.html",
-              children: Array.from({ length: 9 }, (_, i) => ({
+              children: Array.from({ length: 7 }, (_, i) => ({
                 label: `Weekly Writing ${i + 1}`,
                 href: `/assignments/ww${i + 1}.html`
               }))
@@ -78,7 +78,6 @@
                 { label: "Self-Eval & Reflection", href: "/assignments/reflection.html" },
                 { label: "Individual Conferences", href: "/assignments/conferences.html" },
                 { label: "Example Organization", href: "/assignments/example-organization.html" },
-                { label: "Example Essays", href: "/assignments/example-papers.html" },
                 { label: "APA Style & Citations", href: "/assignments/apa-style-citations.html" }
               ]
             },
@@ -104,7 +103,6 @@
             { label: "How to Save a PDF", href: "/resources/save-pdf.html" },
             { label: "How to Annotate a PDF", href: "/resources/annotating-pdfs.html" },
             { label: "How to Read a Scholarly Article", href: "/resources/read-scholarly.html" },
-            { label: "Sample Assignments", href: "/resources/samples.html" }
           ]
         },
         {
