@@ -200,38 +200,28 @@
     }
     .popover .popover-close:hover { color: #ffffff; }
 
-    /* ===== Navigation between pages ===== */
-    .page-nav {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin: 1.5rem 0 2rem;
-      flex-wrap: wrap;
-    }
-    .page-nav button {
-      font-family: "Lato", system-ui, sans-serif;
-      font-size: 0.88rem;
-      font-weight: 400;
-      padding: 0.45rem 1rem;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--accent-box-bg);
-      color: var(--text);
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .page-nav button:hover { border-color: var(--bright); }
-    .page-nav button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
-    .page-nav button.active {
-      background: var(--accent, #041f44);
-      color: #fff;
-      border-color: var(--accent, #041f44);
-    }
 
-    /* Page visibility */
-    .paper-page { display: none; }
-    .paper-page.active { display: block; }
-    .paper-page.title-page.active { display: flex; }
+    /* Page divider (for "additional pages" note) */
+    .page-divider {
+      text-align: center;
+      color: var(--muted);
+      font-family: "Lato", system-ui, sans-serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      margin: 0.5rem 0 2rem;
+      padding: 1rem 0;
+      position: relative;
+    }
+    .page-divider::before,
+    .page-divider::after {
+      content: "";
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+      vertical-align: middle;
+      margin: 0 0.75rem;
+    }
 
     /* ===== Responsive ===== */
     @media (max-width: 740px) {
@@ -257,23 +247,16 @@
   <div id="page-content">
 
     <h1>APA in Action</h1>
-    <p>This interactive example shows what an APA-formatted paper looks like. Click the numbered buttons <span class="hotspot" style="display:inline-flex; cursor:default; transform:none; width:20px; height:20px; font-size:10px;" aria-hidden="true">?</span> to learn about each formatting element. Navigate between the pages of the paper using the buttons below.</p>
+    <p>This interactive example shows what an APA-formatted paper looks like. Click the numbered buttons <span class="hotspot" style="display:inline-flex; cursor:default; transform:none; width:20px; height:20px; font-size:10px;" aria-hidden="true">?</span> to learn about each formatting element.</p>
     <p>For formulas and reference entry examples, see the <a href="/resources/apa-style-citations.html">APA Style &amp; Citations</a> reference page.</p>
 
-    <!-- Page navigation -->
-    <nav class="page-nav" aria-label="Paper page navigation">
-      <button class="active" data-page="title">Title Page</button>
-      <button data-page="body1">Page 2</button>
-      <button data-page="body2">Page 3</button>
-      <button data-page="refs">References</button>
-    </nav>
 
     <div class="paper-wrapper">
 
       <!-- ============================================================ -->
       <!-- TITLE PAGE                                                    -->
       <!-- ============================================================ -->
-      <div class="paper-page title-page active" id="page-title" role="region" aria-label="Title page">
+      <div class="paper-page title-page" id="page-title" role="region" aria-label="Title page">
         <span class="page-num">1 <span class="hotspot hotspot-abs" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 1: Page numbers" data-pop="title-1" style="top: -2px; left: 8px;">1</span></span>
 
         <div class="title-block">
@@ -441,6 +424,9 @@
         </div>
       </div>
 
+      <!-- Page divider -->
+      <div class="page-divider">Additional body pages would continue here</div>
+
       <!-- ============================================================ -->
       <!-- REFERENCES PAGE                                               -->
       <!-- ============================================================ -->
@@ -528,29 +514,6 @@
 
   <script>
   document.addEventListener("DOMContentLoaded", () => {
-
-    /* ===== Page Navigation ===== */
-    const navBtns = document.querySelectorAll(".page-nav button[data-page]");
-    const pages = {
-      title: document.getElementById("page-title"),
-      body1: document.getElementById("page-body1"),
-      body2: document.getElementById("page-body2"),
-      refs:  document.getElementById("page-refs")
-    };
-
-    navBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        // Close any open popovers
-        closeAllPopovers();
-        // Switch pages
-        navBtns.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        Object.values(pages).forEach(p => p.classList.remove("active"));
-        pages[btn.dataset.page].classList.add("active");
-        // Scroll paper into view
-        document.querySelector(".paper-wrapper").scrollIntoView({ behavior: "smooth", block: "nearest" });
-      });
-    });
 
     /* ===== Hotspot Popovers ===== */
     const hotspots = document.querySelectorAll(".hotspot[data-pop]");
