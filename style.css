@@ -1019,4 +1019,51 @@ html {
   }
 }
 
+/* ==================== Checklist ==================== */
+.checklist {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--accent-box-bg);
+  padding: 1.25rem 1.75rem 1rem;
+  margin: 1rem 0 1.75rem;
+}
+
+.checklist h3 {
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-size: 1.2rem;
+  color: var(--accent-box-text);
+}
+
+.checklist h4 {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--accent-box-text);
+  margin: 1rem 0 .35rem;
+  padding-bottom: .25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.checklist ul {
+  list-style: none;
+  margin: .4rem 0 .75rem;
+  padding: 0 0 0 .25rem;
+}
+
+.checklist ul li {
+  position: relative;
+  padding-left: 1.6rem;
+  margin: .45rem 0;
+  line-height: 1.5;
+}
+
+.checklist ul li::before {
+  content: "☐";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1.05em;
+  color: var(--muted);
+}
+
 
