@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APA in Action | ENGL 1190</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <meta name="description" content="Interactive example of an APA-formatted paper with clickable annotations explaining each formatting element." />
+  <style>
+    /* ===== Paper Simulation ===== */
+    .paper-wrapper {
+      margin: 2rem auto;
+      max-width: 680px;
+    }
+    .paper-label {
+      font-family: "Judson", serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .paper-page {
+      position: relative;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      padding: 60px 72px;
+      margin-bottom: 2rem;
+      font-family: "Times New Roman", "Times", Georgia, serif;
+      font-size: 12pt;
+      line-height: 2;
+      min-height: 500px;
+    }
+    /* Paper pages always stay light — they're simulating printed paper */
+    [data-theme="dark"] .paper-page {
+      background: #fdfdfd;
+      color: #000000;
+      border-color: #555;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.35);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .paper-page {
+        background: #fdfdfd;
+        color: #000000;
+        border-color: #555;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.35);
+      }
+    }
+
+    /* Page number */
+    .paper-page .page-num {
+      position: absolute;
+      top: 28px;
+      right: 72px;
+      font-size: 12pt;
+      line-height: 1;
+      color: #000;
+    }
+
+    /* Title page centering */
+    .paper-page.title-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 600px;
+    }
+    .paper-page.title-page .page-num { top: 28px; right: 72px; }
+    .title-block { margin-top: -60px; }
+    .title-block .paper-title {
+      font-weight: bold;
+      font-size: 12pt;
+      margin-bottom: 0;
+      line-height: 2;
+    }
+    .title-block p {
+      margin: 0;
+      line-height: 2;
+    }
+
+    /* Body text */
+    .paper-page p.body-text {
+      text-indent: 0.5in;
+      margin: 0;
+    }
+    .paper-page p.body-text.no-indent {
+      text-indent: 0;
+    }
+    .paper-page .section-heading {
+      text-align: center;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    /* References page */
+    .paper-page .ref-title {
+      text-align: center;
+      font-weight: bold;
+      margin: 0 0 0 0;
+      line-height: 2;
+    }
+    .paper-page .ref-entry {
+      padding-left: 0.5in;
+      text-indent: -0.5in;
+      margin: 0;
+      line-height: 2;
+    }
+
+    /* ===== Hotspot Button ===== */
+    .hotspot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #1a6bc4;
+      color: #fff;
+      font-family: "Lato", system-ui, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+      position: relative;
+      vertical-align: middle;
+      transition: transform 0.15s ease, background 0.15s ease;
+      text-indent: 0;
+      user-select: none;
+    }
+    .hotspot:hover {
+      transform: scale(1.15);
+      background: #0f4f99;
+    }
+    .hotspot:focus-visible {
+      outline: 2px solid #0f4f99;
+      outline-offset: 2px;
+    }
+    .hotspot[aria-expanded="true"] {
+      background: #0a3d7a;
+    }
+
+    /* Positioned hotspots (for title page and other absolute placements) */
+    .hotspot-abs {
+      position: absolute;
+    }
+
+    /* ===== Popover ===== */
+    .popover {
+      display: none;
+      position: absolute;
+      z-index: 100;
+      width: 280px;
+      background: #1a2a4a;
+      color: #eef2f7;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-family: "Lato", system-ui, sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      text-align: left;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      text-indent: 0;
+      pointer-events: none;
+    }
+    .popover.is-open {
+      display: block;
+      pointer-events: auto;
+      animation: popIn 0.2s ease;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .popover .popover-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 0.3rem;
+      color: #a8d4ff;
+    }
+    .popover .popover-close {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: none;
+      border: none;
+      color: #8899aa;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 2px 5px;
+      line-height: 1;
+      font-family: "Lato", system-ui, sans-serif;
+    }
+    .popover .popover-close:hover { color: #ffffff; }
+
+    /* ===== Navigation between pages ===== */
+    .page-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 1.5rem 0 2rem;
+      flex-wrap: wrap;
+    }
+    .page-nav button {
+      font-family: "Lato", system-ui, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      padding: 0.45rem 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--accent-box-bg);
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .page-nav button:hover { border-color: var(--bright); }
+    .page-nav button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    .page-nav button.active {
+      background: var(--accent, #041f44);
+      color: #fff;
+      border-color: var(--accent, #041f44);
+    }
+
+    /* Page visibility */
+    .paper-page { display: none; }
+    .paper-page.active { display: block; }
+    .paper-page.title-page.active { display: flex; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 740px) {
+      .paper-page {
+        padding: 40px 36px;
+        font-size: 11pt;
+      }
+      .paper-page .page-num { right: 36px; top: 18px; }
+      .popover { width: 240px; font-size: 0.82rem; }
+    }
+    @media (max-width: 480px) {
+      .paper-page {
+        padding: 30px 24px;
+        font-size: 10.5pt;
+      }
+      .paper-page .page-num { right: 24px; top: 14px; }
+      .popover { width: 210px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="page-content">
+
+    <h1>APA in Action</h1>
+    <p>This interactive example shows what an APA-formatted paper looks like. Click the numbered buttons <span class="hotspot" style="display:inline-flex; cursor:default; transform:none; width:20px; height:20px; font-size:10px;" aria-hidden="true">?</span> to learn about each formatting element. Navigate between the pages of the paper using the buttons below.</p>
+    <p>For formulas and reference entry examples, see the <a href="/resources/apa-style-citations.html">APA Style &amp; Citations</a> reference page.</p>
+
+    <!-- Page navigation -->
+    <nav class="page-nav" aria-label="Paper page navigation">
+      <button class="active" data-page="title">Title Page</button>
+      <button data-page="body1">Page 2</button>
+      <button data-page="body2">Page 3</button>
+      <button data-page="refs">References</button>
+    </nav>
+
+    <div class="paper-wrapper">
+
+      <!-- ============================================================ -->
+      <!-- TITLE PAGE                                                    -->
+      <!-- ============================================================ -->
+      <div class="paper-page title-page active" id="page-title" role="region" aria-label="Title page">
+        <span class="page-num">1 <span class="hotspot hotspot-abs" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 1: Page numbers" data-pop="title-1" style="top: -2px; left: 8px;">1</span></span>
+
+        <div class="title-block">
+          <p class="paper-title">AI in Community Colleges: Helping Students or Replacing Teachers?</p>
+          <p>&nbsp;</p>
+          <p>Jordan A. Rivera
+            <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 2: Title block info" data-pop="title-2">2</span>
+          </p>
+          <p>ENGL 1190: Communications II, Macomb Community College</p>
+          <p>Professor Karlis</p>
+          <p>March 15, 2026</p>
+        </div>
+
+        <span class="hotspot hotspot-abs" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 3: Title formatting" data-pop="title-3" style="top: 38%; right: 60px;">3</span>
+
+        <span class="hotspot hotspot-abs" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 4: Spacing" data-pop="title-4" style="bottom: 80px; left: 60px;">4</span>
+
+        <span class="hotspot hotspot-abs" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 5: No extra info" data-pop="title-5" style="bottom: 30px; right: 60px;">5</span>
+
+        <!-- Popovers for title page -->
+        <div class="popover" id="pop-title-1">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Page Numbers</div>
+          Page numbers go in the upper-right corner of every page, including the title page. Use your word processor's header function to insert them automatically.
+        </div>
+        <div class="popover" id="pop-title-2">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Title Page Information</div>
+          Center the following on the title page: your paper title (bold), your name, course name and number with institution, instructor's name, and the due date. Each on its own line, double-spaced.
+        </div>
+        <div class="popover" id="pop-title-3">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Title Formatting</div>
+          The paper title should be bold and in title case. If it's longer than one line, use a double-spaced line break. Position the title block in the upper half of the page.
+        </div>
+        <div class="popover" id="pop-title-4">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Double-Spacing</div>
+          The entire paper — including the title page — is double-spaced. Don't add extra space between lines or sections.
+        </div>
+        <div class="popover" id="pop-title-5">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Nothing Extra</div>
+          APA 7th edition does not require a running head, abstract, or author note for student papers. The page header for student papers is just the page number in the upper right — that's it. Your instructor will let you know if anything additional is needed.
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- BODY PAGE 1 (Introduction)                                    -->
+      <!-- ============================================================ -->
+      <div class="paper-page" id="page-body1" role="region" aria-label="Page 2: Introduction">
+        <span class="page-num">2</span>
+
+        <p class="section-heading">AI in Community Colleges: Helping Students or Replacing Teachers?
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 1: Repeat title" data-pop="b1-1">1</span>
+        </p>
+
+        <p class="body-text">Over the past few years, artificial intelligence has started showing up in almost every part of daily life, and college classrooms are no exception. Community colleges in particular are seeing a big push to bring in AI tools like tutoring chatbots, automated grading, and writing assistants. A 2023 report from McKinsey Global Institute found that generative AI could handle tasks equal to 60 to 70 percent of the work people currently do (McKinsey Global Institute, 2023).
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 2: Parenthetical citation" data-pop="b1-2">2</span>
+        That is a huge number, and it raises some real questions about what this means for students and instructors at two-year schools.</p>
+
+        <p class="body-text">Researchers have already started looking into how AI is being used in education. Chen and Sharma (2024) reviewed studies on AI in undergraduate settings and found that while a lot of schools are adopting these tools, most of them have not set up clear guidelines for how they should be used.
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 3: Narrative citation" data-pop="b1-3">3</span>
+        On social media, students and workers are sharing similar concerns. One Reddit user posted about feeling like AI was being forced into their daily routine without anyone asking whether it actually helped (u/dataworklife, 2024).
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 4: Citing social media" data-pop="b1-4">4</span>
+        </p>
+
+        <p class="body-text">This paper looks at how AI is being used in community colleges and argues that students, faculty, and administrators all have different concerns about these tools, and that schools will only get AI right if all three groups are part of the conversation.
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 5: Thesis" data-pop="b1-5">5</span>
+        The following sections look at each group's perspective: what students are worried about, how faculty are responding, and what administrators are trying to balance. Understanding where these groups agree and where they clash is the first step toward using AI in a way that works for everyone.
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 6: Road map" data-pop="b1-6">6</span>
+        </p>
+
+        <!-- Popovers -->
+        <div class="popover" id="pop-b1-1">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Title as Heading</div>
+          In APA, the paper title appears again at the top of the first page of body text, centered and bold. This acts as a Level 1 heading for the introduction — don't add a separate "Introduction" label.
+        </div>
+        <div class="popover" id="pop-b1-2">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Parenthetical Citation</div>
+          When the author isn't named in the sentence, place the author and year in parentheses before the period: (McKinsey Global Institute, 2023). For organizational authors, spell out the full name on first use.
+        </div>
+        <div class="popover" id="pop-b1-3">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Narrative Citation</div>
+          When you name the author(s) in the sentence, place only the year in parentheses right after the name: Chen and Sharma (2024). Note: use "and" in the text, but "&amp;" inside parentheses.
+        </div>
+        <div class="popover" id="pop-b1-4">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Citing Social Media</div>
+          Cite social media by username and year, just like any other source: (u/dataworklife, 2024). The full reference entry on the References page will include the first 20 words of the post, the platform, and the URL.
+        </div>
+        <div class="popover" id="pop-b1-5">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Thesis Statement</div>
+          This isn't an APA formatting rule — but it's good writing practice. Place your thesis (your main argument) near the end of the introduction so readers know what to expect.
+        </div>
+        <div class="popover" id="pop-b1-6">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Road Map</div>
+          Briefly previewing the paper's structure helps readers follow your argument. This sentence tells the reader what the next sections will cover.
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- BODY PAGE 2 (Section with heading)                            -->
+      <!-- ============================================================ -->
+      <div class="paper-page" id="page-body2" role="region" aria-label="Page 3: Body section">
+        <span class="page-num">3</span>
+
+        <p class="section-heading">How AI Is Saving Time in the Classroom
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 1: Section heading" data-pop="b2-1">1</span>
+        </p>
+
+        <p class="body-text">One of the biggest reasons community colleges are interested in AI is that it can save time. According to Metz (2024), schools that started using AI writing assistants saw about a 35% drop in how long it took staff to put together internal reports and communications.
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 2: Paraphrasing" data-pop="b2-2">2</span>
+        A report from the U.S. Government Accountability Office (2024) found something similar in health care training programs, where AI-based diagnostic tools helped students practice faster without losing accuracy. For community colleges that often have tight budgets and high enrollment, those kinds of time savings matter a lot.</p>
+
+        <p class="body-text">But not everyone is excited about it. In a Reddit thread, one community college student wrote, "My school just added an AI tutor and nobody even told us how to use it or if it was any good" (u/dataworklife, 2024).
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 3: Direct quote" data-pop="b2-3">3</span>
+        This kind of frustration lines up with what Chen and Sharma (2024) found in their research. They noted that students were less satisfied with AI tools when they were not part of the conversation about whether to use them. The American Association of Community Colleges (AACC, 2024)
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 4: Abbreviations" data-pop="b2-4">4</span>
+        made a similar point in a recent position statement, saying that community colleges need to involve both faculty and students when making decisions about AI.</p>
+
+        <p class="body-text">The International Society for Technology in Education (n.d.) has put together a framework for using AI in schools that focuses on collaboration and ongoing check-ins.
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 5: No date" data-pop="b2-5">5</span>
+        Even though it was written with K-12 in mind, a lot of the ideas could easily apply to community colleges too. The framework pushes for transparency and making sure technology is actually helping people learn, not just making things faster.</p>
+
+        <p class="body-text">CNBC (2024) covered several examples of schools and companies that got better results when they brought people into the process early on.
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 6: Video source" data-pop="b2-6">6</span>
+        The takeaway seems pretty clear: AI works best when people trust it, and trust comes from being included in the decision.</p>
+
+        <!-- Popovers -->
+        <div class="popover" id="pop-b2-1">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Level 2 Heading</div>
+          Section headings are centered and bold. This is a Level 2 heading in APA. Use these to organize your paper into logical sections. Don't skip heading levels (e.g., don't jump from Level 1 to Level 3).
+        </div>
+        <div class="popover" id="pop-b2-2">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Paraphrasing</div>
+          When you put a source's ideas into your own words, you still need a citation — but no page number is required for paraphrases. A page number is only needed for direct quotes.
+        </div>
+        <div class="popover" id="pop-b2-3">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Direct Quote</div>
+          Short quotes (under 40 words) go in quotation marks within the paragraph. Because this is a social media post without page numbers, no locator is needed — but if you quoted from a paginated source, you'd add (p. 12) after the year.
+        </div>
+        <div class="popover" id="pop-b2-4">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Abbreviating Organizations</div>
+          Spell out the full name on first use, then introduce the abbreviation in parentheses. After that, you can use the abbreviation: (AACC, 2024). Only abbreviate if the organization appears multiple times.
+        </div>
+        <div class="popover" id="pop-b2-5">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">No Date (n.d.)</div>
+          If a source has no publication date, use "n.d." (no date) in both the in-text citation and the reference entry.
+        </div>
+        <div class="popover" id="pop-b2-6">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Citing a Video</div>
+          Cite the organization or person who uploaded the video as the author. The format in the References entry will include [Video] in brackets after the title.
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- REFERENCES PAGE                                               -->
+      <!-- ============================================================ -->
+      <div class="paper-page" id="page-refs" role="region" aria-label="References page">
+        <span class="page-num">7
+          <span class="hotspot hotspot-abs" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 1: New page" data-pop="ref-1" style="top: -2px; left: 8px;">1</span>
+        </span>
+
+        <p class="ref-title">References
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 2: References heading" data-pop="ref-2">2</span>
+        </p>
+
+        <p class="ref-entry">American Association of Community Colleges. (2024). <em>Position statement on the responsible use of artificial intelligence in community college education</em>. https://www.aacc.nche.edu/policies/example
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 3: Alphabetical order" data-pop="ref-3">3</span>
+        </p>
+
+        <p class="ref-entry">Chen, L., &amp; Sharma, D. (2024). Artificial intelligence in undergraduate education: A systematic review. <em>Computers &amp; Education, 210</em>, 104–121. https://doi.org/10.1016/j.compedu.2024.example</p>
+
+        <p class="ref-entry">CNBC. (2024, March 18). <em>How AI is changing education at community colleges</em> [Video]. YouTube. https://www.youtube.com/watch?v=example</p>
+
+        <p class="ref-entry">International Society for Technology in Education. (n.d.). <em>AI in education</em>. https://www.iste.org/areas-of-focus/AI-in-education</p>
+
+        <p class="ref-entry">McKinsey Global Institute. (2023). <em>The economic potential of generative AI: The next productivity frontier</em>. https://www.mckinsey.com/capabilities/example
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 4: No period after URL" data-pop="ref-4">4</span>
+        </p>
+
+        <p class="ref-entry">Metz, C. (2024, September 12). Community colleges turn to AI to support overwhelmed students. <em>The New York Times</em>. https://www.nytimes.com/2024/09/12/technology/example
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 5: Italics" data-pop="ref-5">5</span>
+        </p>
+
+        <p class="ref-entry">u/dataworklife. (2024, October 15). My school just added an AI tutor and nobody even told us how to use it or if it was [Online forum post]. Reddit. https://www.reddit.com/r/communitycolleges/comments/example
+          <span class="hotspot" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 6: Social media entry" data-pop="ref-6">6</span>
+        </p>
+
+        <p class="ref-entry">U.S. Government Accountability Office. (2024). <em>Artificial intelligence in health care: Agencies have begun oversight but more action is needed</em> (GAO-24-106780). https://www.gao.gov/products/gao-24-106780</p>
+
+        <span class="hotspot hotspot-abs" role="button" tabindex="0" aria-expanded="false" aria-label="Tip 7: Hanging indent" data-pop="ref-7" style="bottom: 40px; left: 50px;">7</span>
+
+        <!-- Popovers -->
+        <div class="popover" id="pop-ref-1">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Start on a New Page</div>
+          The References page always starts on its own new page. Continue the page numbering from the rest of your paper.
+        </div>
+        <div class="popover" id="pop-ref-2">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">References Heading</div>
+          Center the word "References" in bold at the top of the page. Don't underline it, change the font size, or put it in quotes.
+        </div>
+        <div class="popover" id="pop-ref-3">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Alphabetical Order</div>
+          List entries alphabetically by the first element — usually the author's last name. For organizations, alphabetize by the organization name (ignoring "The"). Every source cited in your paper should appear here, and every entry here should be cited in your paper.
+        </div>
+        <div class="popover" id="pop-ref-4">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">No Period After URLs or DOIs</div>
+          In APA 7th edition, do not place a period after a DOI or URL. A trailing period could break the link or confuse readers about whether it's part of the address.
+        </div>
+        <div class="popover" id="pop-ref-5">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">What Gets Italicized</div>
+          For journal articles: italicize the journal name, volume, and issue. For news articles: italicize the publication name. For reports, videos, and webpages: italicize the title of the work. Article titles are never italicized — they stay in regular sentence case.
+        </div>
+        <div class="popover" id="pop-ref-6">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Social Media Reference Entry</div>
+          Use the username as the author (here, u/dataworklife). Include the first 20 words of the post as the title, then describe the format in brackets: [Online forum post]. End with the platform name and URL.
+        </div>
+        <div class="popover" id="pop-ref-7">
+          <button class="popover-close" aria-label="Close">&times;</button>
+          <div class="popover-title">Hanging Indent</div>
+          Every reference entry uses a hanging indent: the first line is flush left, and any additional lines are indented 0.5 inches. In Word or Docs, set this under paragraph formatting — don't use the Tab key manually.
+        </div>
+      </div>
+
+    </div><!-- /paper-wrapper -->
+
+    <p style="margin-top: 1.5rem; padding: 0.8rem 1rem; font-size: 0.88rem; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; background: var(--accent-box-bg);">This example paper was generated by Claude AI for instructional purposes only. It is meant to show what APA formatting looks like in practice &mdash; not to serve as a model of research or argumentation. All sources, statistics, quotations, and reference entries are fictional and do not link to real publications.</p>
+
+  </div>
+
+  <script src="/nav.js"></script>
+  <script src="/footer.js" defer></script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    /* ===== Page Navigation ===== */
+    const navBtns = document.querySelectorAll(".page-nav button[data-page]");
+    const pages = {
+      title: document.getElementById("page-title"),
+      body1: document.getElementById("page-body1"),
+      body2: document.getElementById("page-body2"),
+      refs:  document.getElementById("page-refs")
+    };
+
+    navBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        // Close any open popovers
+        closeAllPopovers();
+        // Switch pages
+        navBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        Object.values(pages).forEach(p => p.classList.remove("active"));
+        pages[btn.dataset.page].classList.add("active");
+        // Scroll paper into view
+        document.querySelector(".paper-wrapper").scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+    });
+
+    /* ===== Hotspot Popovers ===== */
+    const hotspots = document.querySelectorAll(".hotspot[data-pop]");
+
+    function closeAllPopovers() {
+      document.querySelectorAll(".popover.is-open").forEach(p => p.classList.remove("is-open"));
+      document.querySelectorAll('.hotspot[aria-expanded="true"]').forEach(h => h.setAttribute("aria-expanded", "false"));
+    }
+
+    function positionPopover(hotspot, popover) {
+      const page = hotspot.closest(".paper-page");
+      const pageRect = page.getBoundingClientRect();
+      const hsRect = hotspot.getBoundingClientRect();
+
+      // Position relative to the paper-page
+      let top = hsRect.top - pageRect.top + hsRect.height + 8;
+      let left = hsRect.left - pageRect.left - 60;
+
+      // Keep within page bounds
+      const popW = 280;
+      if (left + popW > pageRect.width - 20) {
+        left = pageRect.width - popW - 20;
+      }
+      if (left < 10) left = 10;
+
+      // If popover would go below visible area, position above instead
+      if (top + 160 > pageRect.height) {
+        top = hsRect.top - pageRect.top - 160;
+      }
+
+      popover.style.top = top + "px";
+      popover.style.left = left + "px";
+    }
+
+    hotspots.forEach(hs => {
+      const toggle = () => {
+        const popId = "pop-" + hs.dataset.pop;
+        const pop = document.getElementById(popId);
+        if (!pop) return;
+
+        const isOpen = hs.getAttribute("aria-expanded") === "true";
+        closeAllPopovers();
+
+        if (!isOpen) {
+          hs.setAttribute("aria-expanded", "true");
+          positionPopover(hs, pop);
+          pop.classList.add("is-open");
+        }
+      };
+
+      hs.addEventListener("click", (e) => { e.stopPropagation(); toggle(); });
+      hs.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); toggle(); }
+      });
+    });
+
+    // Close buttons inside popovers
+    document.querySelectorAll(".popover-close").forEach(btn => {
+      btn.addEventListener("click", (e) => { e.stopPropagation(); closeAllPopovers(); });
+    });
+
+    // Click outside closes popovers
+    document.addEventListener("click", closeAllPopovers);
+
+    // Escape key closes popovers
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeAllPopovers();
+    });
+
+    // Prevent clicks inside popovers from closing them
+    document.querySelectorAll(".popover").forEach(p => {
+      p.addEventListener("click", (e) => e.stopPropagation());
+    });
+  });
+  </script>
+</body>
+</html>
