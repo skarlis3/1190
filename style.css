@@ -27,6 +27,7 @@
   /* Accent box backgrounds (light mode) */
   --accent-box-bg: color-mix(in srgb, var(--focus) 7%, white);
   --accent-box-text: #000;
+  --interactive-hint: #404850;
 
   --topnav-h:56px;
   --sidenav-w:clamp(272px,24vw,340px);

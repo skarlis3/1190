@@ -20,14 +20,17 @@
       cursor: pointer;
       background: var(--accent-box-bg);
       border: 1px solid var(--border);
+      border-left: 3px solid var(--bright);
       border-radius: 8px;
       padding: 1.25rem 1rem;
       text-align: center;
-      transition: box-shadow 0.15s, border-color 0.15s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
     }
     .card-grid button:hover {
       border-color: var(--bright);
-      box-shadow: 0 2px 8px rgba(0,0,0,.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.13);
+      transform: translateY(-2px);
     }
     .card-grid button:focus-visible {
       outline: 2px solid var(--focus-outline);
@@ -43,7 +46,18 @@
     .card-grid .card-hint {
       display: block;
       font-size: 0.88rem;
+      color: var(--interactive-hint, #404850);
+    }
+    [data-theme="dark"] .card-grid .card-hint {
       color: var(--muted);
+    }
+    .card-grid button::after {
+      content: "Tap to view \203A";
+      display: block;
+      font-size: 0.78rem;
+      color: var(--bright);
+      margin-top: 0.4rem;
+      font-weight: 400;
     }
 
     /* Modal Overlay */
