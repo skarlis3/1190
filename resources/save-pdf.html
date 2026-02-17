@@ -6,74 +6,166 @@
   <title>How to Save a Web Page as a PDF | ENGL 1190</title>
   <link rel="stylesheet" href="/style.css" />
   <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <style>
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+    .card-grid button {
+      all: unset;
+      box-sizing: border-box;
+      cursor: pointer;
+      background: var(--accent-box-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .card-grid button:hover {
+      border-color: var(--bright);
+      box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    }
+    .card-grid button:focus-visible {
+      outline: 2px solid var(--focus-outline);
+      outline-offset: 2px;
+    }
+    .card-grid .card-title {
+      display: block;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .card-grid .card-hint {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(0,0,0,.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-dialog {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      max-width: 640px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2rem 2rem 1.5rem;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--muted);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .modal-close:hover {
+      background: var(--hover);
+      color: var(--text);
+    }
+    .modal-close:focus-visible {
+      outline: 2px solid var(--focus-outline);
+      outline-offset: 2px;
+    }
+    .modal-dialog h3 { margin-top: 0; }
+    .modal-dialog .tip-box {
+      background: var(--accent-box-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.85rem 1.25rem;
+      margin: 1rem 0;
+    }
+    [data-theme="dark"] .modal-dialog .tip-box {
+      border-left-color: var(--bright);
+    }
+    .modal-dialog .tip-box h4 {
+      margin: 0 0 0.3rem;
+      font-size: 0.95rem;
+    }
+    .modal-dialog .tip-box p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 600px) {
+      .modal-dialog {
+        padding: 1.25rem 1.25rem 1rem;
+        max-height: 90vh;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="page-content">
     <h1>How to Save a Web Page as a PDF</h1>
 
-    <p>This page covers three common scenarios you'll run into when you need to save something as a PDF for class. Jump to whichever one applies to your situation.</p>
-
-    <div class="toc">
-      <h3>On This Page</h3>
-      <ul>
-        <li><a href="#basic-pdf">Method 1: Print to PDF (Any Web Page)</a></li>
-        <li><a href="#reader-mode">Method 2: News Articles &amp; Social Media (Reader Mode + Print to PDF)</a></li>
-        <li><a href="#scholarly">Method 3: Scholarly / Journal Articles</a></li>
-      </ul>
-    </div>
+    <p>This page covers three common scenarios you'll run into when you need to save something as a PDF for class. Pick whichever method applies to your situation.</p>
 
     <!-- ============================================================ -->
     <!--  METHOD 1: BASIC PRINT TO PDF                                -->
     <!-- ============================================================ -->
 
-    <h2 id="basic-pdf">Method 1: Print to PDF (Any Web Page)</h2>
+    <h2>Method 1: Print to PDF (Any Web Page)</h2>
+    <p>This is the simplest method and works on any web page. It saves exactly what you see on screen — ads, sidebars, and all. If you're saving a news article and want a cleaner result, skip down to Method 2.</p>
 
-    <p>This is the simplest method and works on any web page. It saves exactly what you see on screen — ads, sidebars, and all. If you're saving a news article and want a cleaner result, skip down to <a href="#reader-mode">Method 2</a>.</p>
-
-    <h3>PC (Windows)</h3>
-    <ol>
-      <li>Open the page you want to save in any browser.</li>
-      <li>Press <strong>Ctrl + P</strong> to open the print dialog.</li>
-      <li>In the Printer dropdown, select <strong>"Microsoft Print to PDF"</strong>.</li>
-      <li>Click <strong>Print</strong>, then choose where to save the file and give it a clear name.</li>
-    </ol>
-
-    <h3>Mac</h3>
-    <ol>
-      <li>Open the page you want to save in any browser.</li>
-      <li>Press <strong>⌘ Cmd + P</strong> to open the print dialog.</li>
-      <li>In the bottom-left corner, click the <strong>PDF</strong> dropdown button and choose <strong>"Save as PDF"</strong>.</li>
-      <li>Name your file and click <strong>Save</strong>.</li>
-    </ol>
-
-    <h3>iPad</h3>
-    <ol>
-      <li>Open the page in Safari (or your preferred browser).</li>
-      <li>Tap the <strong>Share button</strong> (the square with an arrow pointing up).</li>
-      <li>Scroll down and tap <strong>"Print"</strong>.</li>
-      <li>On the print preview, <strong>pinch outward</strong> (zoom in) on the page preview with two fingers. This converts it into a PDF preview.</li>
-      <li>Tap the <strong>Share button</strong> again and choose <strong>"Save to Files"</strong>.</li>
-    </ol>
-
-    <div class="tips-accent-box">
-      <h3>Key Step for iPad</h3>
-      <p style="margin-bottom:0;">The pinch-to-zoom trick is the important part — it converts the print preview into a PDF you can save.</p>
+    <div class="card-grid">
+      <button data-modal="m1-pc">
+        <span class="card-title">PC (Windows)</span>
+        <span class="card-hint">Ctrl + P</span>
+      </button>
+      <button data-modal="m1-mac">
+        <span class="card-title">Mac</span>
+        <span class="card-hint">Cmd + P</span>
+      </button>
+      <button data-modal="m1-ipad">
+        <span class="card-title">iPad</span>
+        <span class="card-hint">Share &rarr; Print</span>
+      </button>
+      <button data-modal="m1-android">
+        <span class="card-title">Android Tablet</span>
+        <span class="card-hint">Menu &rarr; Print</span>
+      </button>
     </div>
-
-    <h3>Android Tablet</h3>
-    <ol>
-      <li>Open the page in your browser.</li>
-      <li>Tap the <strong>three-dot menu (⋯)</strong> and choose <strong>"Share"</strong> or <strong>"Print"</strong>.</li>
-      <li>If you chose Share, select <strong>"Print"</strong> from the share options.</li>
-      <li>At the top of the print screen, tap the <strong>printer dropdown</strong> and select <strong>"Save as PDF"</strong>.</li>
-      <li>Tap the <strong>Save button</strong> and choose where to save it.</li>
-    </ol>
 
     <!-- ============================================================ -->
     <!--  METHOD 2: READER MODE + PRINT TO PDF                       -->
     <!-- ============================================================ -->
 
-    <h2 id="reader-mode">Method 2: News Articles &amp; Social Media (Reader Mode + Print to PDF)</h2>
+    <h2>Method 2: News Articles &amp; Social Media (Reader Mode + Print to PDF)</h2>
 
     <div class="glance-accent-box">
       <h3>Why Reader Mode?</h3>
@@ -81,152 +173,62 @@
       <p style="margin-bottom:0;"><strong>Do not use Google Chrome for this.</strong> Chrome does not have a built-in Reader Mode. Use <strong>Microsoft Edge</strong>, <strong>Mozilla Firefox</strong>, or <strong>Safari</strong> instead.</p>
     </div>
 
-    <h3>On a Computer (PC or Mac)</h3>
+    <h3>On a Computer</h3>
     <p>Pick whichever browser you have installed. The steps are very similar across all three.</p>
 
-    <p><strong>Microsoft Edge (PC or Mac)</strong></p>
-
-    <p><em>Step 1 — Turn on Reader Mode</em></p>
-    <ol>
-      <li>Open the article in Edge.</li>
-      <li>Look at the address bar — you should see a small <strong>book icon</strong> on the right side. Click it.</li>
-      <li>The page will reload in a clean, simplified view. That's Reader Mode!</li>
-    </ol>
-
-    <div class="tips-accent-box">
-      <h3>Don't see the book icon?</h3>
-      <p style="margin-bottom:0;">Not every page supports Reader Mode. Try pressing <strong>F9</strong> on PC, or look under the <strong>three-dot menu (⋯) → Immersive Reader</strong>.</p>
+    <div class="card-grid">
+      <button data-modal="m2-edge">
+        <span class="card-title">Microsoft Edge</span>
+        <span class="card-hint">PC or Mac</span>
+      </button>
+      <button data-modal="m2-firefox">
+        <span class="card-title">Mozilla Firefox</span>
+        <span class="card-hint">PC or Mac</span>
+      </button>
+      <button data-modal="m2-safari">
+        <span class="card-title">Safari</span>
+        <span class="card-hint">Mac only</span>
+      </button>
     </div>
-
-    <p><em>Step 2 — Print to PDF</em></p>
-    <ol>
-      <li>Press <strong>Ctrl + P</strong> on PC, or <strong>⌘ Cmd + P</strong> on Mac.</li>
-      <li>In the Printer dropdown, choose <strong>"Microsoft Print to PDF"</strong> (PC) or <strong>"Save as PDF"</strong> (Mac).</li>
-      <li>Click <strong>Print</strong> (or <strong>Save</strong> on Mac).</li>
-      <li>Choose where to save the file, give it a clear name, and click <strong>Save</strong>.</li>
-    </ol>
-
-    <p><strong>Mozilla Firefox (PC or Mac)</strong></p>
-
-    <p><em>Step 1 — Turn on Reader Mode</em></p>
-    <ol>
-      <li>Open the article in Firefox.</li>
-      <li>Look at the address bar for a small <strong>page/document icon</strong> on the right side. Click it.</li>
-      <li>The page switches to a clean reading view.</li>
-    </ol>
-
-    <div class="tips-accent-box">
-      <h3>Keyboard Shortcut</h3>
-      <p style="margin-bottom:0;">You can also press <strong>F9</strong> to toggle Reader Mode on and off in Firefox.</p>
-    </div>
-
-    <p><em>Step 2 — Print to PDF</em></p>
-    <ol>
-      <li>Press <strong>Ctrl + P</strong> on PC, or <strong>⌘ Cmd + P</strong> on Mac.</li>
-      <li>In the Destination or Printer dropdown, choose <strong>"Microsoft Print to PDF"</strong> (PC) or <strong>"Save as PDF"</strong> (Mac).</li>
-      <li>Click <strong>Print</strong> / <strong>Save</strong>.</li>
-      <li>Name your file and save it somewhere you can find it (like your Desktop or Downloads folder).</li>
-    </ol>
-
-    <p><strong>Safari (Mac Only)</strong></p>
-
-    <p><em>Step 1 — Turn on Reader Mode</em></p>
-    <ol>
-      <li>Open the article in Safari.</li>
-      <li>In the address bar, click the <strong>page icon</strong> on the left side (next to the URL). Select <strong>"Show Reader"</strong>.</li>
-      <li>The page will switch to a clean view.</li>
-    </ol>
-
-    <p><em>Step 2 — Print to PDF</em></p>
-    <ol>
-      <li>Press <strong>⌘ Cmd + P</strong>.</li>
-      <li>In the bottom-left corner of the print dialog, click the <strong>PDF</strong> dropdown button and choose <strong>"Save as PDF"</strong>.</li>
-      <li>Name your file and click <strong>Save</strong>.</li>
-    </ol>
 
     <h3>On a Tablet</h3>
 
-    <p><strong>iPad (Safari)</strong></p>
-
-    <p><em>Step 1 — Turn on Reader Mode</em></p>
-    <ol>
-      <li>Open the article in Safari.</li>
-      <li>Tap the <strong>Aa</strong> button in the address bar (or the page icon, depending on your iOS version).</li>
-      <li>Tap <strong>"Show Reader"</strong> to get the clean view.</li>
-    </ol>
-
-    <p><em>Step 2 — Save as PDF</em></p>
-    <ol>
-      <li>Tap the <strong>Share button</strong> (the square with an arrow pointing up).</li>
-      <li>Scroll down and tap <strong>"Print"</strong>.</li>
-      <li>On the print preview, <strong>pinch outward</strong> (zoom in) on the page preview with two fingers. This turns it into a PDF preview.</li>
-      <li>Now tap the <strong>Share button</strong> again and choose <strong>"Save to Files"</strong>.</li>
-    </ol>
-
-    <p><strong>Android Tablet (Firefox or Edge)</strong></p>
-
-    <p><em>Step 1 — Turn on Reader Mode</em></p>
-    <ol>
-      <li>Open the article in Firefox or Edge.</li>
-      <li><strong>Firefox:</strong> Look for the <strong>Reader Mode icon</strong> in the address bar and tap it.</li>
-      <li><strong>Edge:</strong> Tap the <strong>three-dot menu (⋯)</strong> and look for <strong>"Immersive Reader"</strong>.</li>
-    </ol>
-
-    <p><em>Step 2 — Print to PDF</em></p>
-    <ol>
-      <li>Tap the <strong>three-dot menu</strong> and choose <strong>"Share"</strong> or <strong>"Print"</strong>.</li>
-      <li>If you chose Share, select <strong>"Print"</strong> from the share options.</li>
-      <li>At the top of the print screen, tap the <strong>printer dropdown</strong> and select <strong>"Save as PDF"</strong>.</li>
-      <li>Tap the <strong>Save button</strong> and choose where to save it.</li>
-    </ol>
+    <div class="card-grid">
+      <button data-modal="m2-ipad">
+        <span class="card-title">iPad (Safari)</span>
+        <span class="card-hint">Reader Mode + Print</span>
+      </button>
+      <button data-modal="m2-android">
+        <span class="card-title">Android Tablet</span>
+        <span class="card-hint">Firefox or Edge</span>
+      </button>
+    </div>
 
     <!-- ============================================================ -->
     <!--  METHOD 3: SCHOLARLY / JOURNAL ARTICLES                      -->
     <!-- ============================================================ -->
 
-    <h2 id="scholarly">Method 3: Scholarly / Journal Articles</h2>
-
+    <h2>Method 3: Scholarly / Journal Articles</h2>
     <p>When you find an article through our library databases (like EBSCO, JSTOR, or ProQuest), you'll usually land in one of two situations. Here's how to handle each one.</p>
 
-    <h3>If the Article Opens on the Journal's Website</h3>
-    <p>Many databases link you out to the journal's own site, where the article appears as a regular web page with text, images, and navigation around it.</p>
-    <ol>
-      <li>Look for a <strong>"Download PDF"</strong> or <strong>"View PDF"</strong> button or icon — it's usually near the top of the article, in a toolbar, or in a sidebar. It may also appear as a small PDF icon.</li>
-      <li>Click it. The article will either download directly or open as a PDF in your browser.</li>
-      <li>If it opens as a PDF in your browser, see the next section to save it.</li>
-    </ol>
-
-    <div class="tips-accent-box">
-      <h3>Can't Find a Download Button?</h3>
-      <p style="margin-bottom:0;">Some journal sites bury the PDF link or only show it after you scroll past the abstract. Look for icons that look like a downward arrow, a document page, or the letters "PDF." If you still can't find it, try the <a href="#basic-pdf">basic Print to PDF method</a> as a fallback.</p>
+    <div class="card-grid">
+      <button data-modal="m3-website">
+        <span class="card-title">Article on a Website</span>
+        <span class="card-hint">Journal or database site</span>
+      </button>
+      <button data-modal="m3-computer">
+        <span class="card-title">PDF on a Computer</span>
+        <span class="card-hint">Already open as PDF</span>
+      </button>
+      <button data-modal="m3-ipad">
+        <span class="card-title">PDF on iPad</span>
+        <span class="card-hint">Save to Files</span>
+      </button>
+      <button data-modal="m3-android">
+        <span class="card-title">PDF on Android</span>
+        <span class="card-hint">Download icon</span>
+      </button>
     </div>
-
-    <h3>If the Article Opens as a PDF Document</h3>
-    <p>Sometimes the database or journal site opens the article directly as a PDF in your browser window. You'll know this is the case because the page will look like a document with its own formatting — not like a regular web page.</p>
-
-    <p><strong>On a Computer (PC or Mac)</strong></p>
-    <ol>
-      <li>Hover your mouse near the <strong>top of the browser window</strong> — a toolbar should appear with icons for zoom, print, and save.</li>
-      <li>Click the <strong>download/save icon</strong> (usually a downward arrow or a floppy disk icon).</li>
-      <li>Choose where to save the file, give it a clear name, and click <strong>Save</strong>.</li>
-    </ol>
-
-    <div class="tips-accent-box">
-      <h3>Toolbar Not Appearing?</h3>
-      <p style="margin-bottom:0;">Try right-clicking anywhere on the PDF and selecting <strong>"Save As"</strong> or <strong>"Download PDF."</strong> You can also press <strong>Ctrl + S</strong> (PC) or <strong>⌘ Cmd + S</strong> (Mac).</p>
-    </div>
-
-    <p><strong>On an iPad</strong></p>
-    <ol>
-      <li>When the PDF opens in Safari, tap the <strong>Share button</strong> (the square with an arrow pointing up).</li>
-      <li>Choose <strong>"Save to Files"</strong> and pick your preferred location.</li>
-    </ol>
-
-    <p><strong>On an Android Tablet</strong></p>
-    <ol>
-      <li>When the PDF opens in your browser, tap the <strong>download icon</strong> (downward arrow) in the toolbar at the top of the screen.</li>
-      <li>The file will save to your Downloads folder. You can move it from there if needed.</li>
-    </ol>
 
     <div class="glance-accent-box">
       <h3>File Naming Tip</h3>
@@ -234,8 +236,251 @@
     </div>
 
   </div>
-<!-- main navigation and page scripts -->
-<script src="/nav.js"></script>
-<script src="/footer.js" defer></script>
+
+  <!-- ============================================================ -->
+  <!--  HIDDEN MODAL CONTENT TEMPLATES                              -->
+  <!-- ============================================================ -->
+
+  <!-- Method 1 modals -->
+  <template id="m1-pc" data-title="Print to PDF — PC (Windows)">
+    <h3>Print to PDF — PC (Windows)</h3>
+    <ol>
+      <li>Open the page you want to save in any browser.</li>
+      <li>Press <strong>Ctrl + P</strong> to open the print dialog.</li>
+      <li>In the Printer dropdown, select <strong>"Microsoft Print to PDF"</strong>.</li>
+      <li>Click <strong>Print</strong>, then choose where to save the file and give it a clear name.</li>
+    </ol>
+  </template>
+
+  <template id="m1-mac" data-title="Print to PDF — Mac">
+    <h3>Print to PDF — Mac</h3>
+    <ol>
+      <li>Open the page you want to save in any browser.</li>
+      <li>Press <strong>&#8984; Cmd + P</strong> to open the print dialog.</li>
+      <li>In the bottom-left corner, click the <strong>PDF</strong> dropdown button and choose <strong>"Save as PDF"</strong>.</li>
+      <li>Name your file and click <strong>Save</strong>.</li>
+    </ol>
+  </template>
+
+  <template id="m1-ipad" data-title="Print to PDF — iPad">
+    <h3>Print to PDF — iPad</h3>
+    <ol>
+      <li>Open the page in Safari (or your preferred browser).</li>
+      <li>Tap the <strong>Share button</strong> (the square with an arrow pointing up).</li>
+      <li>Scroll down and tap <strong>"Print"</strong>.</li>
+      <li>On the print preview, <strong>pinch outward</strong> (zoom in) on the page preview with two fingers. This converts it into a PDF preview.</li>
+      <li>Tap the <strong>Share button</strong> again and choose <strong>"Save to Files"</strong>.</li>
+    </ol>
+    <div class="tip-box">
+      <h4>Key Step</h4>
+      <p>The pinch-to-zoom trick is the important part — it converts the print preview into a PDF you can save.</p>
+    </div>
+  </template>
+
+  <template id="m1-android" data-title="Print to PDF — Android Tablet">
+    <h3>Print to PDF — Android Tablet</h3>
+    <ol>
+      <li>Open the page in your browser.</li>
+      <li>Tap the <strong>three-dot menu (&#x22EF;)</strong> and choose <strong>"Share"</strong> or <strong>"Print"</strong>.</li>
+      <li>If you chose Share, select <strong>"Print"</strong> from the share options.</li>
+      <li>At the top of the print screen, tap the <strong>printer dropdown</strong> and select <strong>"Save as PDF"</strong>.</li>
+      <li>Tap the <strong>Save button</strong> and choose where to save it.</li>
+    </ol>
+  </template>
+
+  <!-- Method 2 modals -->
+  <template id="m2-edge" data-title="Reader Mode — Microsoft Edge">
+    <h3>Reader Mode — Microsoft Edge</h3>
+    <p><strong>Step 1 — Turn on Reader Mode</strong></p>
+    <ol>
+      <li>Open the article in Edge.</li>
+      <li>Look at the address bar — you should see a small <strong>book icon</strong> on the right side. Click it.</li>
+      <li>The page will reload in a clean, simplified view. That's Reader Mode!</li>
+    </ol>
+    <div class="tip-box">
+      <h4>Don't see the book icon?</h4>
+      <p>Not every page supports Reader Mode. Try pressing <strong>F9</strong> on PC, or look under the <strong>three-dot menu (&#x22EF;) &rarr; Immersive Reader</strong>.</p>
+    </div>
+    <p><strong>Step 2 — Print to PDF</strong></p>
+    <ol>
+      <li>Press <strong>Ctrl + P</strong> on PC, or <strong>&#8984; Cmd + P</strong> on Mac.</li>
+      <li>In the Printer dropdown, choose <strong>"Microsoft Print to PDF"</strong> (PC) or <strong>"Save as PDF"</strong> (Mac).</li>
+      <li>Click <strong>Print</strong> (or <strong>Save</strong> on Mac).</li>
+      <li>Choose where to save the file, give it a clear name, and click <strong>Save</strong>.</li>
+    </ol>
+  </template>
+
+  <template id="m2-firefox" data-title="Reader Mode — Mozilla Firefox">
+    <h3>Reader Mode — Mozilla Firefox</h3>
+    <p><strong>Step 1 — Turn on Reader Mode</strong></p>
+    <ol>
+      <li>Open the article in Firefox.</li>
+      <li>Look at the address bar for a small <strong>page/document icon</strong> on the right side. Click it.</li>
+      <li>The page switches to a clean reading view.</li>
+    </ol>
+    <div class="tip-box">
+      <h4>Keyboard Shortcut</h4>
+      <p>You can also press <strong>F9</strong> to toggle Reader Mode on and off in Firefox.</p>
+    </div>
+    <p><strong>Step 2 — Print to PDF</strong></p>
+    <ol>
+      <li>Press <strong>Ctrl + P</strong> on PC, or <strong>&#8984; Cmd + P</strong> on Mac.</li>
+      <li>In the Destination or Printer dropdown, choose <strong>"Microsoft Print to PDF"</strong> (PC) or <strong>"Save as PDF"</strong> (Mac).</li>
+      <li>Click <strong>Print</strong> / <strong>Save</strong>.</li>
+      <li>Name your file and save it somewhere you can find it (like your Desktop or Downloads folder).</li>
+    </ol>
+  </template>
+
+  <template id="m2-safari" data-title="Reader Mode — Safari (Mac)">
+    <h3>Reader Mode — Safari (Mac)</h3>
+    <p><strong>Step 1 — Turn on Reader Mode</strong></p>
+    <ol>
+      <li>Open the article in Safari.</li>
+      <li>In the address bar, click the <strong>page icon</strong> on the left side (next to the URL). Select <strong>"Show Reader"</strong>.</li>
+      <li>The page will switch to a clean view.</li>
+    </ol>
+    <p><strong>Step 2 — Print to PDF</strong></p>
+    <ol>
+      <li>Press <strong>&#8984; Cmd + P</strong>.</li>
+      <li>In the bottom-left corner of the print dialog, click the <strong>PDF</strong> dropdown button and choose <strong>"Save as PDF"</strong>.</li>
+      <li>Name your file and click <strong>Save</strong>.</li>
+    </ol>
+  </template>
+
+  <template id="m2-ipad" data-title="Reader Mode — iPad (Safari)">
+    <h3>Reader Mode — iPad (Safari)</h3>
+    <p><strong>Step 1 — Turn on Reader Mode</strong></p>
+    <ol>
+      <li>Open the article in Safari.</li>
+      <li>Tap the <strong>Aa</strong> button in the address bar (or the page icon, depending on your iOS version).</li>
+      <li>Tap <strong>"Show Reader"</strong> to get the clean view.</li>
+    </ol>
+    <p><strong>Step 2 — Save as PDF</strong></p>
+    <ol>
+      <li>Tap the <strong>Share button</strong> (the square with an arrow pointing up).</li>
+      <li>Scroll down and tap <strong>"Print"</strong>.</li>
+      <li>On the print preview, <strong>pinch outward</strong> (zoom in) on the page preview with two fingers. This turns it into a PDF preview.</li>
+      <li>Now tap the <strong>Share button</strong> again and choose <strong>"Save to Files"</strong>.</li>
+    </ol>
+  </template>
+
+  <template id="m2-android" data-title="Reader Mode — Android Tablet">
+    <h3>Reader Mode — Android Tablet (Firefox or Edge)</h3>
+    <p><strong>Step 1 — Turn on Reader Mode</strong></p>
+    <ol>
+      <li>Open the article in Firefox or Edge.</li>
+      <li><strong>Firefox:</strong> Look for the <strong>Reader Mode icon</strong> in the address bar and tap it.</li>
+      <li><strong>Edge:</strong> Tap the <strong>three-dot menu (&#x22EF;)</strong> and look for <strong>"Immersive Reader"</strong>.</li>
+    </ol>
+    <p><strong>Step 2 — Print to PDF</strong></p>
+    <ol>
+      <li>Tap the <strong>three-dot menu</strong> and choose <strong>"Share"</strong> or <strong>"Print"</strong>.</li>
+      <li>If you chose Share, select <strong>"Print"</strong> from the share options.</li>
+      <li>At the top of the print screen, tap the <strong>printer dropdown</strong> and select <strong>"Save as PDF"</strong>.</li>
+      <li>Tap the <strong>Save button</strong> and choose where to save it.</li>
+    </ol>
+  </template>
+
+  <!-- Method 3 modals -->
+  <template id="m3-website" data-title="Scholarly Article on a Website">
+    <h3>If the Article Opens on the Journal's Website</h3>
+    <p>Many databases link you out to the journal's own site, where the article appears as a regular web page with text, images, and navigation around it.</p>
+    <ol>
+      <li>Look for a <strong>"Download PDF"</strong> or <strong>"View PDF"</strong> button or icon — it's usually near the top of the article, in a toolbar, or in a sidebar. It may also appear as a small PDF icon.</li>
+      <li>Click it. The article will either download directly or open as a PDF in your browser.</li>
+      <li>If it opens as a PDF in your browser, see the "PDF on a Computer" steps to save it.</li>
+    </ol>
+    <div class="tip-box">
+      <h4>Can't Find a Download Button?</h4>
+      <p>Some journal sites bury the PDF link or only show it after you scroll past the abstract. Look for icons that look like a downward arrow, a document page, or the letters "PDF." If you still can't find it, try the basic Print to PDF method (Method 1) as a fallback.</p>
+    </div>
+  </template>
+
+  <template id="m3-computer" data-title="PDF on a Computer">
+    <h3>If the Article Opens as a PDF — Computer (PC or Mac)</h3>
+    <p>Sometimes the database or journal site opens the article directly as a PDF in your browser window. You'll know this is the case because the page will look like a document with its own formatting — not like a regular web page.</p>
+    <ol>
+      <li>Hover your mouse near the <strong>top of the browser window</strong> — a toolbar should appear with icons for zoom, print, and save.</li>
+      <li>Click the <strong>download/save icon</strong> (usually a downward arrow or a floppy disk icon).</li>
+      <li>Choose where to save the file, give it a clear name, and click <strong>Save</strong>.</li>
+    </ol>
+    <div class="tip-box">
+      <h4>Toolbar Not Appearing?</h4>
+      <p>Try right-clicking anywhere on the PDF and selecting <strong>"Save As"</strong> or <strong>"Download PDF."</strong> You can also press <strong>Ctrl + S</strong> (PC) or <strong>&#8984; Cmd + S</strong> (Mac).</p>
+    </div>
+  </template>
+
+  <template id="m3-ipad" data-title="PDF on iPad">
+    <h3>If the Article Opens as a PDF — iPad</h3>
+    <ol>
+      <li>When the PDF opens in Safari, tap the <strong>Share button</strong> (the square with an arrow pointing up).</li>
+      <li>Choose <strong>"Save to Files"</strong> and pick your preferred location.</li>
+    </ol>
+  </template>
+
+  <template id="m3-android" data-title="PDF on Android">
+    <h3>If the Article Opens as a PDF — Android Tablet</h3>
+    <ol>
+      <li>When the PDF opens in your browser, tap the <strong>download icon</strong> (downward arrow) in the toolbar at the top of the screen.</li>
+      <li>The file will save to your Downloads folder. You can move it from there if needed.</li>
+    </ol>
+  </template>
+
+  <!-- ============================================================ -->
+  <!--  MODAL SHELL                                                 -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay" role="dialog" aria-label="">
+    <div class="modal-dialog">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <div class="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- main navigation and page scripts -->
+  <script src="/nav.js"></script>
+  <script src="/footer.js" defer></script>
+  <script>
+    (function() {
+      var overlay = document.querySelector('.modal-overlay');
+      var dialog = overlay.querySelector('.modal-dialog');
+      var content = overlay.querySelector('.modal-content');
+      var closeBtn = overlay.querySelector('.modal-close');
+      var lastFocus = null;
+
+      function openModal(id) {
+        var tpl = document.getElementById(id);
+        if (!tpl) return;
+        lastFocus = document.activeElement;
+        content.innerHTML = tpl.innerHTML;
+        overlay.setAttribute('aria-label', tpl.dataset.title || '');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      }
+
+      function closeModal() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+        content.innerHTML = '';
+        if (lastFocus) lastFocus.focus();
+      }
+
+      document.querySelectorAll('[data-modal]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          openModal(this.dataset.modal);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) closeModal();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+      });
+    })();
+  </script>
 </body>
 </html>

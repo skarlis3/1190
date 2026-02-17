@@ -6,6 +6,128 @@
   <title>How to Annotate a PDF | ENGL 1190</title>
   <link rel="stylesheet" href="/style.css" />
   <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <style>
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0 1.75rem;
+    }
+    .card-grid button {
+      all: unset;
+      box-sizing: border-box;
+      cursor: pointer;
+      background: var(--accent-box-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .card-grid button:hover {
+      border-color: var(--bright);
+      box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    }
+    .card-grid button:focus-visible {
+      outline: 2px solid var(--focus-outline);
+      outline-offset: 2px;
+    }
+    .card-grid .card-title {
+      display: block;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .card-grid .card-hint {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(0,0,0,.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-dialog {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      max-width: 640px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2rem 2rem 1.5rem;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--muted);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .modal-close:hover {
+      background: var(--hover);
+      color: var(--text);
+    }
+    .modal-close:focus-visible {
+      outline: 2px solid var(--focus-outline);
+      outline-offset: 2px;
+    }
+    .modal-dialog h3 { margin-top: 0; }
+    .modal-dialog .tip-box {
+      background: var(--accent-box-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.85rem 1.25rem;
+      margin: 1rem 0;
+    }
+    [data-theme="dark"] .modal-dialog .tip-box {
+      border-left-color: var(--bright);
+    }
+    .modal-dialog .tip-box h4 {
+      margin: 0 0 0.3rem;
+      font-size: 0.95rem;
+    }
+    .modal-dialog .tip-box p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 600px) {
+      .modal-dialog {
+        padding: 1.25rem 1.25rem 1rem;
+        max-height: 90vh;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="page-content">
@@ -14,21 +136,11 @@
 
     <p>For some assignments in this class, you'll need to annotate scholarly articles directly on the PDF — highlighting key passages, adding comments, and writing notes. This guide covers what to annotate, how to do it on whatever device you have, and how to make sure your annotations are saved when you submit.</p>
 
-    <div class="toc">
-      <h3>On This Page</h3>
-      <ul>
-        <li><a href="#what-to-annotate">What to Annotate (and Why)</a></li>
-        <li><a href="#computer">Annotating on a Computer (PC or Mac)</a></li>
-        <li><a href="#tablets">Annotating on a Tablet (iPad or Android)</a></li>
-        <li><a href="#saving">Saving and Submitting Your Annotated PDF</a></li>
-      </ul>
-    </div>
-
     <!-- ============================================================ -->
     <!--  WHAT TO ANNOTATE                                            -->
     <!-- ============================================================ -->
 
-    <h2 id="what-to-annotate">What to Annotate (and Why)</h2>
+    <h2>What to Annotate (and Why)</h2>
 
     <p>Annotating isn't just highlighting everything that looks important. The goal is to have a conversation with the text — marking the parts that matter and writing down your thinking as you read. When you come back to the article later (for a paper, a discussion, or a project), your annotations become a record of what you noticed and what you were thinking.</p>
 
@@ -53,69 +165,24 @@
     <!--  COMPUTER                                                    -->
     <!-- ============================================================ -->
 
-    <h2 id="computer">Annotating on a Computer (PC or Mac)</h2>
+    <h2>Annotating on a Computer (PC or Mac)</h2>
 
     <p>You have several free options for annotating PDFs on a computer. Pick whichever one you already have or feels most comfortable.</p>
 
-    <h3>Adobe Acrobat Reader (Free — PC and Mac)</h3>
-
-    <p>Adobe Acrobat Reader is free and works on both PC and Mac. If you don't already have it, you can download it from <a href="https://get.adobe.com/reader/">get.adobe.com/reader</a>. Make sure you download the free <strong>Acrobat Reader</strong>, not the paid Acrobat Pro — Reader is all you need.</p>
-
-    <p><strong>To highlight text:</strong></p>
-    <ol>
-      <li>Open your PDF in Acrobat Reader.</li>
-      <li>Select the <strong>Highlight</strong> tool from the toolbar at the top (it looks like a marker pen). If you don't see it, look under the <strong>Comment</strong> or <strong>Markup</strong> menu.</li>
-      <li>Click and drag across the text you want to highlight.</li>
-      <li>To change the highlight color, right-click (or Control-click on Mac) the highlighted text and choose <strong>Properties</strong>.</li>
-    </ol>
-
-    <p><strong>To add a comment:</strong></p>
-    <ol>
-      <li>Highlight a passage first, then <strong>double-click</strong> the highlight to open a comment box. Type your note there.</li>
-      <li>Or, use the <strong>Sticky Note</strong> tool (speech bubble icon) from the toolbar to place a comment anywhere on the page.</li>
-    </ol>
-
-    <p><strong>To add a note at the top of the PDF</strong> (for the short annotation your assignment requires):</p>
-    <ol>
-      <li>Use the <strong>Sticky Note</strong> tool and click at the very top of the first page.</li>
-      <li>Type your 1–2 sentence note about how the article relates to your research topic.</li>
-    </ol>
-
-    <p><strong>To save:</strong> Press <strong>Ctrl + S</strong> (PC) or <strong>⌘ Cmd + S</strong> (Mac). Your annotations are saved directly into the PDF file.</p>
-
-    <h3>Microsoft Edge (Free — PC and Mac)</h3>
-
-    <p>If you don't want to install anything, Microsoft Edge has a built-in PDF reader with annotation tools. This is especially convenient on Windows PCs where Edge is already installed.</p>
-
-    <p><strong>To highlight and comment:</strong></p>
-    <ol>
-      <li>Right-click your PDF file and choose <strong>Open with → Microsoft Edge</strong>.</li>
-      <li>A toolbar will appear at the top of the PDF. Select the <strong>Highlight</strong> tool (marker icon) and drag across text to highlight it.</li>
-      <li>To add a comment, highlight some text first, then right-click the highlight and choose <strong>Add comment</strong>.</li>
-      <li>You can also use the <strong>Text comment</strong> tool (if available) or the <strong>Draw</strong> tool to write or circle things freehand.</li>
-    </ol>
-
-    <p><strong>To save:</strong> Click the <strong>Save</strong> icon (floppy disk) in the toolbar, or press <strong>Ctrl + S</strong>. Choose <strong>"Save as"</strong> if you want to keep the original PDF unchanged and save an annotated copy.</p>
-
-    <h3>Preview (Free — Mac Only)</h3>
-
-    <p>Preview comes pre-installed on every Mac. It's simple and works well for basic annotation.</p>
-
-    <p><strong>To highlight text:</strong></p>
-    <ol>
-      <li>Open the PDF in Preview (this is usually the default when you double-click a PDF on a Mac).</li>
-      <li>If the Markup toolbar isn't showing, click the <strong>pen-tip icon</strong> near the top-right of the window (or go to <strong>View → Show Markup Toolbar</strong>).</li>
-      <li>Select the <strong>Highlight</strong> tool (marker icon) and drag across text.</li>
-      <li>To change the color, click the small dropdown arrow next to the highlight icon.</li>
-    </ol>
-
-    <p><strong>To add a comment:</strong></p>
-    <ol>
-      <li>Highlight a passage, then right-click (or Control-click) the highlight and choose <strong>"Add Note"</strong>.</li>
-      <li>A small note icon will appear — click it to open the note and type your comment.</li>
-    </ol>
-
-    <p><strong>To save:</strong> Press <strong>⌘ Cmd + S</strong>. Preview saves annotations directly into the PDF. If you want to keep the original untouched, use <strong>File → Export as PDF</strong> to save an annotated copy.</p>
+    <div class="card-grid">
+      <button data-modal="c-adobe">
+        <span class="card-title">Adobe Acrobat Reader</span>
+        <span class="card-hint">Free — PC and Mac</span>
+      </button>
+      <button data-modal="c-edge">
+        <span class="card-title">Microsoft Edge</span>
+        <span class="card-hint">Built-in on Windows</span>
+      </button>
+      <button data-modal="c-preview">
+        <span class="card-title">Preview</span>
+        <span class="card-hint">Mac only</span>
+      </button>
+    </div>
 
     <div class="tips-accent-box">
       <h3>Google Drive as a Backup Option</h3>
@@ -126,64 +193,30 @@
     <!--  TABLETS                                                     -->
     <!-- ============================================================ -->
 
-    <h2 id="tablets">Annotating on a Tablet (iPad or Android)</h2>
+    <h2>Annotating on a Tablet (iPad or Android)</h2>
 
     <p>Tablets are actually great for annotating PDFs, especially if you have a stylus. You can highlight and write notes directly on the document like you would with a printed article and a pen.</p>
 
-    <h3>iPad — Built-In Markup</h3>
-
-    <p>Every iPad can annotate PDFs using Apple's built-in Markup tools through the Files app. No extra apps needed.</p>
-
-    <ol>
-      <li>Save your PDF to the <strong>Files</strong> app (or open it from Google Drive/email and tap <strong>"Save to Files"</strong>).</li>
-      <li>Open the PDF in the <strong>Files</strong> app.</li>
-      <li>Tap the <strong>Markup icon</strong> (a pen-tip in a circle) in the top-right corner.</li>
-      <li>Use the <strong>pen, highlighter, or pencil tools</strong> at the bottom to draw or highlight directly on the page.</li>
-      <li>To add a typed comment: tap the <strong>+</strong> button in the Markup toolbar and choose <strong>"Text"</strong> to add a text box, or choose <strong>"Signature"</strong> → <strong>"Add or Remove Signature"</strong> (not ideal — see the app recommendation below for better commenting).</li>
-      <li>When you're done, tap <strong>Done</strong>. Your annotations are saved into the PDF.</li>
-    </ol>
-
-    <div class="tips-accent-box">
-      <h3>Limitation of Built-In Markup</h3>
-      <p style="margin-bottom:0;">Apple's Markup tools are great for freehand highlighting and drawing, especially with an Apple Pencil. But they don't support sticky-note-style typed comments very well. If you want to type comments (rather than handwrite them), use one of the free apps recommended below.</p>
+    <div class="card-grid">
+      <button data-modal="t-ipad">
+        <span class="card-title">iPad (Built-in Markup)</span>
+        <span class="card-hint">No extra apps needed</span>
+      </button>
+      <button data-modal="t-android">
+        <span class="card-title">Android (Google Drive)</span>
+        <span class="card-hint">Basic annotations</span>
+      </button>
+      <button data-modal="t-apps">
+        <span class="card-title">Recommended Free Apps</span>
+        <span class="card-hint">iPad and Android</span>
+      </button>
     </div>
-
-    <h3>Android Tablet — Google Drive</h3>
-
-    <p>Android doesn't have a built-in PDF annotation tool as polished as Apple's, but Google Drive offers basic annotation if your PDF is stored there.</p>
-
-    <ol>
-      <li>Upload your PDF to <strong>Google Drive</strong> (or save it there from your browser).</li>
-      <li>Open the PDF in the Google Drive app.</li>
-      <li>Tap the <strong>comment icon</strong> or select text and choose <strong>"Add comment"</strong> from the menu that appears.</li>
-      <li>Type your note and tap the send arrow to save it.</li>
-    </ol>
-
-    <p>Google Drive's annotation tools are limited — you can add comments, but highlighting and freehand markup aren't well supported. For a better experience, use the free app recommendation below.</p>
-
-    <h3>Recommended Free App: PDF Markup (Both iPad and Android)</h3>
-
-    <p>For the best tablet annotation experience, especially if you want both highlighting <em>and</em> typed comments, download a free PDF annotation app. A few solid options:</p>
-
-    <ul>
-      <li><strong>Adobe Acrobat Reader</strong> (free — iPad and Android): The mobile version of the same tool described in the computer section above. Supports highlighting, sticky notes, text comments, and freehand drawing. This is the most reliable free option across both platforms.</li>
-      <li><strong>PDF Expert</strong> (free with limitations — iPad): Very smooth highlighting and commenting. The free version covers everything you need for class.</li>
-    </ul>
-
-    <p>The process in these apps is similar across the board:</p>
-    <ol>
-      <li>Open your PDF in the app.</li>
-      <li>Use the <strong>highlight tool</strong> to select and highlight text.</li>
-      <li>Tap a highlighted passage and choose <strong>"Add Note"</strong> or <strong>"Comment"</strong> to type a note.</li>
-      <li>Use the <strong>sticky note</strong> tool to add comments anywhere on the page.</li>
-      <li>Save or export the PDF when you're done — make sure your annotations are included in the saved file.</li>
-    </ol>
 
     <!-- ============================================================ -->
     <!--  SAVING AND SUBMITTING                                       -->
     <!-- ============================================================ -->
 
-    <h2 id="saving">Saving and Submitting Your Annotated PDF</h2>
+    <h2>Saving and Submitting Your Annotated PDF</h2>
 
     <div class="glance-accent-box">
       <h3>The Most Important Step</h3>
@@ -206,8 +239,180 @@
     </div>
 
   </div>
-<!-- main navigation and page scripts -->
-<script src="/nav.js"></script>
-<script src="/footer.js" defer></script>
+
+  <!-- ============================================================ -->
+  <!--  HIDDEN MODAL CONTENT TEMPLATES                              -->
+  <!-- ============================================================ -->
+
+  <!-- Computer tool modals -->
+  <template id="c-adobe" data-title="Adobe Acrobat Reader">
+    <h3>Adobe Acrobat Reader (Free — PC and Mac)</h3>
+    <p>Adobe Acrobat Reader is free and works on both PC and Mac. If you don't already have it, you can download it from <a href="https://get.adobe.com/reader/" target="_blank" rel="noopener">get.adobe.com/reader</a>. Make sure you download the free <strong>Acrobat Reader</strong>, not the paid Acrobat Pro — Reader is all you need.</p>
+
+    <p><strong>To highlight text:</strong></p>
+    <ol>
+      <li>Open your PDF in Acrobat Reader.</li>
+      <li>Select the <strong>Highlight</strong> tool from the toolbar at the top (it looks like a marker pen). If you don't see it, look under the <strong>Comment</strong> or <strong>Markup</strong> menu.</li>
+      <li>Click and drag across the text you want to highlight.</li>
+      <li>To change the highlight color, right-click (or Control-click on Mac) the highlighted text and choose <strong>Properties</strong>.</li>
+    </ol>
+
+    <p><strong>To add a comment:</strong></p>
+    <ol>
+      <li>Highlight a passage first, then <strong>double-click</strong> the highlight to open a comment box. Type your note there.</li>
+      <li>Or, use the <strong>Sticky Note</strong> tool (speech bubble icon) from the toolbar to place a comment anywhere on the page.</li>
+    </ol>
+
+    <p><strong>To add a note at the top of the PDF</strong> (for the short annotation your assignment requires):</p>
+    <ol>
+      <li>Use the <strong>Sticky Note</strong> tool and click at the very top of the first page.</li>
+      <li>Type your 1–2 sentence note about how the article relates to your research topic.</li>
+    </ol>
+
+    <p><strong>To save:</strong> Press <strong>Ctrl + S</strong> (PC) or <strong>&#8984; Cmd + S</strong> (Mac). Your annotations are saved directly into the PDF file.</p>
+  </template>
+
+  <template id="c-edge" data-title="Microsoft Edge">
+    <h3>Microsoft Edge (Free — PC and Mac)</h3>
+    <p>If you don't want to install anything, Microsoft Edge has a built-in PDF reader with annotation tools. This is especially convenient on Windows PCs where Edge is already installed.</p>
+
+    <p><strong>To highlight and comment:</strong></p>
+    <ol>
+      <li>Right-click your PDF file and choose <strong>Open with &rarr; Microsoft Edge</strong>.</li>
+      <li>A toolbar will appear at the top of the PDF. Select the <strong>Highlight</strong> tool (marker icon) and drag across text to highlight it.</li>
+      <li>To add a comment, highlight some text first, then right-click the highlight and choose <strong>Add comment</strong>.</li>
+      <li>You can also use the <strong>Text comment</strong> tool (if available) or the <strong>Draw</strong> tool to write or circle things freehand.</li>
+    </ol>
+
+    <p><strong>To save:</strong> Click the <strong>Save</strong> icon (floppy disk) in the toolbar, or press <strong>Ctrl + S</strong>. Choose <strong>"Save as"</strong> if you want to keep the original PDF unchanged and save an annotated copy.</p>
+  </template>
+
+  <template id="c-preview" data-title="Preview (Mac)">
+    <h3>Preview (Free — Mac Only)</h3>
+    <p>Preview comes pre-installed on every Mac. It's simple and works well for basic annotation.</p>
+
+    <p><strong>To highlight text:</strong></p>
+    <ol>
+      <li>Open the PDF in Preview (this is usually the default when you double-click a PDF on a Mac).</li>
+      <li>If the Markup toolbar isn't showing, click the <strong>pen-tip icon</strong> near the top-right of the window (or go to <strong>View &rarr; Show Markup Toolbar</strong>).</li>
+      <li>Select the <strong>Highlight</strong> tool (marker icon) and drag across text.</li>
+      <li>To change the color, click the small dropdown arrow next to the highlight icon.</li>
+    </ol>
+
+    <p><strong>To add a comment:</strong></p>
+    <ol>
+      <li>Highlight a passage, then right-click (or Control-click) the highlight and choose <strong>"Add Note"</strong>.</li>
+      <li>A small note icon will appear — click it to open the note and type your comment.</li>
+    </ol>
+
+    <p><strong>To save:</strong> Press <strong>&#8984; Cmd + S</strong>. Preview saves annotations directly into the PDF. If you want to keep the original untouched, use <strong>File &rarr; Export as PDF</strong> to save an annotated copy.</p>
+  </template>
+
+  <!-- Tablet tool modals -->
+  <template id="t-ipad" data-title="iPad — Built-in Markup">
+    <h3>iPad — Built-In Markup</h3>
+    <p>Every iPad can annotate PDFs using Apple's built-in Markup tools through the Files app. No extra apps needed.</p>
+    <ol>
+      <li>Save your PDF to the <strong>Files</strong> app (or open it from Google Drive/email and tap <strong>"Save to Files"</strong>).</li>
+      <li>Open the PDF in the <strong>Files</strong> app.</li>
+      <li>Tap the <strong>Markup icon</strong> (a pen-tip in a circle) in the top-right corner.</li>
+      <li>Use the <strong>pen, highlighter, or pencil tools</strong> at the bottom to draw or highlight directly on the page.</li>
+      <li>To add a typed comment: tap the <strong>+</strong> button in the Markup toolbar and choose <strong>"Text"</strong> to add a text box, or choose <strong>"Signature"</strong> &rarr; <strong>"Add or Remove Signature"</strong> (not ideal — see the Recommended Free Apps card for better commenting).</li>
+      <li>When you're done, tap <strong>Done</strong>. Your annotations are saved into the PDF.</li>
+    </ol>
+    <div class="tip-box">
+      <h4>Limitation</h4>
+      <p>Apple's Markup tools are great for freehand highlighting and drawing, especially with an Apple Pencil. But they don't support sticky-note-style typed comments very well. If you want to type comments (rather than handwrite them), use one of the free apps in the Recommended Free Apps card.</p>
+    </div>
+  </template>
+
+  <template id="t-android" data-title="Android — Google Drive">
+    <h3>Android Tablet — Google Drive</h3>
+    <p>Android doesn't have a built-in PDF annotation tool as polished as Apple's, but Google Drive offers basic annotation if your PDF is stored there.</p>
+    <ol>
+      <li>Upload your PDF to <strong>Google Drive</strong> (or save it there from your browser).</li>
+      <li>Open the PDF in the Google Drive app.</li>
+      <li>Tap the <strong>comment icon</strong> or select text and choose <strong>"Add comment"</strong> from the menu that appears.</li>
+      <li>Type your note and tap the send arrow to save it.</li>
+    </ol>
+    <div class="tip-box">
+      <h4>Limitation</h4>
+      <p>Google Drive's annotation tools are limited — you can add comments, but highlighting and freehand markup aren't well supported. For a better experience, check the Recommended Free Apps card.</p>
+    </div>
+  </template>
+
+  <template id="t-apps" data-title="Recommended Free Apps">
+    <h3>Recommended Free Apps (iPad and Android)</h3>
+    <p>For the best tablet annotation experience, especially if you want both highlighting <em>and</em> typed comments, download a free PDF annotation app:</p>
+    <ul>
+      <li><strong>Adobe Acrobat Reader</strong> (free — iPad and Android): The mobile version of the same tool described in the computer section. Supports highlighting, sticky notes, text comments, and freehand drawing. This is the most reliable free option across both platforms.</li>
+      <li><strong>PDF Expert</strong> (free with limitations — iPad): Very smooth highlighting and commenting. The free version covers everything you need for class.</li>
+    </ul>
+    <p>The process in these apps is similar across the board:</p>
+    <ol>
+      <li>Open your PDF in the app.</li>
+      <li>Use the <strong>highlight tool</strong> to select and highlight text.</li>
+      <li>Tap a highlighted passage and choose <strong>"Add Note"</strong> or <strong>"Comment"</strong> to type a note.</li>
+      <li>Use the <strong>sticky note</strong> tool to add comments anywhere on the page.</li>
+      <li>Save or export the PDF when you're done — make sure your annotations are included in the saved file.</li>
+    </ol>
+  </template>
+
+  <!-- ============================================================ -->
+  <!--  MODAL SHELL                                                 -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay" role="dialog" aria-label="">
+    <div class="modal-dialog">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <div class="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- main navigation and page scripts -->
+  <script src="/nav.js"></script>
+  <script src="/footer.js" defer></script>
+  <script>
+    (function() {
+      var overlay = document.querySelector('.modal-overlay');
+      var dialog = overlay.querySelector('.modal-dialog');
+      var content = overlay.querySelector('.modal-content');
+      var closeBtn = overlay.querySelector('.modal-close');
+      var lastFocus = null;
+
+      function openModal(id) {
+        var tpl = document.getElementById(id);
+        if (!tpl) return;
+        lastFocus = document.activeElement;
+        content.innerHTML = tpl.innerHTML;
+        overlay.setAttribute('aria-label', tpl.dataset.title || '');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      }
+
+      function closeModal() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+        content.innerHTML = '';
+        if (lastFocus) lastFocus.focus();
+      }
+
+      document.querySelectorAll('[data-modal]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          openModal(this.dataset.modal);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) closeModal();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+      });
+    })();
+  </script>
 </body>
 </html>
