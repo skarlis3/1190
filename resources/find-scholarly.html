@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finding Scholarly Sources | ENGL 1190</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <style>
+    /* =====================================================
+       Find Scholarly Sources — Page-specific styles
+       Uses root CSS variables for dark mode compatibility
+       ===================================================== */
+
+    /* ── Accordion ─────────────────────────────────────── */
+    .accordion {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 1rem 0 1.5rem;
+      overflow: hidden;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .accordion-item:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-trigger {
+      all: unset;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      background: var(--accent-box-bg);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+      gap: 1rem;
+      transition: background 0.15s;
+    }
+
+    .accordion-trigger:hover {
+      background: var(--hover);
+    }
+
+    .accordion-trigger:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: -2px;
+    }
+
+    .accordion-trigger[aria-expanded="true"] {
+      background: var(--hover);
+      color: var(--accent);
+    }
+
+    [data-theme="dark"] .accordion-trigger[aria-expanded="true"] {
+      color: var(--bright);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .accordion-trigger[aria-expanded="true"] {
+        color: var(--bright);
+      }
+    }
+
+    .accordion-icon {
+      flex-shrink: 0;
+      width: 1.1rem;
+      height: 1.1rem;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .accordion-icon::before,
+    .accordion-icon::after {
+      content: "";
+      position: absolute;
+      background: currentColor;
+      border-radius: 2px;
+    }
+
+    .accordion-icon::before {
+      width: 100%;
+      height: 2px;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+
+    .accordion-icon::after {
+      width: 2px;
+      height: 100%;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .accordion-trigger[aria-expanded="true"] .accordion-icon::after {
+      transform: translateX(-50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .accordion-panel {
+      display: none;
+      padding: 1.25rem 1.5rem 1.5rem;
+      background: var(--bg);
+    }
+
+    .accordion-panel.is-open {
+      display: block;
+    }
+
+    .accordion-panel h3 {
+      margin-top: 0;
+    }
+
+    .accordion-panel ol,
+    .accordion-panel ul {
+      margin-top: 0.25rem;
+    }
+
+    /* ── Warning / note box ─────────────────────────────── */
+    .warning-box {
+      border: 1px solid var(--border);
+      border-left: 6px solid #b05a00;
+      background: #fff8f0;
+      color: #3a1a00;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      margin: 1rem 0 1.5rem;
+      font-size: .95rem;
+    }
+
+    [data-theme="dark"] .warning-box {
+      background: #2a1800;
+      color: #f0c080;
+      border-left-color: #d07020;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .warning-box {
+        background: #2a1800;
+        color: #f0c080;
+        border-left-color: #d07020;
+      }
+    }
+
+    .warning-box p {
+      margin: 0 0 .5em;
+    }
+
+    .warning-box p:last-child {
+      margin: 0;
+    }
+
+    .warning-box ul {
+      margin: .25rem 0 0;
+      padding-left: 1.5rem;
+    }
+
+    .warning-box ul li {
+      margin-bottom: .25rem;
+    }
+
+    /* ── Stop box (do not do this) ──────────────────────── */
+    .stop-box {
+      border: 1px solid var(--border);
+      border-left: 6px solid #8b0000;
+      background: #fff5f5;
+      color: #3a0000;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      margin: 1rem 0 1.5rem;
+      font-size: .95rem;
+    }
+
+    [data-theme="dark"] .stop-box {
+      background: #220000;
+      color: #f08080;
+      border-left-color: #cc2222;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .stop-box {
+        background: #220000;
+        color: #f08080;
+        border-left-color: #cc2222;
+      }
+    }
+
+    .stop-box p {
+      margin: 0 0 .5em;
+    }
+
+    .stop-box p:last-child {
+      margin: 0;
+    }
+
+    /* ── Google Scholar mock-up ─────────────────────────── */
+    .gs-mock {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem 0 1.25rem;
+      font-size: .9rem;
+    }
+
+    .gs-mock-bar {
+      background: #f8f9fa;
+      border-bottom: 1px solid var(--border);
+      padding: .6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    [data-theme="dark"] .gs-mock-bar,
+    .gs-mock-bar {
+      background: #f8f9fa;
+      color: #202124;
+    }
+
+    .gs-mock-logo {
+      font-size: .85rem;
+      font-weight: 700;
+      color: #4285f4;
+      white-space: nowrap;
+      font-family: Arial, sans-serif;
+    }
+
+    .gs-mock-logo span {
+      color: #ea4335;
+    }
+
+    .gs-mock-searchbar {
+      flex: 1;
+      border: 1px solid #dfe1e5;
+      border-radius: 24px;
+      padding: .4rem .9rem;
+      background: #fff;
+      color: #202124;
+      font-size: .88rem;
+      font-family: Arial, sans-serif;
+      max-width: 480px;
+    }
+
+    .gs-mock-body {
+      padding: .75rem 1rem 1rem;
+      background: var(--bg);
+    }
+
+    .gs-mock-result {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: .5rem 1rem;
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .gs-mock-result:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .gs-mock-result-main {}
+
+    .gs-mock-result-title {
+      color: #1a0dab;
+      font-size: .95rem;
+      font-weight: 600;
+      font-family: Arial, sans-serif;
+      margin-bottom: .15rem;
+    }
+
+    [data-theme="dark"] .gs-mock-result-title {
+      color: #8ab4f8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .gs-mock-result-title {
+        color: #8ab4f8;
+      }
+    }
+
+    .gs-mock-result-authors {
+      font-size: .82rem;
+      color: #006621;
+      margin-bottom: .2rem;
+      font-family: Arial, sans-serif;
+    }
+
+    [data-theme="dark"] .gs-mock-result-authors {
+      color: #81c995;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .gs-mock-result-authors {
+        color: #81c995;
+      }
+    }
+
+    .gs-mock-result-snippet {
+      font-size: .83rem;
+      color: #4d5156;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    [data-theme="dark"] .gs-mock-result-snippet {
+      color: #bdc1c6;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .gs-mock-result-snippet {
+        color: #bdc1c6;
+      }
+    }
+
+    .gs-mock-result-meta {
+      font-size: .78rem;
+      color: #70757a;
+      margin-top: .25rem;
+      font-family: Arial, sans-serif;
+    }
+
+    .gs-mock-result-side {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .gs-mock-pdf-link {
+      display: inline-block;
+      background: #f8f9fa;
+      border: 1px solid #dfe1e5;
+      border-radius: 4px;
+      padding: .25rem .6rem;
+      font-size: .78rem;
+      font-weight: 700;
+      color: #1a0dab;
+      font-family: Arial, sans-serif;
+      white-space: nowrap;
+    }
+
+    [data-theme="dark"] .gs-mock-pdf-link {
+      background: #303134;
+      border-color: #5f6368;
+      color: #8ab4f8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .gs-mock-pdf-link {
+        background: #303134;
+        border-color: #5f6368;
+        color: #8ab4f8;
+      }
+    }
+
+    .gs-mock-cited {
+      font-size: .78rem;
+      color: #1a0dab;
+      font-family: Arial, sans-serif;
+      margin-top: .35rem;
+      display: block;
+    }
+
+    [data-theme="dark"] .gs-mock-cited {
+      color: #8ab4f8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .gs-mock-cited {
+        color: #8ab4f8;
+      }
+    }
+
+    /* Callout badge for mock-ups */
+    .c-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      vertical-align: middle;
+      margin-left: .3rem;
+      flex-shrink: 0;
+      position: relative;
+      top: -1px;
+    }
+
+    [data-theme="dark"] .c-badge {
+      background: var(--bright);
+      color: #121212;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .c-badge {
+        background: var(--bright);
+        color: #121212;
+      }
+    }
+
+    .callout-key {
+      list-style: none;
+      padding: 0;
+      margin: .5rem 0 0;
+    }
+
+    .callout-key li {
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+      margin-bottom: .5rem;
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+
+    .callout-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      min-width: 1.5rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: .78rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    [data-theme="dark"] .callout-badge {
+      background: var(--bright);
+      color: #121212;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .callout-badge {
+        background: var(--bright);
+        color: #121212;
+      }
+    }
+
+    /* ── Prompt example box ─────────────────────────────── */
+    .prompt-box {
+      background: var(--accent-box-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: .85rem 1.25rem;
+      margin: .75rem 0 1rem;
+      font-size: .92rem;
+    }
+
+    [data-theme="dark"] .prompt-box {
+      border-left-color: var(--bright);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .prompt-box {
+        border-left-color: var(--bright);
+      }
+    }
+
+    .prompt-box p {
+      margin: 0 0 .4em;
+      font-size: .82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--muted);
+    }
+
+    .prompt-box code {
+      display: block;
+      font-family: monospace;
+      font-size: .9rem;
+      color: var(--text);
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    /* ── Semantic Scholar mock ──────────────────────────── */
+    .ss-mock {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem 0 1.25rem;
+      font-size: .9rem;
+    }
+
+    .ss-mock-bar {
+      background: #1857b6;
+      padding: .6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    .ss-mock-logo {
+      font-size: .9rem;
+      font-weight: 700;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      white-space: nowrap;
+    }
+
+    .ss-mock-searchbar {
+      flex: 1;
+      border: none;
+      border-radius: 4px;
+      padding: .35rem .8rem;
+      background: #fff;
+      color: #202124;
+      font-size: .88rem;
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+    }
+
+    .ss-mock-body {
+      padding: .75rem 1rem 1rem;
+      background: var(--bg);
+    }
+
+    .ss-mock-result {
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ss-mock-result:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .ss-mock-result-title {
+      color: #1857b6;
+      font-size: .95rem;
+      font-weight: 600;
+      font-family: Arial, sans-serif;
+      margin-bottom: .2rem;
+    }
+
+    [data-theme="dark"] .ss-mock-result-title {
+      color: #8ab4f8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .ss-mock-result-title {
+        color: #8ab4f8;
+      }
+    }
+
+    .ss-mock-result-meta {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: .25rem;
+      font-family: Arial, sans-serif;
+    }
+
+    .ss-mock-result-snippet {
+      font-size: .83rem;
+      color: #4d5156;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      margin-bottom: .35rem;
+    }
+
+    [data-theme="dark"] .ss-mock-result-snippet {
+      color: #bdc1c6;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .ss-mock-result-snippet {
+        color: #bdc1c6;
+      }
+    }
+
+    .ss-mock-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+      margin-top: .3rem;
+    }
+
+    .ss-tag {
+      font-size: .75rem;
+      border: 1px solid #1857b6;
+      color: #1857b6;
+      border-radius: 3px;
+      padding: .1rem .4rem;
+      font-family: Arial, sans-serif;
+    }
+
+    [data-theme="dark"] .ss-tag {
+      border-color: #8ab4f8;
+      color: #8ab4f8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .ss-tag {
+        border-color: #8ab4f8;
+        color: #8ab4f8;
+      }
+    }
+
+    .ss-mock-actions {
+      font-size: .78rem;
+      color: #1857b6;
+      margin-top: .35rem;
+      display: flex;
+      gap: 1rem;
+      font-family: Arial, sans-serif;
+    }
+
+    [data-theme="dark"] .ss-mock-actions {
+      color: #8ab4f8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .ss-mock-actions {
+        color: #8ab4f8;
+      }
+    }
+
+    /* ── highlight for "do click" / "don't click" ───────── */
+    .do-click {
+      background: #e6f4ea;
+      color: #1a4a1a;
+      padding: .1rem .3rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    .dont-click {
+      background: #fce8e6;
+      color: #4a0a00;
+      padding: .1rem .3rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    [data-theme="dark"] .do-click {
+      background: #0d2e12;
+      color: #80d080;
+    }
+
+    [data-theme="dark"] .dont-click {
+      background: #2e0d0d;
+      color: #f08080;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .do-click {
+        background: #0d2e12; color: #80d080;
+      }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .dont-click {
+        background: #2e0d0d; color: #f08080;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="page-content">
+
+    <h1>Finding Scholarly Sources</h1>
+
+    <p>Scholarly research can be harder to find than news articles — especially for very current topics. This resource walks you through your best options, step by step.</p>
+
+    <nav class="toc" aria-label="Table of contents">
+      <h2>On This Page</h2>
+      <ul>
+        <li><a href="#library-databases">Library Databases</a></li>
+        <li><a href="#google-scholar">Google Scholar</a></li>
+        <li><a href="#semantic-scholar">Semantic Scholar</a></li>
+        <li><a href="#genai">Using GenAI Tools to Help</a></li>
+      </ul>
+    </nav>
+
+    <!-- ================================================ -->
+    <!-- LIBRARY DATABASES -->
+    <!-- ================================================ -->
+    <h2 id="library-databases">Library Databases</h2>
+
+    <p>Library databases are curated collections of academic journals, articles, and other publications that your library pays to give you access to. They are the traditional starting point for scholarly research because they are reliable, peer-reviewed, and well-organized.</p>
+
+    <p>You can access Macomb Community College's library databases through the <a href="https://www.macomb.edu/library" target="_blank" rel="noopener">Macomb Library website</a>.</p>
+
+    <div class="warning-box" role="note">
+      <p><strong>Important note about library databases at Macomb:</strong></p>
+      <p>You may have limited success using the library databases for this assignment. Here's why:</p>
+      <ul>
+        <li>As a community college, we have less database access than research-focused universities</li>
+        <li>Journal subscriptions are extremely expensive, and we can't pay for everything</li>
+        <li>Subscriptions are only getting more costly over time</li>
+        <li>Your topics are <strong>very recent</strong> — and the most current research is often behind paywalls even at large universities</li>
+        <li>You will need access to the most recent sources possible, which is where the tools below become more useful</li>
+      </ul>
+      <p>Try the databases first, but don't be surprised if you need to use the methods below.</p>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- GOOGLE SCHOLAR -->
+    <!-- ================================================ -->
+    <h2 id="google-scholar">Google Scholar</h2>
+
+    <p>Google Scholar (<a href="https://scholar.google.com" target="_blank" rel="noopener">scholar.google.com</a>) is a free search engine that indexes scholarly articles, theses, books, conference papers, and patents. It is one of the most useful tools available to community college students because it finds open-access versions of articles that would otherwise be behind paywalls.</p>
+
+    <div class="accordion" id="gs-accordion">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="gs-panel-1" id="gs-btn-1">
+          Step 1: Connect your Macomb library account
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="gs-panel-1" role="region" aria-labelledby="gs-btn-1">
+          <p>Connecting your library account means Google Scholar will automatically show you a link to access articles through Macomb's subscriptions when available.</p>
+          <ol>
+            <li>Go to <a href="https://scholar.google.com" target="_blank" rel="noopener">scholar.google.com</a></li>
+            <li>Click the menu icon (&#9776;) in the top left corner</li>
+            <li>Click <strong>Settings</strong></li>
+            <li>Click <strong>Library links</strong> in the left menu</li>
+            <li>In the search box, type <strong>Macomb Community College</strong></li>
+            <li>Check the box next to Macomb Community College when it appears</li>
+            <li>Click <strong>Save</strong></li>
+          </ol>
+          <p>From now on, when a Macomb subscription is available for an article, you'll see a link to it on the right side of the search result.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="gs-panel-2" id="gs-btn-2">
+          Step 2: Search and filter by date
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="gs-panel-2" role="region" aria-labelledby="gs-btn-2">
+          <p>Since your topic is recent, filtering by publication year is essential.</p>
+          <ol>
+            <li>Type your search terms into the Google Scholar search bar and press Enter</li>
+            <li>On the results page, look at the left side panel</li>
+            <li>You will see a <strong>Custom range</strong> option — click it</li>
+            <li>Enter a start year (for AI topics, <strong>2022</strong> or later is recommended) and leave the end year blank</li>
+            <li>Click <strong>Search</strong> to filter results</li>
+          </ol>
+          <p>You can also use the quick year options like <strong>Since 2023</strong> that appear in the left panel.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="gs-panel-3" id="gs-btn-3">
+          Step 3: Reading the results — what to click (and what not to)
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="gs-panel-3" role="region" aria-labelledby="gs-btn-3">
+          <p>Google Scholar results can be confusing. Here is what you are looking at:</p>
+
+          <div class="gs-mock" role="img" aria-label="Example Google Scholar search result">
+            <div class="gs-mock-bar">
+              <span class="gs-mock-logo">Scholar<span>.</span></span>
+              <div class="gs-mock-searchbar">AI nursing triage patient outcomes</div>
+            </div>
+            <div class="gs-mock-body">
+              <div class="gs-mock-result">
+                <div class="gs-mock-result-main">
+                  <div class="gs-mock-result-title">
+                    Effects of AI-assisted triage on patient outcomes in acute care nursing <span class="c-badge" aria-label="Callout 1">1</span>
+                  </div>
+                  <div class="gs-mock-result-authors">
+                    M Chen, T Okafor, R Patel — <em>Journal of Nursing Research</em>, 2024 <span class="c-badge" aria-label="Callout 2">2</span>
+                  </div>
+                  <div class="gs-mock-result-snippet">
+                    This study examined the effects of AI-assisted triage software on patient wait times, triage accuracy, and nursing workload in three acute care facilities over a 12-month period… <span class="c-badge" aria-label="Callout 3">3</span>
+                  </div>
+                  <div class="gs-mock-result-meta">
+                    Cited by 14 &nbsp;·&nbsp; <span style="color:#1a0dab">Related articles</span> &nbsp;·&nbsp; <span style="color:#1a0dab">All 6 versions</span> <span class="c-badge" aria-label="Callout 5">5</span>
+                  </div>
+                </div>
+                <div class="gs-mock-result-side">
+                  <div class="gs-mock-pdf-link">[PDF] nursingresearch.org <span class="c-badge" aria-label="Callout 4">4</span></div>
+                  <span class="gs-mock-cited">Macomb: Full text</span>
+                </div>
+              </div>
+
+              <div class="gs-mock-result">
+                <div class="gs-mock-result-main">
+                  <div class="gs-mock-result-title" style="color:#70757a; font-weight:400; font-size:.85rem;">
+                    [CITATION] Artificial intelligence in emergency triage: a systematic review <span class="c-badge" aria-label="Callout 6">6</span>
+                  </div>
+                  <div class="gs-mock-result-authors">
+                    S Johnson, P Williams — <em>Emergency Medicine Journal</em>, 2023
+                  </div>
+                  <div class="gs-mock-result-meta">Cited by 31</div>
+                </div>
+                <div class="gs-mock-result-side"></div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="callout-key" aria-label="Callout explanations for Google Scholar mock-up">
+            <li><span class="callout-badge" aria-hidden="true">1</span> <span class="dont-click">Do not click the title.</span> The title links to the journal's website, which is often behind a paywall. You will be asked to pay or log in.</li>
+            <li><span class="callout-badge" aria-hidden="true">2</span> Check the journal name and year to confirm this is a real, recent publication in a relevant field.</li>
+            <li><span class="callout-badge" aria-hidden="true">3</span> The snippet gives you a preview. Read it to decide if the article is relevant before clicking anything.</li>
+            <li><span class="callout-badge" aria-hidden="true">4</span> <span class="do-click">Click the link on the right side</span> — labeled [PDF], [HTML], or your library name. This is where you are most likely to get free access to the full article.</li>
+            <li><span class="callout-badge" aria-hidden="true">5</span> "Related articles" and "Cited by" are useful for finding more sources — see the section below on using related articles.</li>
+            <li><span class="callout-badge" aria-hidden="true">6</span> Results labeled [CITATION] have no free full text available. Google Scholar knows this article exists but cannot link to it. Skip these unless you can find it another way.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="gs-panel-4" id="gs-btn-4">
+          Step 4: Using Related Articles to find more sources
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="gs-panel-4" role="region" aria-labelledby="gs-btn-4">
+          <p>Once you find one good article, Google Scholar makes it easy to find more. Look at the links below any search result:</p>
+          <ul>
+            <li><strong>Related articles</strong> — shows articles on similar topics, identified by Google Scholar's algorithm. Great for broadening your search.</li>
+            <li><strong>Cited by [number]</strong> — shows articles that have cited this one. Since they came after, they are often more recent and build on the same research. Great for finding newer work.</li>
+          </ul>
+          <p>You can chain these — find one good article, click "Cited by," find another good article in those results, click "Related articles," and so on. This is called <strong>citation chaining</strong> and it is one of the most effective research strategies.</p>
+        </div>
+      </div>
+
+    </div><!-- end gs-accordion -->
+
+    <!-- ================================================ -->
+    <!-- SEMANTIC SCHOLAR -->
+    <!-- ================================================ -->
+    <h2 id="semantic-scholar">Semantic Scholar</h2>
+
+    <p>Semantic Scholar (<a href="https://www.semanticscholar.org" target="_blank" rel="noopener">semanticscholar.org</a>) is a free, AI-powered research tool developed by the Allen Institute for AI. It indexes millions of peer-reviewed papers and is particularly strong for recent research in health, technology, and science. It often surfaces open-access PDFs that are harder to find through Google Scholar.</p>
+
+    <div class="accordion" id="ss-accordion">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="ss-panel-1" id="ss-btn-1">
+          Step 1: Search for your topic
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="ss-panel-1" role="region" aria-labelledby="ss-btn-1">
+          <ol>
+            <li>Go to <a href="https://www.semanticscholar.org" target="_blank" rel="noopener">semanticscholar.org</a></li>
+            <li>Type your search terms into the search bar and press Enter</li>
+            <li>Use specific terms — for example: <em>artificial intelligence nursing triage</em> or <em>AI clinical decision making nursing</em></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="ss-panel-2" id="ss-btn-2">
+          Step 2: Filter your results
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="ss-panel-2" role="region" aria-labelledby="ss-btn-2">
+          <p>On the results page, use the filters on the left side to narrow down your results:</p>
+          <ol>
+            <li>Under <strong>Publication Date</strong>, set a range — for AI topics, start from 2022</li>
+            <li>Under <strong>Publication Type</strong>, select <strong>Journal Articles</strong> to filter out conference papers and other types if needed</li>
+            <li>Check <strong>Open Access</strong> if you want to limit to articles you can read for free immediately</li>
+            <li>Under <strong>Fields of Study</strong>, you can select a relevant field like Medicine, Computer Science, or Nursing to narrow results</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="ss-panel-3" id="ss-btn-3">
+          Step 3: Reading the results
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="ss-panel-3" role="region" aria-labelledby="ss-btn-3">
+          <p>Here is what a Semantic Scholar result looks like:</p>
+
+          <div class="ss-mock" role="img" aria-label="Example Semantic Scholar result">
+            <div class="ss-mock-bar">
+              <span class="ss-mock-logo">Semantic Scholar</span>
+              <div class="ss-mock-searchbar">artificial intelligence nursing triage</div>
+            </div>
+            <div class="ss-mock-body">
+              <div class="ss-mock-result">
+                <div class="ss-mock-result-title">
+                  Effects of AI-Assisted Triage on Patient Outcomes in Acute Care Nursing <span class="c-badge" aria-label="Callout 1">1</span>
+                </div>
+                <div class="ss-mock-result-meta">
+                  M. Chen, T. Okafor, R. Patel, L. Johansson &nbsp;·&nbsp; Journal of Nursing Research &nbsp;·&nbsp; 2024 <span class="c-badge" aria-label="Callout 2">2</span>
+                </div>
+                <div class="ss-mock-result-snippet">
+                  This study examined the effects of AI-assisted triage software on patient wait times, triage accuracy, and nursing workload in three acute care facilities over a 12-month period using a randomized controlled design…
+                </div>
+                <div class="ss-mock-tags">
+                  <span class="ss-tag">Open Access <span class="c-badge" aria-label="Callout 3">3</span></span>
+                  <span class="ss-tag">Medicine</span>
+                  <span class="ss-tag">Nursing Informatics</span>
+                </div>
+                <div class="ss-mock-actions">
+                  <span>[PDF] View Paper <span class="c-badge" aria-label="Callout 4">4</span></span>
+                  <span>187 Citations <span class="c-badge" aria-label="Callout 5">5</span></span>
+                  <span>Related Papers</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="callout-key" aria-label="Callout explanations for Semantic Scholar mock-up">
+            <li><span class="callout-badge" aria-hidden="true">1</span> Click the title to go to the full article page, which includes the abstract, references, and links to the PDF if available.</li>
+            <li><span class="callout-badge" aria-hidden="true">2</span> Always check the journal name and year to confirm it is a real, recent, peer-reviewed publication.</li>
+            <li><span class="callout-badge" aria-hidden="true">3</span> The <strong>Open Access</strong> tag means there is a free full-text version available — look for the PDF link.</li>
+            <li><span class="callout-badge" aria-hidden="true">4</span> Click <strong>View Paper</strong> or the PDF link to access the full article. Semantic Scholar often finds open-access versions even when the journal itself is paywalled.</li>
+            <li><span class="callout-badge" aria-hidden="true">5</span> <strong>Citations</strong> and <strong>Related Papers</strong> work the same way as in Google Scholar — use them to find more sources once you have found a good one.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="ss-panel-4" id="ss-btn-4">
+          Step 4: Using the article page to find more sources
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="ss-panel-4" role="region" aria-labelledby="ss-btn-4">
+          <p>When you click on an article in Semantic Scholar, the full article page has several useful features for expanding your research:</p>
+          <ul>
+            <li><strong>References</strong> tab — lists all the sources cited in this article. If an article is useful, its references are a goldmine of related sources.</li>
+            <li><strong>Citations</strong> tab — shows all the articles that have cited this one. These are more recent and build on the same research.</li>
+            <li><strong>Related Papers</strong> — Semantic Scholar's AI identifies papers on similar topics, even if they don't directly cite each other.</li>
+            <li><strong>TLDR</strong> — Semantic Scholar provides an AI-generated one-sentence summary of the paper. This is useful for quickly deciding if an article is relevant, but always read the actual abstract before deciding to use it.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- end ss-accordion -->
+
+    <!-- ================================================ -->
+    <!-- GENAI TOOLS -->
+    <!-- ================================================ -->
+    <h2 id="genai">Using GenAI Tools to Help</h2>
+
+    <p>GenAI tools like ChatGPT, Claude, and Gemini are not databases — they cannot reliably search the internet for real articles on their own. However, they can be genuinely useful in two specific ways: helping you find a starting point for sources, and helping you figure out better search terms to use in Google Scholar or Semantic Scholar.</p>
+
+    <div class="accordion" id="ai-accordion">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="ai-panel-1" id="ai-btn-1">
+          Using ChatGPT to find a few starting sources
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="ai-panel-1" role="region" aria-labelledby="ai-btn-1">
+          <p>ChatGPT (with web search enabled) can sometimes surface real open-access articles with working links. The free version of ChatGPT has limited web search, and the free version of Claude does not reliably search for real academic sources, so results will vary. Treat anything GenAI gives you as a <strong>starting point to verify</strong>, not a confirmed source.</p>
+
+          <p>To get the best results, be very specific in your prompt. Here is a formula that works well:</p>
+
+          <div class="prompt-box">
+            <p>Example prompt</p>
+            <code>Find me 3–5 real, peer-reviewed journal articles published after 2022 about [your topic]. I need open-access articles with working links to full PDFs. Do not make up sources — only list articles you can confirm exist with a real URL.</code>
+          </div>
+
+          <p>For example:</p>
+
+          <div class="prompt-box">
+            <p>Example prompt</p>
+            <code>Find me 3–5 real, peer-reviewed journal articles published after 2022 about artificial intelligence in nursing practice. I need open-access articles with working links to full PDFs. Do not make up sources — only list articles you can confirm exist with a real URL.</code>
+          </div>
+
+          <div class="warning-box">
+            <p><strong>Always verify every source GenAI gives you.</strong> GenAI tools can and do fabricate citations — real-sounding article titles, authors, and journals that do not actually exist. Before you use any source GenAI suggests:</p>
+            <ul>
+              <li>Search for the article title in Google Scholar or Semantic Scholar</li>
+              <li>Confirm the article actually exists before using it</li>
+              <li>Confirm the link actually works and goes to the right article</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="ai-panel-2" id="ai-btn-2">
+          Using GenAI to generate better search terms
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="ai-panel-2" role="region" aria-labelledby="ai-btn-2">
+          <p>This is one of the most reliable and useful ways to use GenAI for research. If your searches in Google Scholar or Semantic Scholar are not returning good results, ask a GenAI tool to help you brainstorm better search terms.</p>
+
+          <div class="prompt-box">
+            <p>Example prompt</p>
+            <code>I am trying to find peer-reviewed research articles about AI in nursing. My searches aren't returning good results. Can you suggest 8–10 specific academic search terms or phrases I could try in Google Scholar? Include both broad and narrow terms.</code>
+          </div>
+
+          <p>GenAI is good at this because it understands academic vocabulary and can suggest terms you might not think of — like "machine learning clinical decision support" instead of just "AI nursing." Take the terms it gives you and plug them directly into Google Scholar or Semantic Scholar.</p>
+
+          <div class="prompt-box">
+            <p>Another useful prompt</p>
+            <code>What are the academic or technical terms used in research literature for AI tools that help nurses monitor patients? I want to search for peer-reviewed articles and need the correct terminology.</code>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end ai-accordion -->
+
+    <!-- ── Do not use AI to summarize ───────────────────── -->
+    <div class="stop-box" role="note">
+      <p><strong>Do not use GenAI to summarize your sources for you.</strong></p>
+      <p>Using AI to summarize articles and then writing about those summaries means you are writing about what AI said, not what the research actually says. AI summaries can miss key details, misrepresent findings, or simply get things wrong. You need to read your sources yourself.</p>
+      <p>For guidance on how to read a scholarly article efficiently without reading every word, see <a href="https://1190.skarlis.org/resources/read-scholarly.html">How to Read a Scholarly Source</a>.</p>
+    </div>
+
+  </div>
+
+  <!-- main navigation and page scripts -->
+  <script src="/nav.js"></script>
+  <script src="/footer.js" defer></script>
+
+  <script>
+    // Accordion functionality
+    document.querySelectorAll('.accordion-trigger').forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        var panelId = this.getAttribute('aria-controls');
+        var panel = document.getElementById(panelId);
+
+        // Close all panels in the same accordion
+        var accordion = this.closest('.accordion');
+        accordion.querySelectorAll('.accordion-trigger').forEach(function(t) {
+          t.setAttribute('aria-expanded', 'false');
+        });
+        accordion.querySelectorAll('.accordion-panel').forEach(function(p) {
+          p.classList.remove('is-open');
+        });
+
+        // Open this one if it was closed
+        if (!expanded) {
+          this.setAttribute('aria-expanded', 'true');
+          panel.classList.add('is-open');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
