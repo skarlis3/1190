@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recognizing Source Types | ENGL 1190</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <style>
+    /* =====================================================
+       Source Types Resource — Page-specific styles
+       Uses root CSS variables for dark mode compatibility
+       ===================================================== */
+
+    .source-section {
+      margin: 2.5rem 0 3rem;
+    }
+
+    /* Source type label pill */
+    .source-type-pill {
+      display: inline-block;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .3rem .9rem;
+      border-radius: 999px;
+      margin-bottom: .75rem;
+    }
+
+    .pill-public {
+      background: #e8f0e8;
+      color: #2a4a2a;
+      border: 1px solid #b0cfb0;
+    }
+
+    .pill-news {
+      background: #e8eef8;
+      color: #1a2e54;
+      border: 1px solid #a8bde0;
+    }
+
+    .pill-scholarly {
+      background: #f3ece8;
+      color: #4a2a10;
+      border: 1px solid #d4b090;
+    }
+
+    [data-theme="dark"] .pill-public {
+      background: #1a2e1a;
+      color: #a0cfa0;
+      border-color: #3a5e3a;
+    }
+
+    [data-theme="dark"] .pill-news {
+      background: #141e30;
+      color: #8ab0e0;
+      border-color: #2a3e60;
+    }
+
+    [data-theme="dark"] .pill-scholarly {
+      background: #2a1a0a;
+      color: #d4a070;
+      border-color: #5a3a1a;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .pill-public {
+        background: #1a2e1a; color: #a0cfa0; border-color: #3a5e3a;
+      }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .pill-news {
+        background: #141e30; color: #8ab0e0; border-color: #2a3e60;
+      }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .pill-scholarly {
+        background: #2a1a0a; color: #d4a070; border-color: #5a3a1a;
+      }
+    }
+
+    /* Mock source card */
+    .mock-source {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg);
+      margin: .75rem 0 1rem;
+      position: relative;
+    }
+
+    .mock-source .mock-site-bar {
+      font-size: .78rem;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: .5rem;
+      margin-bottom: .75rem;
+      font-family: monospace;
+    }
+
+    .mock-source .mock-publication {
+      font-size: .82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      margin-bottom: .3rem;
+    }
+
+    .mock-source .mock-title {
+      font-family: "Judson", serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 .4rem;
+      line-height: 1.3;
+    }
+
+    .mock-source .mock-byline {
+      font-size: .82rem;
+      color: var(--muted);
+      margin-bottom: .6rem;
+    }
+
+    .mock-source .mock-body {
+      font-size: .92rem;
+      color: var(--text);
+      line-height: 1.6;
+      border-top: 1px solid var(--border);
+      padding-top: .6rem;
+      margin-top: .5rem;
+    }
+
+    .mock-source .mock-body p {
+      margin: 0 0 .5em;
+    }
+
+    .mock-source .mock-tags {
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: .5rem;
+    }
+
+    /* Reference list styling inside mock */
+    .mock-references {
+      margin-top: .75rem;
+      padding-top: .6rem;
+      border-top: 1px solid var(--border);
+      font-size: .82rem;
+      color: var(--text);
+    }
+
+    .mock-references p {
+      font-weight: 700;
+      margin: 0 0 .3rem;
+    }
+
+    .mock-references ol {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+
+    .mock-references ol li {
+      margin-bottom: .25rem;
+      color: var(--muted);
+    }
+
+    /* Social media mock */
+    .mock-social {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      background: var(--bg);
+      max-width: 480px;
+      margin: .75rem 0 1rem;
+    }
+
+    .mock-social .social-handle {
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--text);
+    }
+
+    .mock-social .social-username {
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    .mock-social .social-body {
+      font-size: .92rem;
+      margin: .6rem 0 .5rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .mock-social .social-meta {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    /* Callout badge */
+    .callout-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: .78rem;
+      font-weight: 700;
+      margin-right: .4rem;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+
+    [data-theme="dark"] .callout-badge {
+      background: var(--bright);
+      color: #121212;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .callout-badge {
+        background: var(--bright);
+        color: #121212;
+      }
+    }
+
+    /* Inline callout marker inside mock source */
+    .callout-marker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      vertical-align: middle;
+      margin-left: .25rem;
+      flex-shrink: 0;
+      position: relative;
+      top: -1px;
+    }
+
+    [data-theme="dark"] .callout-marker {
+      background: var(--bright);
+      color: #121212;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .callout-marker {
+        background: var(--bright);
+        color: #121212;
+      }
+    }
+
+    /* Callout key list */
+    .callout-key {
+      list-style: none;
+      padding: 0;
+      margin: .5rem 0 0;
+    }
+
+    .callout-key li {
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+      margin-bottom: .5rem;
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+
+    /* Opinion text highlight */
+    .opinion-highlight {
+      background: var(--mark-bg);
+      color: var(--mark-text);
+      padding: .1rem .2rem;
+      border-radius: 3px;
+    }
+
+    /* Section divider */
+    .source-divider {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* Disclaimer box */
+    .disclaimer-box {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 3rem;
+      background: var(--accent-box-bg);
+      font-size: .88rem;
+      color: var(--muted);
+    }
+
+    .disclaimer-box p {
+      margin: 0 0 .5em;
+    }
+
+    .disclaimer-box p:last-child {
+      margin: 0;
+    }
+
+    .disclaimer-box strong {
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div id="page-content">
+
+    <h1>Recognizing Source Types</h1>
+
+    <p>Not all sources look the same, but there are patterns you can learn to spot. This page shows examples of common source types you may encounter when researching AI in your field. Each example is labeled and includes numbered callouts explaining what to look for.</p>
+
+    <nav class="toc" aria-label="Table of contents">
+      <h2>Source Types on This Page</h2>
+      <ul>
+        <li><a href="#social-media">Social Media Post</a> <span class="source-type-pill pill-public">Public Conversation</span></li>
+        <li><a href="#blog">Blog Post / Article</a> <span class="source-type-pill pill-public">Public Conversation</span></li>
+        <li><a href="#opinion-news">Opinion Article (Newspaper)</a> <span class="source-type-pill pill-public">Public Conversation</span></li>
+        <li><a href="#news-article">News Article</a> <span class="source-type-pill pill-news">News</span></li>
+        <li><a href="#pro-org-news">Professional Organization News</a> <span class="source-type-pill pill-news">News</span></li>
+        <li><a href="#journal-opinion">Opinion Article (Academic Journal)</a> <span class="source-type-pill pill-public">Public Conversation</span></li>
+        <li><a href="#scholarly">Scholarly Article</a> <span class="source-type-pill pill-scholarly">Scholarly / Academic</span></li>
+        <li><a href="#white-paper">White Paper / Report</a> <span class="source-type-pill pill-scholarly">Scholarly / Academic</span></li>
+      </ul>
+    </nav>
+
+    <!-- ================================================ -->
+    <!-- SOCIAL MEDIA -->
+    <!-- ================================================ -->
+    <hr class="source-divider" />
+    <div class="source-section" id="social-media">
+      <span class="source-type-pill pill-public">Public Conversation</span>
+      <h2>Social Media Post</h2>
+      <p>Social media posts — on platforms like X (Twitter), Facebook, LinkedIn, Instagram, or Reddit — are public conversations, not vetted sources. Unless a post links directly to a news article or other published source, you should treat the post itself as a social media source, not a news source.</p>
+
+      <div class="mock-social" role="img" aria-label="Example social media post">
+        <div>
+          <span class="mock-social social-handle">NursingToday <span class="callout-marker" aria-label="Callout 1">1</span></span><br/>
+          <span class="mock-social social-username">@nursingtoday_unofficial</span>
+        </div>
+        <div class="mock-social social-body">
+          AI is changing everything in nursing. Hospitals are already using AI triage tools and it's only going to get bigger. What do you think — is this good or bad for patients? <span class="callout-marker" aria-label="Callout 2">2</span>
+        </div>
+        <div class="mock-social social-meta">
+          4:32 PM · Oct 14, 2024 &nbsp;·&nbsp; 214 Reposts &nbsp;·&nbsp; 1,089 Likes <span class="callout-marker" aria-label="Callout 3">3</span>
+        </div>
+      </div>
+
+      <ul class="callout-key" aria-label="Callout explanations">
+        <li><span class="callout-badge" aria-hidden="true">1</span> The account name and handle are not affiliated with any official organization — anyone can create an account with a professional-sounding name.</li>
+        <li><span class="callout-badge" aria-hidden="true">2</span> The post makes a claim but provides no source, data, or evidence. It also invites opinions rather than reporting facts.</li>
+        <li><span class="callout-badge" aria-hidden="true">3</span> Engagement numbers (likes, reposts) tell you nothing about accuracy. Popular posts can still be wrong or misleading.</li>
+      </ul>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- BLOG -->
+    <!-- ================================================ -->
+    <hr class="source-divider" />
+    <div class="source-section" id="blog">
+      <span class="source-type-pill pill-public">Public Conversation</span>
+      <h2>Blog Post / Article</h2>
+      <p>Blog posts are written by individuals or organizations and published without peer review or editorial oversight. They can be thoughtful and well-researched, but they can also be purely personal opinion. Look for the signals below to identify a blog.</p>
+
+      <div class="mock-source" role="img" aria-label="Example blog post">
+        <div class="mock-site-bar">nursinginsider.blogspot.com/2024/10/ai-in-nursing <span class="callout-marker" aria-label="Callout 1">1</span></div>
+        <div class="mock-publication">Nursing Insider Blog <span class="callout-marker" aria-label="Callout 2">2</span></div>
+        <div class="mock-title">Why I Think AI Will Change Bedside Nursing Forever</div>
+        <div class="mock-byline">Posted by Jamie L., RN · October 9, 2024 · 5 min read <span class="callout-marker" aria-label="Callout 3">3</span></div>
+        <div class="mock-body">
+          <p>I've been a nurse for twelve years, and nothing has surprised me more than watching AI tools roll out across our unit this past year. In my opinion, we're only at the beginning of a massive transformation...</p>
+          <p class="mock-tags">Tags: nursing, AI, opinion, technology, healthcare <span class="callout-marker" aria-label="Callout 4">4</span></p>
+        </div>
+      </div>
+
+      <ul class="callout-key" aria-label="Callout explanations">
+        <li><span class="callout-badge" aria-hidden="true">1</span> The URL includes "blog" or is hosted on a blogging platform (blogspot, Medium, Substack, WordPress, etc.).</li>
+        <li><span class="callout-badge" aria-hidden="true">2</span> There is no named publication or editorial organization — just a blog name.</li>
+        <li><span class="callout-badge" aria-hidden="true">3</span> The author is an individual, not a journalist or researcher writing for a publication. There may be no credentials listed at all.</li>
+        <li><span class="callout-badge" aria-hidden="true">4</span> Tags or categories may include words like "opinion," "personal," or "lifestyle," signaling this is not a reported or researched piece.</li>
+      </ul>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- OPINION ARTICLE (NEWSPAPER) -->
+    <!-- ================================================ -->
+    <hr class="source-divider" />
+    <div class="source-section" id="opinion-news">
+      <span class="source-type-pill pill-public">Public Conversation</span>
+      <h2>Opinion Article (Newspaper)</h2>
+      <p>Opinion articles — also called op-eds or editorials — appear in newspapers and news sites alongside regular news coverage. They are written by journalists, experts, or guest contributors and express a personal point of view. They are labeled "Opinion" or "Editorial," but they can be easy to mistake for news articles if you're not looking carefully.</p>
+
+      <div class="mock-source" role="img" aria-label="Example newspaper opinion article">
+        <div class="mock-site-bar">apnews.com/opinion/nursing-ai-future <span class="callout-marker" aria-label="Callout 1">1</span></div>
+        <div class="mock-publication">AP News &nbsp;|&nbsp; <strong>OPINION</strong> <span class="callout-marker" aria-label="Callout 2">2</span></div>
+        <div class="mock-title">AI Will Never Replace the Human Heart of Nursing</div>
+        <div class="mock-byline">By Dr. Patricia Okonkwo, Guest Contributor · November 2, 2024 <span class="callout-marker" aria-label="Callout 3">3</span></div>
+        <div class="mock-body">
+          <p>The push to integrate artificial intelligence into nursing care is moving too fast, and I believe it will ultimately harm patients more than it helps them. <span class="opinion-highlight" aria-label="Opinion language highlighted">No algorithm can replicate the intuition a seasoned nurse develops over years of patient care — and anyone who thinks otherwise has never spent a night on a hospital floor.</span> <span class="callout-marker" aria-label="Callout 4">4</span></p>
+          <p>The technology may have its place, but until the evidence is clearer, hospitals should slow down and listen to frontline nurses...</p>
+        </div>
+      </div>
+
+      <ul class="callout-key" aria-label="Callout explanations">
+        <li><span class="callout-badge" aria-hidden="true">1</span> The URL may appear on a legitimate news site — this does not automatically make it a news article.</li>
+        <li><span class="callout-badge" aria-hidden="true">2</span> Look for the word <strong>Opinion</strong> or <strong>Editorial</strong> near the publication name or headline. This is the clearest signal.</li>
+        <li><span class="callout-badge" aria-hidden="true">3</span> Guest contributors are not staff journalists — they are outside writers invited to share a perspective.</li>
+        <li><span class="callout-badge" aria-hidden="true">4</span> Opinion language — phrases like "I believe," "anyone who thinks otherwise," or strong absolute statements — signals this is a viewpoint, not a reported fact.</li>
+      </ul>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- NEWS ARTICLE -->
+    <!-- ================================================ -->
+    <hr class="source-divider" />
+    <div class="source-section" id="news-article">
+      <span class="source-type-pill pill-news">News</span>
+      <h2>News Article</h2>
+      <p>A news article reports on events, developments, or issues for a general audience. It is written by a journalist, edited by a publication, and aims to present facts rather than opinions. News articles cite sources like experts, studies, or official statements.</p>
+
+      <div class="mock-source" role="img" aria-label="Example news article">
+        <div class="mock-site-bar">apnews.com/health/nursing-ai-hospitals-2024 <span class="callout-marker" aria-label="Callout 1">1</span></div>
+        <div class="mock-publication">AP News <span class="callout-marker" aria-label="Callout 2">2</span></div>
+        <div class="mock-title">Hospitals Expand AI Tools in Nursing Units, Raising Questions About Workload and Safety</div>
+        <div class="mock-byline">By Marcus Webb, AP Health Writer · November 8, 2024 <span class="callout-marker" aria-label="Callout 3">3</span></div>
+        <div class="mock-body">
+          <p>Hospitals across the country are deploying artificial intelligence tools to assist nursing staff with tasks ranging from patient monitoring to documentation, according to a new report from the American Hospital Association. <span class="callout-marker" aria-label="Callout 4">4</span></p>
+          <p>"We're seeing real efficiency gains, but nurses are also raising legitimate concerns about over-reliance on these systems," said Dr. Sandra Yuen, a health systems researcher at the University of Michigan. <span class="callout-marker" aria-label="Callout 5">5</span></p>
+        </div>
+      </div>
+
+      <ul class="callout-key" aria-label="Callout explanations">
+        <li><span class="callout-badge" aria-hidden="true">1</span> The URL is on a recognized news outlet with no "opinion" or "blog" in the path.</li>
+        <li><span class="callout-badge" aria-hidden="true">2</span> A named, established publication — not a personal blog or unknown site.</li>
+        <li><span class="callout-badge" aria-hidden="true">3</span> The author is identified as a staff writer or reporter for the publication, not a guest or unnamed contributor.</li>
+        <li><span class="callout-badge" aria-hidden="true">4</span> Claims are attributed to a named, external source — here, a published report from a known organization.</li>
+        <li><span class="callout-badge" aria-hidden="true">5</span> Experts are quoted by name with their credentials and institutional affiliation clearly stated.</li>
+      </ul>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- PROFESSIONAL ORGANIZATION NEWS -->
+    <!-- ================================================ -->
+    <hr class="source-divider" />
+    <div class="source-section" id="pro-org-news">
+      <span class="source-type-pill pill-news">News</span>
+      <h2>Professional Organization News</h2>
+      <p>Professional organization news is published by organizations that represent people in a specific field. It is written for practitioners, not the general public, and tends to be more technical and field-specific than popular news. It may also reflect the organization's advocacy positions — see the <a href="popular-professional-news.html">Popular &amp; Professional News</a> reading for more on this.</p>
+
+      <div class="mock-source" role="img" aria-label="Example professional organization news article">
+        <div class="mock-site-bar">ana.org/news/2024/ai-nursing-workforce-guidelines <span class="callout-marker" aria-label="Callout 1">1</span></div>
+        <div class="mock-publication">American Nurses Association — Newsroom <span class="callout-marker" aria-label="Callout 2">2</span></div>
+        <div class="mock-title">ANA Releases New Guidelines on AI Integration in Nursing Practice</div>
+        <div class="mock-byline">ANA Staff · October 28, 2024 <span class="callout-marker" aria-label="Callout 3">3</span></div>
+        <div class="mock-body">
+          <p>The American Nurses Association today released updated practice guidelines addressing the integration of artificial intelligence tools in clinical nursing environments, citing concerns raised by member nurses about patient safety and professional accountability. <span class="callout-marker" aria-label="Callout 4">4</span></p>
+          <p>The guidelines recommend that AI tools be used only to support — not replace — clinical nursing judgment, and call for mandatory training before implementation. The full guidelines are available to ANA members in the <em>Online Journal of Issues in Nursing</em>. <span class="callout-marker" aria-label="Callout 5">5</span></p>
+        </div>
+      </div>
+
+      <ul class="callout-key" aria-label="Callout explanations">
+        <li><span class="callout-badge" aria-hidden="true">1</span> The URL is on a professional organization's website (typically .org) with a news or newsroom section in the path.</li>
+        <li><span class="callout-badge" aria-hidden="true">2</span> The publication is a named professional organization, not a general news outlet or personal blog.</li>
+        <li><span class="callout-badge" aria-hidden="true">3</span> Articles may be written by organization staff rather than named individual journalists — this is normal for org newsrooms.</li>
+        <li><span class="callout-badge" aria-hidden="true">4</span> The article reflects the organization's positions and concerns — this is advocacy-informed reporting, not neutral journalism.</li>
+        <li><span class="callout-badge" aria-hidden="true">5</span> References to the organization's own publications or member resources are common — follow these links to find deeper, more detailed sources.</li>
+      </ul>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- JOURNAL OPINION -->
+    <!-- ================================================ -->
+    <hr class="source-divider" />
+    <div class="source-section" id="journal-opinion">
+      <span class="source-type-pill pill-public">Public Conversation</span>
+      <h2>Opinion Article (Academic Journal)</h2>
+      <p>Academic journals sometimes publish opinion pieces, editorials, or commentary alongside peer-reviewed research. These can look very similar to scholarly articles — they appear in the same journals, use academic language, and are written by credentialed experts. The key difference is that they are <em>not</em> peer-reviewed research, and they typically have few or no references.</p>
+
+      <div class="mock-source" role="img" aria-label="Example academic journal opinion article">
+        <div class="mock-site-bar">journals.nursingresearch.org/commentary/vol42/ai-ethics <span class="callout-marker" aria-label="Callout 1">1</span></div>
+        <div class="mock-publication">Nursing Research Quarterly &nbsp;|&nbsp; <strong>COMMENTARY</strong> <span class="callout-marker" aria-label="Callout 2">2</span></div>
+        <div class="mock-title">Ethical Concerns About AI in Clinical Nursing: A Call for Caution</div>
+        <div class="mock-byline">Dr. Renata Sousa, PhD, RN · Vol. 42, No. 4, 2024 <span class="callout-marker" aria-label="Callout 3">3</span></div>
+        <div class="mock-body">
+          <p>The rapid deployment of AI in nursing practice raises profound ethical questions that the profession has not yet adequately addressed. <span class="opinion-highlight" aria-label="Opinion language highlighted">I contend that we are moving recklessly, prioritizing efficiency over the fundamental moral obligations of nursing care.</span> <span class="callout-marker" aria-label="Callout 4">4</span></p>
+          <p>The nursing community must slow down and engage in a broader ethical conversation before these tools become standard practice...</p>
+          <div class="mock-references">
+            <p>References <span class="callout-marker" aria-label="Callout 5">5</span></p>
+            <ol>
+              <li>American Nurses Association. (2023). <em>Code of Ethics for Nurses.</em></li>
+              <li>Topol, E. (2019). <em>Deep Medicine.</em> Basic Books.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <ul class="callout-key" aria-label="Callout explanations">
+        <li><span class="callout-badge" aria-hidden="true">1</span> The URL is on a legitimate academic journal site — this alone does not make it a scholarly research article.</li>
+        <li><span class="callout-badge" aria-hidden="true">2</span> Look for labels like <strong>Commentary</strong>, <strong>Editorial</strong>, <strong>Perspective</strong>, or <strong>Letter</strong> near the title or publication name. These signal opinion, not peer-reviewed research.</li>
+        <li><span class="callout-badge" aria-hidden="true">3</span> The author may have impressive credentials (PhD, RN) — credentials alone don't make something a research article.</li>
+        <li><span class="callout-badge" aria-hidden="true">4</span> First-person opinion language ("I contend," "I argue") signals this is a viewpoint piece, not a research report.</li>
+        <li><span class="callout-badge" aria-hidden="true">5</span> The reference list is very short — only 2 items. A scholarly research article typically has many more references (often 20–50+). A short or missing reference list is a strong sign this is opinion, not research.</li>
+      </ul>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- SCHOLARLY ARTICLE -->
+    <!-- ================================================ -->
+    <hr class="source-divider" />
+    <div class="source-section" id="scholarly">
+      <span class="source-type-pill pill-scholarly">Scholarly / Academic</span>
+      <h2>Scholarly Article</h2>
+      <p>Scholarly articles report original research conducted by researchers and reviewed by other experts in the field before publication (called peer review). They follow a structured format, use technical language, and include an extensive list of references. They are the most heavily vetted type of source.</p>
+
+      <div class="mock-source" role="img" aria-label="Example scholarly article">
+        <div class="mock-site-bar">doi.org/10.1016/j.nursingresearch.2024.08.012 <span class="callout-marker" aria-label="Callout 1">1</span></div>
+        <div class="mock-publication">Journal of Nursing Research &nbsp;|&nbsp; <strong>ORIGINAL RESEARCH</strong> <span class="callout-marker" aria-label="Callout 2">2</span></div>
+        <div class="mock-title">Effects of AI-Assisted Triage on Patient Outcomes in Acute Care Nursing: A Randomized Controlled Study</div>
+        <div class="mock-byline">Chen, M., Okafor, T., Patel, R., &amp; Johansson, L. · Received March 2024 · Accepted July 2024 · Published August 2024 <span class="callout-marker" aria-label="Callout 3">3</span></div>
+        <div class="mock-body">
+          <p><strong>Abstract:</strong> This study examined the effects of AI-assisted triage software on patient wait times, triage accuracy, and nursing workload in three acute care facilities over a 12-month period. Using a randomized controlled design with 480 participants... <span class="callout-marker" aria-label="Callout 4">4</span></p>
+          <p><strong>Sections:</strong> Introduction · Literature Review · Methods · Results · Discussion · Conclusion <span class="callout-marker" aria-label="Callout 5">5</span></p>
+          <div class="mock-references">
+            <p>References <span class="callout-marker" aria-label="Callout 6">6</span></p>
+            <ol>
+              <li>Topol, E. J. (2019). High-performance medicine: The convergence of human and artificial intelligence. <em>Nature Medicine, 25</em>(1), 44–56.</li>
+              <li>Obermeyer, Z., &amp; Emanuel, E. J. (2016). Predicting the future — Big data, machine learning, and clinical medicine. <em>New England Journal of Medicine, 375</em>, 1216–1219.</li>
+              <li>American Nurses Association. (2022). <em>Nursing informatics: Scope and standards of practice.</em> ANA.</li>
+              <li>Bates, D. W., Auerbach, A., Schulam, P., Wright, A., &amp; Saria, S. (2020). Reporting recommendations for clinical use of AI. <em>JAMA, 323</em>(17), 1677–1678.</li>
+              <li>Char, D. S., Shah, N. H., &amp; Magnus, D. (2018). Implementing machine learning in health care — addressing ethical challenges. <em>New England Journal of Medicine, 378</em>, 981–983.</li>
+              <li>Ronquillo, C. E., Peltonen, L. M., Pruinelli, L., &amp; Nibber, R. (2021). Artificial intelligence in nursing. <em>Nursing Informatics, 33</em>(2), 14–22.</li>
+              <li>Lysaght, T., Lim, H. Y., Xafis, V., &amp; Ngiam, K. Y. (2019). AI-assisted decision-making in healthcare. <em>Asian Bioethics Review, 11</em>(3), 299–314.</li>
+              <li>Jiang, F., Jiang, Y., Zhi, H., Dong, Y., Li, H., &amp; Ma, S. (2017). Artificial intelligence in healthcare. <em>Stroke and Vascular Neurology, 2</em>(4), e000101.</li>
+              <li>Shortliffe, E. H., &amp; Sepúlveda, M. J. (2018). Clinical decision support in the era of AI. <em>JAMA, 320</em>(21), 2199–2200.</li>
+              <li>Suleyman, M., Ballard, G., &amp; Bhatt, D. L. (2022). Patients and AI. <em>Nature Medicine, 28</em>, 877–880.</li>
+              <li>Yang, Y., Xu, L., Sun, L., &amp; Zhang, P. (2023). Machine learning for nursing outcomes. <em>Journal of Nursing Scholarship, 55</em>(1), 102–115.</li>
+              <li>Booth, R. G., Strudwick, G., McBride, S., O'Connor, S., &amp; Solano López, A. L. (2021). How nursing will cope with AI. <em>Journal of Advanced Nursing, 77</em>(9), 3765–3775.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <ul class="callout-key" aria-label="Callout explanations">
+        <li><span class="callout-badge" aria-hidden="true">1</span> Scholarly articles often have a DOI (Digital Object Identifier) — a permanent link starting with doi.org — instead of a standard URL.</li>
+        <li><span class="callout-badge" aria-hidden="true">2</span> Labels like <strong>Original Research</strong>, <strong>Systematic Review</strong>, or <strong>Peer-Reviewed</strong> confirm this is a research article, not an opinion piece.</li>
+        <li><span class="callout-badge" aria-hidden="true">3</span> Multiple authors are common in research. The submission and acceptance dates show it went through a review process before publication.</li>
+        <li><span class="callout-badge" aria-hidden="true">4</span> An abstract summarizes the study's purpose, methods, and findings. If you see an abstract, you're likely looking at a research article.</li>
+        <li><span class="callout-badge" aria-hidden="true">5</span> Scholarly articles follow a standard structure: Introduction, Methods, Results, Discussion. If you see these section headers, it's a research article.</li>
+        <li><span class="callout-badge" aria-hidden="true">6</span> The reference list is long — 12 or more sources here, and real research articles often have 20–50+. Compare this to the journal opinion article above, which had only 2.</li>
+      </ul>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- WHITE PAPER / REPORT -->
+    <!-- ================================================ -->
+    <hr class="source-divider" />
+    <div class="source-section" id="white-paper">
+      <span class="source-type-pill pill-scholarly">Scholarly / Academic</span>
+      <h2>White Paper / Report</h2>
+      <p>White papers and reports are in-depth documents produced by organizations, government agencies, research institutions, or think tanks. They summarize research, analyze data, and often make policy or practice recommendations. They are not peer-reviewed in the same way as scholarly articles, but they are heavily researched and cited, and they carry significant weight in professional and policy conversations.</p>
+
+      <div class="mock-source" role="img" aria-label="Example white paper or report">
+        <div class="mock-site-bar">ahrq.gov/reports/nursing-ai-workforce-2024.pdf <span class="callout-marker" aria-label="Callout 1">1</span></div>
+        <div class="mock-publication">Agency for Healthcare Research and Quality (AHRQ) <span class="callout-marker" aria-label="Callout 2">2</span></div>
+        <div class="mock-title">Artificial Intelligence in the Nursing Workforce: Current Applications, Risks, and Recommendations for Practice</div>
+        <div class="mock-byline">Prepared by the AHRQ Workforce Research Division · Report No. AHRQ-24-0047 · September 2024 <span class="callout-marker" aria-label="Callout 3">3</span></div>
+        <div class="mock-body">
+          <p>This report synthesizes current evidence on the deployment of AI tools in nursing practice settings across U.S. healthcare institutions. Drawing on analysis of 34 peer-reviewed studies and survey data from 1,200 registered nurses, this report identifies key patterns in adoption, barriers to implementation, and risks to patient safety... <span class="callout-marker" aria-label="Callout 4">4</span></p>
+          <p><strong>Sections:</strong> Executive Summary · Background · Methods · Findings · Policy Recommendations · Appendices <span class="callout-marker" aria-label="Callout 5">5</span></p>
+          <div class="mock-references">
+            <p>References</p>
+            <ol>
+              <li>Chen, M. et al. (2024). Effects of AI-assisted triage. <em>Journal of Nursing Research.</em></li>
+              <li>Topol, E. J. (2019). High-performance medicine. <em>Nature Medicine.</em></li>
+              <li>Booth, R. G. et al. (2021). How nursing will cope with AI. <em>Journal of Advanced Nursing.</em></li>
+              <li>U.S. Bureau of Labor Statistics. (2023). <em>Occupational Outlook Handbook: Registered Nurses.</em></li>
+              <li>American Hospital Association. (2023). <em>AI in Health Care: National Survey Results.</em></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <ul class="callout-key" aria-label="Callout explanations">
+        <li><span class="callout-badge" aria-hidden="true">1</span> Reports are often hosted on government (.gov), university (.edu), or established organization (.org) websites and frequently available as PDFs.</li>
+        <li><span class="callout-badge" aria-hidden="true">2</span> The author is an institution or agency, not an individual — this is common for white papers and reports.</li>
+        <li><span class="callout-badge" aria-hidden="true">3</span> Reports often have an official report number and are clearly dated, making them easy to cite.</li>
+        <li><span class="callout-badge" aria-hidden="true">4</span> The document describes its methodology — how many studies were reviewed, what data was collected. This level of transparency signals a serious, well-researched document.</li>
+        <li><span class="callout-badge" aria-hidden="true">5</span> Like scholarly articles, reports are structured documents with distinct sections. An Executive Summary is a common feature of reports that scholarly articles don't typically have.</li>
+      </ul>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- DISCLAIMER -->
+    <!-- ================================================ -->
+    <div class="disclaimer-box" role="note" aria-label="Disclaimer">
+      <p><strong>Disclaimer: These examples are for illustrative purposes only.</strong></p>
+      <p>All source examples on this page — including publication names, author names, article titles, URLs, quotes, and references — are entirely fictional and were created with the assistance of Claude AI (Anthropic). They are not real articles, real people, real organizations (where not explicitly named as real, e.g. ANA, AHRQ), or real URLs.</p>
+      <p>These mock-ups are designed only to help you recognize the visual and textual patterns associated with each source type. Always evaluate real sources using the same critical thinking skills described in this resource.</p>
+    </div>
+
+  </div>
+
+  <!-- main navigation and page scripts -->
+  <script src="/nav.js"></script>
+  <script src="/footer.js" defer></script>
+
+</body>
+</html>
