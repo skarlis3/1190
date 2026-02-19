@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick & Dirty APA Citations | ENGL 1190</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <style>
+    /* =====================================================
+       APA Citation Guide — Page-specific styles
+       Uses root CSS variables for dark mode compatibility
+       ===================================================== */
+
+    /* ── Accordion ─────────────────────────────────────── */
+    .accordion {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 1rem 0 1.5rem;
+      overflow: hidden;
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .accordion-item:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-trigger {
+      all: unset;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      background: var(--accent-box-bg);
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+      gap: 1rem;
+      transition: background 0.15s;
+    }
+
+    .accordion-trigger:hover {
+      background: var(--hover);
+    }
+
+    .accordion-trigger:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: -2px;
+    }
+
+    .accordion-trigger[aria-expanded="true"] {
+      background: var(--hover);
+      color: var(--accent);
+    }
+
+    [data-theme="dark"] .accordion-trigger[aria-expanded="true"] {
+      color: var(--bright);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .accordion-trigger[aria-expanded="true"] {
+        color: var(--bright);
+      }
+    }
+
+    .accordion-icon {
+      flex-shrink: 0;
+      width: 1.1rem;
+      height: 1.1rem;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .accordion-icon::before,
+    .accordion-icon::after {
+      content: "";
+      position: absolute;
+      background: currentColor;
+      border-radius: 2px;
+    }
+
+    .accordion-icon::before {
+      width: 100%;
+      height: 2px;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+
+    .accordion-icon::after {
+      width: 2px;
+      height: 100%;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .accordion-trigger[aria-expanded="true"] .accordion-icon::after {
+      transform: translateX(-50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .accordion-panel {
+      display: none;
+      padding: 1.25rem 1.5rem 1.5rem;
+      background: var(--bg);
+    }
+
+    .accordion-panel.is-open {
+      display: block;
+    }
+
+    .accordion-panel h3 {
+      margin-top: 0;
+    }
+
+    /* ── Google Scholar mock-up ─────────────────────────── */
+    .gs-mock {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem 0 1.25rem;
+      font-size: .9rem;
+    }
+
+    .gs-mock-bar {
+      background: #f8f9fa;
+      border-bottom: 1px solid #dfe1e5;
+      padding: .6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    .gs-mock-logo {
+      font-size: .85rem;
+      font-weight: 700;
+      color: #4285f4;
+      white-space: nowrap;
+      font-family: Arial, sans-serif;
+    }
+
+    .gs-mock-searchbar {
+      flex: 1;
+      border: 1px solid #dfe1e5;
+      border-radius: 24px;
+      padding: .4rem .9rem;
+      background: #fff;
+      color: #202124;
+      font-size: .88rem;
+      font-family: Arial, sans-serif;
+      max-width: 480px;
+    }
+
+    .gs-mock-body {
+      padding: .75rem 1rem 1rem;
+      background: var(--bg);
+    }
+
+    .gs-mock-result {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: .5rem 1rem;
+      padding: .75rem 0;
+      align-items: start;
+    }
+
+    .gs-mock-result-title {
+      color: #1a0dab;
+      font-size: .95rem;
+      font-weight: 600;
+      font-family: Arial, sans-serif;
+      margin-bottom: .15rem;
+    }
+
+    [data-theme="dark"] .gs-mock-result-title {
+      color: #8ab4f8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .gs-mock-result-title {
+        color: #8ab4f8;
+      }
+    }
+
+    .gs-mock-result-authors {
+      font-size: .82rem;
+      color: #006621;
+      margin-bottom: .2rem;
+      font-family: Arial, sans-serif;
+    }
+
+    [data-theme="dark"] .gs-mock-result-authors {
+      color: #81c995;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .gs-mock-result-authors {
+        color: #81c995;
+      }
+    }
+
+    .gs-mock-result-snippet {
+      font-size: .83rem;
+      color: #4d5156;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    [data-theme="dark"] .gs-mock-result-snippet {
+      color: #bdc1c6;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .gs-mock-result-snippet {
+        color: #bdc1c6;
+      }
+    }
+
+    .gs-mock-result-meta {
+      font-size: .78rem;
+      color: #1a0dab;
+      margin-top: .3rem;
+      font-family: Arial, sans-serif;
+    }
+
+    [data-theme="dark"] .gs-mock-result-meta {
+      color: #8ab4f8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .gs-mock-result-meta {
+        color: #8ab4f8;
+      }
+    }
+
+    .gs-mock-pdf-link {
+      display: inline-block;
+      background: #f8f9fa;
+      border: 1px solid #dfe1e5;
+      border-radius: 4px;
+      padding: .25rem .6rem;
+      font-size: .78rem;
+      font-weight: 700;
+      color: #1a0dab;
+      font-family: Arial, sans-serif;
+      white-space: nowrap;
+    }
+
+    [data-theme="dark"] .gs-mock-pdf-link {
+      background: #303134;
+      border-color: #5f6368;
+      color: #8ab4f8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .gs-mock-pdf-link {
+        background: #303134;
+        border-color: #5f6368;
+        color: #8ab4f8;
+      }
+    }
+
+    /* ── Cite dialog mock ───────────────────────────────── */
+    .cite-dialog {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem 0 1.25rem;
+      max-width: 560px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    }
+
+    .cite-dialog-bar {
+      background: var(--accent);
+      color: #fff;
+      padding: .6rem 1rem;
+      font-size: .88rem;
+      font-weight: 600;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cite-dialog-close {
+      font-size: 1.1rem;
+      opacity: .7;
+    }
+
+    .cite-dialog-body {
+      padding: 1rem 1.25rem;
+      background: var(--bg);
+    }
+
+    .cite-dialog-label {
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      margin-bottom: .35rem;
+    }
+
+    .cite-dialog-text {
+      font-size: .88rem;
+      color: var(--text);
+      background: var(--accent-box-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: .6rem .85rem;
+      line-height: 1.6;
+      font-family: Arial, sans-serif;
+      margin-bottom: .85rem;
+    }
+
+    .cite-dialog-tabs {
+      display: flex;
+      gap: .25rem;
+      margin-bottom: .85rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: .5rem;
+    }
+
+    .cite-tab {
+      font-size: .82rem;
+      padding: .3rem .75rem;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .cite-tab.active {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* ── Journal page mock ──────────────────────────────── */
+    .journal-mock {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem 0 1.25rem;
+      font-size: .9rem;
+    }
+
+    .journal-mock-bar {
+      background: #1a3a6b;
+      padding: .5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    .journal-mock-logo {
+      font-size: .85rem;
+      font-weight: 700;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .journal-mock-url {
+      font-size: .75rem;
+      color: rgba(255,255,255,.7);
+      font-family: monospace;
+    }
+
+    .journal-mock-body {
+      padding: 1rem 1.25rem;
+      background: var(--bg);
+    }
+
+    .journal-mock-label {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      margin-bottom: .3rem;
+    }
+
+    .journal-mock-title {
+      font-family: "Judson", serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 .4rem;
+      line-height: 1.35;
+    }
+
+    .journal-mock-authors {
+      font-size: .82rem;
+      color: var(--muted);
+      margin-bottom: .6rem;
+    }
+
+    .journal-mock-meta {
+      font-size: .82rem;
+      color: var(--text);
+      margin-bottom: .75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 1.5rem;
+    }
+
+    .journal-mock-doi {
+      font-size: .82rem;
+      color: var(--bright);
+      font-family: monospace;
+    }
+
+    .journal-mock-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: .75rem;
+    }
+
+    .journal-btn {
+      font-size: .82rem;
+      padding: .4rem .9rem;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      border: 1px solid var(--border);
+      background: var(--accent-box-bg);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .journal-btn.primary {
+      background: #1a3a6b;
+      color: #fff;
+      border-color: #1a3a6b;
+      font-weight: 600;
+    }
+
+    [data-theme="dark"] .journal-btn.primary {
+      background: var(--bright);
+      color: #121212;
+      border-color: var(--bright);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .journal-btn.primary {
+        background: var(--bright);
+        color: #121212;
+        border-color: var(--bright);
+      }
+    }
+
+    /* ── Citation display ───────────────────────────────── */
+    .citation-display {
+      background: var(--accent-box-bg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: .85rem 1.25rem;
+      margin: .75rem 0 1rem;
+      font-size: .92rem;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    [data-theme="dark"] .citation-display {
+      border-left-color: var(--bright);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .citation-display {
+        border-left-color: var(--bright);
+      }
+    }
+
+    .citation-display .cite-label {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      display: block;
+      margin-bottom: .35rem;
+    }
+
+    .doi-highlight {
+      background: var(--mark-bg);
+      color: var(--mark-text);
+      padding: .05rem .2rem;
+      border-radius: 3px;
+    }
+
+    /* ── Callout badges ─────────────────────────────────── */
+    .c-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      vertical-align: middle;
+      margin-left: .3rem;
+      flex-shrink: 0;
+      position: relative;
+      top: -1px;
+    }
+
+    [data-theme="dark"] .c-badge {
+      background: var(--bright);
+      color: #121212;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .c-badge {
+        background: var(--bright);
+        color: #121212;
+      }
+    }
+
+    .callout-key {
+      list-style: none;
+      padding: 0;
+      margin: .75rem 0 0;
+    }
+
+    .callout-key li {
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+      margin-bottom: .5rem;
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+
+    .callout-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      min-width: 1.5rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: .78rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    [data-theme="dark"] .callout-badge {
+      background: var(--bright);
+      color: #121212;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .callout-badge {
+        background: var(--bright);
+        color: #121212;
+      }
+    }
+
+    /* ── Tips box ───────────────────────────────────────── */
+    .tips-accent-box {
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      background: var(--accent-box-bg);
+      padding: 1rem 1.75rem .8rem;
+      margin: 1rem 0 1.75rem 0;
+      border-radius: 6px;
+    }
+
+    [data-theme="dark"] .tips-accent-box {
+      border-left-color: var(--bright);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .tips-accent-box {
+        border-left-color: var(--bright);
+      }
+    }
+
+    .tips-accent-box h3 {
+      margin-top: 0;
+      font-family: "Judson", serif;
+      font-size: 1.1rem;
+    }
+
+    .tips-accent-box p {
+      margin: 0 0 .5em;
+    }
+
+    .tips-accent-box p:last-child {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="page-content">
+
+    <h1>Quick &amp; Dirty Guide to APA Reference Citations</h1>
+
+    <p>This guide covers the two fastest ways to get a correctly formatted APA citation for a journal article. You don't need to build citations by hand — both methods pull the citation for you. The key is knowing where to look and what to do with what you get.</p>
+
+    <nav class="toc" aria-label="Table of contents">
+      <h2>Methods</h2>
+      <ul>
+        <li><a href="#method-1">Method 1: Journal Article Page</a> — usually the cleanest option</li>
+        <li><a href="#method-2">Method 2: Google Scholar</a> — useful when you don't have the article page handy</li>
+      </ul>
+    </nav>
+
+    <!-- ================================================ -->
+    <!-- METHOD 1: JOURNAL PAGE -->
+    <!-- ================================================ -->
+    <h2 id="method-1">Method 1: Journal Article Page</h2>
+
+    <p>This is usually the cleanest and most reliable method. Most journal article pages have a built-in cite button that generates a complete citation including the DOI link.</p>
+
+    <div class="accordion" id="m1-accordion">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="m1-panel-1" id="m1-btn-1">
+          Step 1: Go to the journal article's webpage
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="m1-panel-1" role="region" aria-labelledby="m1-btn-1">
+          <p>Open the article's page on the journal's website — not just the PDF, but the actual article page. This is usually where you found the article, or you can get there by clicking the title link in Google Scholar or Semantic Scholar.</p>
+
+          <div class="journal-mock" role="img" aria-label="Example journal article page">
+            <div class="journal-mock-bar">
+              <span class="journal-mock-logo">Journal of Nursing Research</span>
+              <span class="journal-mock-url">doi.org/10.1016/j.nursingresearch.2024.08.012</span>
+            </div>
+            <div class="journal-mock-body">
+              <div class="journal-mock-label">Original Research Article</div>
+              <div class="journal-mock-title">Effects of AI-Assisted Triage on Patient Outcomes in Acute Care Nursing: A Randomized Controlled Study</div>
+              <div class="journal-mock-authors">M. Chen, T. Okafor, R. Patel, L. Johansson</div>
+              <div class="journal-mock-meta">
+                <span>Volume 42, Issue 4</span>
+                <span>August 2024</span>
+                <span>Pages 112–128</span>
+              </div>
+              <div class="journal-mock-doi">
+                DOI: <span class="doi-highlight">https://doi.org/10.1016/j.nursingresearch.2024.08.012</span>
+              </div>
+              <div class="journal-mock-actions">
+                <button class="journal-btn primary">Cite <span class="c-badge" aria-label="Callout 1">1</span></button>
+                <button class="journal-btn">Download PDF</button>
+                <button class="journal-btn">Share</button>
+              </div>
+            </div>
+          </div>
+
+          <ul class="callout-key">
+            <li><span class="callout-badge" aria-hidden="true">1</span> Look for a <strong>Cite</strong> button on the article page — it may also say <strong>Citation</strong>, <strong>Export Citation</strong>, or show a quotation mark icon. It is usually near the title, the abstract, or the article actions menu.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="m1-panel-2" id="m1-btn-2">
+          Step 2: Click Cite and select APA
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="m1-panel-2" role="region" aria-labelledby="m1-btn-2">
+          <p>When you click the Cite button, a dialog or panel will appear. If you are given a choice of citation styles, select <strong>APA</strong>.</p>
+
+          <div class="cite-dialog" role="img" aria-label="Example citation dialog from a journal page">
+            <div class="cite-dialog-bar">
+              <span>Export Citation</span>
+              <span class="cite-dialog-close">&#10005;</span>
+            </div>
+            <div class="cite-dialog-body">
+              <div class="cite-dialog-tabs">
+                <span class="cite-tab active">APA <span class="c-badge" aria-label="Callout 1">1</span></span>
+                <span class="cite-tab">MLA</span>
+                <span class="cite-tab">Chicago</span>
+                <span class="cite-tab">BibTeX</span>
+              </div>
+              <div class="cite-dialog-label">APA Citation</div>
+              <div class="cite-dialog-text">
+                Chen, M., Okafor, T., Patel, R., &amp; Johansson, L. (2024). Effects of AI-assisted triage on patient outcomes in acute care nursing: A randomized controlled study. <em>Journal of Nursing Research, 42</em>(4), 112–128. https://doi.org/10.1016/j.nursingresearch.2024.08.012 <span class="c-badge" aria-label="Callout 2">2</span>
+              </div>
+            </div>
+          </div>
+
+          <ul class="callout-key">
+            <li><span class="callout-badge" aria-hidden="true">1</span> Select <strong>APA</strong> from the style options. If APA is already selected or there is only one option, you are good to go.</li>
+            <li><span class="callout-badge" aria-hidden="true">2</span> The citation should already include the full DOI link at the end — this is what makes the journal page method so convenient.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="m1-panel-3" id="m1-btn-3">
+          Step 3: Copy and paste the citation
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="m1-panel-3" role="region" aria-labelledby="m1-btn-3">
+          <p>Copy the entire citation text and paste it into your Word document or wherever you are keeping your references.</p>
+          <p>Your finished citation should look like this:</p>
+
+          <div class="citation-display">
+            <span class="cite-label">Your final APA citation</span>
+            Chen, M., Okafor, T., Patel, R., &amp; Johansson, L. (2024). Effects of AI-assisted triage on patient outcomes in acute care nursing: A randomized controlled study. <em>Journal of Nursing Research, 42</em>(4), 112–128. <span class="doi-highlight">https://doi.org/10.1016/j.nursingresearch.2024.08.012</span>
+          </div>
+
+          <div class="tips-accent-box">
+            <h3>What is a DOI?</h3>
+            <p>A DOI (Digital Object Identifier) is a permanent link to a published article. It always starts with <code>https://doi.org/</code> followed by a unique code. Including the DOI in your citation means anyone reading your paper can find the exact source you used, even if the article moves to a different URL. Always include it when it's available.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end m1-accordion -->
+
+    <!-- ================================================ -->
+    <!-- METHOD 2: GOOGLE SCHOLAR -->
+    <!-- ================================================ -->
+    <h2 id="method-2">Method 2: Google Scholar</h2>
+
+    <p>Use this method when you found your article through Google Scholar and don't have the journal page handy, or when the journal page doesn't have a Cite button. Google Scholar can generate an APA citation for almost any article in its index.</p>
+
+    <div class="accordion" id="m2-accordion">
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="m2-panel-1" id="m2-btn-1">
+          Step 1: Find the article in Google Scholar and click Cite
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="m2-panel-1" role="region" aria-labelledby="m2-btn-1">
+          <p>Search for the article title in Google Scholar. When you find the correct result, look for the <strong>Cite</strong> link below the result — it appears in the row of links beneath the snippet.</p>
+
+          <div class="gs-mock" role="img" aria-label="Example Google Scholar result with Cite link highlighted">
+            <div class="gs-mock-bar">
+              <span class="gs-mock-logo">Scholar</span>
+              <div class="gs-mock-searchbar">Effects of AI-assisted triage on patient outcomes in acute care nursing</div>
+            </div>
+            <div class="gs-mock-body">
+              <div class="gs-mock-result">
+                <div>
+                  <div class="gs-mock-result-title">Effects of AI-assisted triage on patient outcomes in acute care nursing: A randomized controlled study</div>
+                  <div class="gs-mock-result-authors">M Chen, T Okafor, R Patel, L Johansson — <em>Journal of Nursing Research</em>, 2024</div>
+                  <div class="gs-mock-result-snippet">This study examined the effects of AI-assisted triage software on patient wait times, triage accuracy, and nursing workload in three acute care facilities…</div>
+                  <div class="gs-mock-result-meta">
+                    Cited by 14 &nbsp;·&nbsp; Related articles &nbsp;·&nbsp; All 6 versions &nbsp;·&nbsp; <strong>&#8220;&nbsp;Cite <span class="c-badge" aria-label="Callout 1">1</span>&nbsp;&#8221;</strong>
+                  </div>
+                </div>
+                <div>
+                  <div class="gs-mock-pdf-link">[PDF] nursingresearch.org</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="callout-key">
+            <li><span class="callout-badge" aria-hidden="true">1</span> Click the <strong>Cite</strong> link — it appears in the small row of links beneath the article snippet, not on the right side. It looks like a quotation mark icon or the word "Cite."</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="m2-panel-2" id="m2-btn-2">
+          Step 2: Copy the APA citation from the dialog
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="m2-panel-2" role="region" aria-labelledby="m2-btn-2">
+          <p>A small dialog will appear with the citation already formatted in several styles. Copy the <strong>APA</strong> version — it is the first one listed.</p>
+
+          <div class="cite-dialog" role="img" aria-label="Example Google Scholar cite dialog">
+            <div class="cite-dialog-bar">
+              <span>Cite</span>
+              <span class="cite-dialog-close">&#10005;</span>
+            </div>
+            <div class="cite-dialog-body">
+              <div class="cite-dialog-label">APA <span class="c-badge" aria-label="Callout 1">1</span></div>
+              <div class="cite-dialog-text">
+                Chen, M., Okafor, T., Patel, R., &amp; Johansson, L. (2024). Effects of AI-assisted triage on patient outcomes in acute care nursing: A randomized controlled study. <em>Journal of Nursing Research, 42</em>(4), 112–128. <span class="c-badge" aria-label="Callout 2">2</span>
+              </div>
+              <div class="cite-dialog-label">MLA</div>
+              <div class="cite-dialog-text" style="font-size:.82rem; color: var(--muted);">
+                Chen, M., et al. "Effects of AI-assisted triage…" <em>Journal of Nursing Research</em> 42.4 (2024): 112–128.
+              </div>
+            </div>
+          </div>
+
+          <ul class="callout-key">
+            <li><span class="callout-badge" aria-hidden="true">1</span> Copy the APA citation — it is the first style listed in the dialog.</li>
+            <li><span class="callout-badge" aria-hidden="true">2</span> Notice that the Google Scholar citation does <strong>not</strong> include a DOI or link. You will need to add that in the next step.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="m2-panel-3" id="m2-btn-3">
+          Step 3: Find and add the DOI link
+          <span class="accordion-icon" aria-hidden="true"></span>
+        </button>
+        <div class="accordion-panel" id="m2-panel-3" role="region" aria-labelledby="m2-btn-3">
+          <p>Go back to the Google Scholar result and this time click the <strong>main article title</strong> — not the PDF link on the right. This will take you to the journal's article page.</p>
+          <ol>
+            <li>Click the article title (the blue link) to go to the journal page</li>
+            <li>Look for a <strong>DOI</strong> on the page — it usually appears near the top, near the article title or publication info, and looks like: <code>https://doi.org/10.xxxx/xxxxxxx</code></li>
+            <li>Copy the full DOI link</li>
+            <li>If there is no DOI listed, copy the URL from your browser's address bar instead</li>
+            <li>Go back to your citation and paste the link at the very end, after a space</li>
+          </ol>
+
+          <p>Your finished citation should look like this:</p>
+
+          <div class="citation-display">
+            <span class="cite-label">Google Scholar citation (before adding DOI)</span>
+            Chen, M., Okafor, T., Patel, R., &amp; Johansson, L. (2024). Effects of AI-assisted triage on patient outcomes in acute care nursing: A randomized controlled study. <em>Journal of Nursing Research, 42</em>(4), 112–128.
+          </div>
+
+          <div class="citation-display">
+            <span class="cite-label">Your final APA citation (after adding DOI)</span>
+            Chen, M., Okafor, T., Patel, R., &amp; Johansson, L. (2024). Effects of AI-assisted triage on patient outcomes in acute care nursing: A randomized controlled study. <em>Journal of Nursing Research, 42</em>(4), 112–128. <span class="doi-highlight">https://doi.org/10.1016/j.nursingresearch.2024.08.012</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end m2-accordion -->
+
+    <div class="tips-accent-box">
+      <h3>A note on Google Scholar citations</h3>
+      <p>Google Scholar's citations are auto-generated, which means they are occasionally imperfect — a period in the wrong place, an author's name formatted inconsistently, or a journal title not quite right. In practice these errors are rare, but it is worth a quick look before you submit.</p>
+      <p>The most common issue is simply the missing DOI, which is why Step 3 above is important. Beyond that, if something looks off, you can compare it against the journal page to double-check.</p>
+    </div>
+
+  </div>
+
+  <!-- main navigation and page scripts -->
+  <script src="/nav.js"></script>
+  <script src="/footer.js" defer></script>
+
+  <script>
+    document.querySelectorAll('.accordion-trigger').forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        var panelId = this.getAttribute('aria-controls');
+        var panel = document.getElementById(panelId);
+
+        var accordion = this.closest('.accordion');
+        accordion.querySelectorAll('.accordion-trigger').forEach(function(t) {
+          t.setAttribute('aria-expanded', 'false');
+        });
+        accordion.querySelectorAll('.accordion-panel').forEach(function(p) {
+          p.classList.remove('is-open');
+        });
+
+        if (!expanded) {
+          this.setAttribute('aria-expanded', 'true');
+          panel.classList.add('is-open');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

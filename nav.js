@@ -106,6 +106,7 @@
             { label: "How to Annotate a PDF", href: "/resources/annotating-pdfs.html" },
             { label: "How to Read a Scholarly Article", href: "/resources/read-scholarly.html" },
             { label: "APA Style & Citations", href: "/resources/apa-style-citations.html" },
+            { label: "APA Quick & Dirty Guide", href: "/resources/apa-citations.html" },
             { label: "APA in Action", href: "/resources/apa-in-action.html" },
           ]
         },
