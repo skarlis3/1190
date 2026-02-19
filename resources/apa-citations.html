@@ -571,6 +571,36 @@
       }
     }
 
+    /* ── Warning box ────────────────────────────────────── */
+    .warning-box {
+      border: 1px solid var(--border);
+      border-left: 6px solid #b05a00;
+      background: #fff8f0;
+      color: #3a1a00;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      margin: 1rem 0 1.5rem;
+      font-size: .95rem;
+    }
+
+    [data-theme="dark"] .warning-box {
+      background: #2a1800;
+      color: #f0c080;
+      border-left-color: #d07020;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .warning-box {
+        background: #2a1800;
+        color: #f0c080;
+        border-left-color: #d07020;
+      }
+    }
+
+    .warning-box p {
+      margin: 0;
+    }
+
     /* ── Tips box ───────────────────────────────────────── */
     .tips-accent-box {
       border: 1px solid var(--border);
@@ -637,10 +667,14 @@
 
     <h3 id="zoterobib">ZoteroBib</h3>
 
-    <p><a href="https://bib.zotero.org" target="_blank" rel="noopener">ZoteroBib</a> (bib.zotero.org) is a free, no-account-required citation generator made by the Zotero team — the same people behind one of the most respected academic citation managers. You paste in a URL and it pulls the metadata automatically. It handles news articles, websites, and journal articles.</p>
+    <p><a href="https://zbib.org" target="_blank" rel="noopener">ZoteroBib</a> (zbib.org) is a free, no-account-required citation generator made by the Zotero team — the same people behind one of the most respected academic citation managers. You paste in a URL and it pulls the metadata automatically. It handles news articles, websites, and journal articles.</p>
+
+    <div class="warning-box" role="note">
+      <p><strong>Are you looking at a PDF?</strong> If you opened a PDF directly — for example by clicking the [PDF] link in Google Scholar — that URL won't work for citation lookup. You need the article's landing page, not the PDF itself. Go back to Google Scholar, find the result, and click the <strong>title link</strong> instead. Even if the page is paywalled and you can't read the article there, ZoteroBib can still pull the citation from it.</p>
+    </div>
 
     <ol>
-      <li>Go to <a href="https://bib.zotero.org" target="_blank" rel="noopener">bib.zotero.org</a></li>
+      <li>Go to <a href="https://zbib.org" target="_blank" rel="noopener">zbib.org</a></li>
       <li>Copy the URL of your article and paste it into the search bar, then press Enter</li>
       <li>ZoteroBib will generate the citation automatically</li>
       <li>Make sure <strong>APA</strong> is selected in the style dropdown at the top of the page</li>
