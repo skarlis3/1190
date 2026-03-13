@@ -62,7 +62,7 @@
             {
               label: "Weekly Writing",
               href: "/assignments/weeklywriting.html",
-              children: Array.from({ length: 7 }, (_, i) => ({
+              children: Array.from({ length: 8 }, (_, i) => ({
                 label: `Weekly Writing ${i + 1}`,
                 href: `/assignments/ww${i + 1}.html`
               }))
