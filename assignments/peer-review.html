@@ -282,6 +282,40 @@
         <img src="/img/peer4.png" alt="Canvas: viewing feedback and sidebar comments on your draft" loading="lazy"></li>
     </ul>
 
+    <!-- Projector View Button -->
+    <p style="margin-top: 3rem; text-align: right;">
+      <a href="#projector" id="projector-btn" style="font-size: 0.82rem; color: var(--muted); text-decoration: none; border: 1px solid var(--border); border-radius: 4px; padding: 0.3em 0.7em;">For Projector</a>
+    </p>
+
+    <!-- Projector Overlay -->
+    <div id="projector-view" style="display:none; position:fixed; inset:0; z-index:20000; background:var(--bg); color:var(--text); overflow-y:auto; padding: 3rem 4rem;">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <button id="projector-close" style="position:fixed; top:1.5rem; right:2rem; background:none; border:2px solid var(--border); border-radius:6px; padding:0.4em 0.8em; font-size:1.1rem; cursor:pointer; color:var(--text); z-index:20001;" aria-label="Close projector view">&times; Close</button>
+
+        <h1 style="font-size: 2.8rem; margin-bottom: 0.2em;">Peer Review Today</h1>
+
+        <h2 style="font-size: 1.8rem; margin-top: 1.5em; margin-bottom: 0.3em;">Getting Started</h2>
+        <ol style="font-size: 1.5rem; line-height: 1.8;">
+          <li>Go to the class website for full instructions:<br>
+            <b style="font-size: 1.3rem;">1190.skarlis.org &rarr; Assignments &rarr; Project 1 &rarr; Peer Review</b>
+          </li>
+          <li style="margin-top: 0.5em;">Figure out with your team who is reviewing whose paper. You should have access to all submitted papers in your team on Canvas.</li>
+          <li style="margin-top: 0.5em;">You are reviewing <b>TWO</b> papers today.</li>
+        </ol>
+
+        <h2 style="font-size: 1.8rem; margin-top: 1.5em; margin-bottom: 0.3em;">For Each Paper</h2>
+        <ol style="font-size: 1.5rem; line-height: 1.8;">
+          <li><b>Part A &mdash; Paper Map:</b> Read the paper and build a quick reverse outline. Post it in the <b>Canvas comments</b>.</li>
+          <li style="margin-top: 0.4em;"><b>Part B &mdash; Feedback:</b> Leave comments <b>directly on the draft</b> in Canvas about what's working and what could be stronger.</li>
+        </ol>
+
+        <h2 style="font-size: 1.8rem; margin-top: 1.5em; margin-bottom: 0.3em;">Watch the Clock</h2>
+        <p style="font-size: 1.5rem; line-height: 1.8;">
+          Move on to your second paper review by the end of the first hour.
+        </p>
+      </div>
+    </div>
+
   </div>
 
   <!-- main navigation and page scripts -->
@@ -326,6 +360,29 @@
     document.querySelectorAll(".term-popover").forEach(p => {
       p.addEventListener("click", (e) => e.stopPropagation());
     });
+
+    // Projector view toggle
+    const projBtn = document.getElementById("projector-btn");
+    const projView = document.getElementById("projector-view");
+    const projClose = document.getElementById("projector-close");
+
+    if (projBtn && projView && projClose) {
+      projBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        projView.style.display = "block";
+        document.body.style.overflow = "hidden";
+      });
+      projClose.addEventListener("click", () => {
+        projView.style.display = "none";
+        document.body.style.overflow = "";
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && projView.style.display === "block") {
+          projView.style.display = "none";
+          document.body.style.overflow = "";
+        }
+      });
+    }
   });
   </script>
 </body>
