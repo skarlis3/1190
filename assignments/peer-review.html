@@ -64,7 +64,7 @@
       right: 8px;
       background: none;
       border: none;
-      color: #8899aa;
+      color: #aabbcc;
       font-size: 1.1rem;
       cursor: pointer;
       padding: 2px 5px;
@@ -94,8 +94,8 @@
       vertical-align: middle;
       line-height: 1;
     }
-    .part-a { background: #2a6496; color: #fff; }
-    .part-b { background: #5b8c3e; color: #fff; }
+    .part-a { background: #1e5582; color: #fff; }
+    .part-b { background: #2f5e18; color: #fff; }
 
     /* ===== Part Boxes ===== */
     .part-box {
@@ -106,10 +106,10 @@
       background: var(--accent-box-bg);
     }
     .part-box-a {
-      border-left: 5px solid #2a6496;
+      border-left: 5px solid #1e5582;
     }
     .part-box-b {
-      border-left: 5px solid #5b8c3e;
+      border-left: 5px solid #2f5e18;
     }
     [data-theme="dark"] .part-box-a { border-left-color: #6db3f2; }
     [data-theme="dark"] .part-box-b { border-left-color: #8bc66a; }
@@ -123,8 +123,8 @@
       font-family: "Judson", serif;
       font-size: 1.2rem;
     }
-    .part-box-a h3 { color: #2a6496; }
-    .part-box-b h3 { color: #5b8c3e; }
+    .part-box-a h3 { color: #1e5582; }
+    .part-box-b h3 { color: #2f5e18; }
     [data-theme="dark"] .part-box-a h3 { color: #6db3f2; }
     [data-theme="dark"] .part-box-b h3 { color: #8bc66a; }
     @media (prefers-color-scheme: dark) {
@@ -288,31 +288,69 @@
     </p>
 
     <!-- Projector Overlay -->
-    <div id="projector-view" style="display:none; position:fixed; inset:0; z-index:20000; background:var(--bg); color:var(--text); overflow-y:auto; padding: 3rem 4rem;">
-      <div style="max-width: 900px; margin: 0 auto;">
-        <button id="projector-close" style="position:fixed; top:1.5rem; right:2rem; background:none; border:2px solid var(--border); border-radius:6px; padding:0.4em 0.8em; font-size:1.1rem; cursor:pointer; color:var(--text); z-index:20001;" aria-label="Close projector view">&times; Close</button>
+    <div id="projector-view" style="display:none; position:fixed; inset:0; z-index:20000; background:var(--bg); color:var(--text); overflow:hidden;">
+      <div style="height:100vh; padding: 2rem 3rem; display:flex; flex-direction:column; max-width:1200px; margin:0 auto;">
 
-        <h1 style="font-size: 2.8rem; margin-bottom: 0.2em;">Peer Review Today</h1>
+        <button id="projector-close" style="position:absolute; top:1rem; right:1.5rem; background:none; border:2px solid var(--border); border-radius:6px; padding:0.3em 0.7em; font-size:1rem; cursor:pointer; color:var(--muted); z-index:20001;" aria-label="Close projector view">&times; Close</button>
 
-        <h2 style="font-size: 1.8rem; margin-top: 1.5em; margin-bottom: 0.3em;">Getting Started</h2>
-        <ol style="font-size: 1.5rem; line-height: 1.8;">
-          <li>Go to the class website for full instructions:<br>
-            <b style="font-size: 1.3rem;">1190.skarlis.org &rarr; Assignments &rarr; Project 1 &rarr; Peer Review</b>
-          </li>
-          <li style="margin-top: 0.5em;">Figure out with your team who is reviewing whose paper. You should have access to all submitted papers in your team on Canvas.</li>
-          <li style="margin-top: 0.5em;">You are reviewing <b>TWO</b> papers today.</li>
-        </ol>
-
-        <h2 style="font-size: 1.8rem; margin-top: 1.5em; margin-bottom: 0.3em;">For Each Paper</h2>
-        <ol style="font-size: 1.5rem; line-height: 1.8;">
-          <li><b>Part A &mdash; Paper Map:</b> Read the paper and build a quick reverse outline. Post it in the <b>Canvas comments</b>.</li>
-          <li style="margin-top: 0.4em;"><b>Part B &mdash; Feedback:</b> Leave comments <b>directly on the draft</b> in Canvas about what's working and what could be stronger.</li>
-        </ol>
-
-        <h2 style="font-size: 1.8rem; margin-top: 1.5em; margin-bottom: 0.3em;">Watch the Clock</h2>
-        <p style="font-size: 1.5rem; line-height: 1.8;">
-          Move on to your second paper review by the end of the first hour.
+        <h1 style="font-size: 2.4rem; margin: 0 0 0.3em; text-align:center;">Peer Review Today</h1>
+        <p style="font-size: 1.15rem; text-align:center; margin: 0 0 1.2rem; color:var(--muted);">
+          Full instructions: <b>1190.skarlis.org</b> &rarr; Assignments &rarr; Project 1 &rarr; Peer Review
         </p>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; flex:1; min-height:0;">
+
+          <!-- Left column: Getting Started -->
+          <div style="display:flex; flex-direction:column; gap:1.2rem;">
+
+            <div style="border:2px solid var(--border); border-radius:10px; padding:1.2rem 1.5rem; background:var(--accent-box-bg); flex:1;">
+              <h2 style="font-size:1.4rem; margin:0 0 0.6rem; font-family:'Judson',serif;">Getting Started</h2>
+              <ol style="font-size:1.15rem; line-height:1.7; margin:0; padding-left:1.3em;">
+                <li>Coordinate with your team: who is reviewing whose paper?</li>
+                <li style="margin-top:0.3em;">Open Canvas &mdash; you should have access to all submitted papers in your team.</li>
+                <li style="margin-top:0.3em;">You are reviewing <b>TWO</b> papers today.</li>
+              </ol>
+            </div>
+
+            <div style="border:2px solid var(--border); border-left:5px solid #c0392b; border-radius:10px; padding:1rem 1.5rem; background:var(--accent-box-bg); text-align:center;">
+              <p style="font-size:1.3rem; margin:0; line-height:1.5;">
+                <b>Watch the Clock</b><br>
+                Move on to your second review by the end of the first hour.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Right column: The Two Parts -->
+          <div style="display:flex; flex-direction:column; gap:1.2rem;">
+
+            <div style="border:2px solid var(--border); border-left:5px solid #1e5582; border-radius:10px; padding:1.2rem 1.5rem; background:var(--accent-box-bg); flex:1;">
+              <h2 style="font-size:1.3rem; margin:0 0 0.5rem; font-family:'Judson',serif; color:#1e5582;">
+                <span class="part-label part-a" style="font-size:0.75rem; vertical-align:middle;">Part A</span> Paper Map
+              </h2>
+              <ul style="font-size:1.1rem; line-height:1.65; margin:0; padding-left:1.2em;">
+                <li>Read the paper all the way through</li>
+                <li>Build a quick reverse outline of what you see</li>
+                <li>Note the source types used in each section</li>
+                <li>Post your Paper Map in the <b>Canvas comments</b></li>
+              </ul>
+            </div>
+
+            <div style="border:2px solid var(--border); border-left:5px solid #2f5e18; border-radius:10px; padding:1.2rem 1.5rem; background:var(--accent-box-bg); flex:1;">
+              <h2 style="font-size:1.3rem; margin:0 0 0.5rem; font-family:'Judson',serif; color:#2f5e18;">
+                <span class="part-label part-b" style="font-size:0.75rem; vertical-align:middle;">Part B</span> Feedback on the Draft
+              </h2>
+              <ul style="font-size:1.1rem; line-height:1.65; margin:0; padding-left:1.2em;">
+                <li>Leave comments <b>directly on the paper</b> in Canvas</li>
+                <li>At least one suggestion for improvement (be specific)</li>
+                <li>At least one thing that's working well</li>
+                <li>High- and middle-order concerns only &mdash; no grammar fixes</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </div>
 
