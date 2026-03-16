@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TED Paragraphs: Building Body Paragraphs | ENGL 1190</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <style>
+    /* ===== Paper Simulation (reused from APA in Action) ===== */
+    .paper-wrapper {
+      margin: 2rem auto;
+      max-width: 680px;
+    }
+    .paper-label {
+      font-family: "Judson", serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .paper-page {
+      position: relative;
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      padding: 48px 72px;
+      margin-bottom: 2rem;
+      font-family: "Times New Roman", "Times", Georgia, serif;
+      font-size: 12pt;
+      line-height: 2;
+    }
+    [data-theme="dark"] .paper-page {
+      background: #fdfdfd;
+      color: #000000;
+      border-color: #555;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.35);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .paper-page {
+        background: #fdfdfd;
+        color: #000000;
+        border-color: #555;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.35);
+      }
+    }
+    .paper-page p.body-text {
+      text-indent: 0.5in;
+      margin: 0;
+    }
+
+    /* ===== TED Label Highlights ===== */
+    .ted-label {
+      display: inline-block;
+      font-family: "Lato", system-ui, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.15em 0.45em;
+      border-radius: 3px;
+      vertical-align: middle;
+      margin-right: 0.15em;
+      line-height: 1;
+    }
+    .ted-t { background: #2a6496; color: #fff; }
+    .ted-e { background: #5b8c3e; color: #fff; }
+    .ted-d { background: #9b59b6; color: #fff; }
+
+    /* ===== Breakdown Boxes ===== */
+    .ted-breakdown {
+      margin: 1.5rem 0;
+    }
+    .ted-section {
+      border-left: 4px solid;
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 1rem;
+      border-radius: 0 6px 6px 0;
+      background: var(--accent-box-bg);
+    }
+    .ted-section-t { border-left-color: #2a6496; }
+    .ted-section-e { border-left-color: #5b8c3e; }
+    .ted-section-d { border-left-color: #9b59b6; }
+
+    .ted-section h4 {
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .ted-section-t h4 { color: #2a6496; }
+    .ted-section-e h4 { color: #5b8c3e; }
+    .ted-section-d h4 { color: #9b59b6; }
+
+    [data-theme="dark"] .ted-section-t h4 { color: #6db3f2; }
+    [data-theme="dark"] .ted-section-e h4 { color: #8bc66a; }
+    [data-theme="dark"] .ted-section-d h4 { color: #c49bdb; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .ted-section-t h4 { color: #6db3f2; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .ted-section-e h4 { color: #8bc66a; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .ted-section-d h4 { color: #c49bdb; }
+    }
+
+    .ted-section p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+    .ted-section .excerpt {
+      font-style: italic;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 740px) {
+      .paper-page {
+        padding: 36px 30px;
+        font-size: 11pt;
+      }
+    }
+    @media (max-width: 480px) {
+      .paper-page {
+        padding: 28px 20px;
+        font-size: 10.5pt;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="page-content">
+
+    <h1>TED Paragraphs</h1>
+    <h2>Building Strong Body Paragraphs</h2>
+
+    <!-- At a Glance -->
+    <div class="glance-accent-box">
+      <h3>At a Glance</h3>
+      <ul>
+        <li><b>TED</b> stands for <b>Topic sentence</b>, <b>Evidence</b>, and <b>Discussion</b>.</li>
+        <li>It's a simple framework for building body paragraphs that make a clear point and back it up.</li>
+        <li>This page shows how TED works when you're pulling from social media, news, and scholarly sources all in the same paragraph.</li>
+        <li>For help with overall paper structure, see the <a href="/assignments/example-organization.html">Example Organization</a> page.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <h3>Table of Contents</h3>
+      <ul>
+        <li><a href="#what-is-ted">What Is TED?</a></li>
+        <li><a href="#example">Example Paragraph</a></li>
+        <li><a href="#breakdown">The Breakdown</a></li>
+        <li><a href="#tips">Tips for Using TED</a></li>
+      </ul>
+    </div>
+
+    <!-- What Is TED? -->
+    <h2 id="what-is-ted">What Is TED?</h2>
+    <p>
+      Every body paragraph in your research paper should do three things:
+    </p>
+    <ol>
+      <li>
+        <b>T &mdash; Topic Sentence:</b> Start with a clear sentence that tells the reader what this paragraph is about. Think of it as a mini-thesis for the paragraph. It should connect back to your overall argument.
+      </li>
+      <li>
+        <b>E &mdash; Evidence:</b> Bring in your sources. This is where you use paraphrases, summaries, or short quotes from your research to support the point you just made. In Project 1, this means mixing different source types &mdash; social media, news, and scholarly research &mdash; so your sources are in conversation with each other.
+      </li>
+      <li>
+        <b>D &mdash; Discussion:</b> Explain what the evidence means. Don't just drop in a source and move on &mdash; tell the reader <em>why</em> this evidence matters, how it connects to your topic sentence, and what it shows about the bigger picture.
+      </li>
+    </ol>
+    <p>
+      In practice, evidence and discussion often alternate. You might introduce one source, discuss it briefly, then bring in another source and discuss how it compares. That's normal and good &mdash; the key is that you're not just listing sources back-to-back without explaining what they mean.
+    </p>
+
+    <!-- Example Paragraph -->
+    <h2 id="example">Example Paragraph</h2>
+    <p>
+      Below is an example body paragraph based on the <a href="/assignments/example-organization.html#model2">Model 2 (Sub-Topics)</a> outline for technical theatre. This paragraph comes from a section about designers using AI-generated art and the concerns that raises about creativity and ownership.
+    </p>
+
+    <div class="paper-wrapper">
+      <p class="paper-label">Example body paragraph</p>
+      <div class="paper-page">
+        <p class="body-text">
+          <span class="ted-label ted-t">T</span>One of the biggest concerns designers have about AI art tools is that they could take away the creative thinking that makes design work meaningful.
+          <span class="ted-label ted-e">E</span>In a discussion on the r/techtheatre subreddit, one scenic designer wrote that using AI-generated concept art "feels like skipping the part of the process where you actually learn something" (u/setdesigner_mk, 2025). This frustration is not limited to online spaces. Rivera (2025) reported in <em>Stage Directions</em> that several regional theatres have started using AI tools to speed up early design work, and that some designers feel pressured to adopt them just to keep up with production timelines. Researchers have found similar patterns in other creative fields. Torres and Kim (2024) found that when visual artists relied on AI-generated images during early brainstorming, they tended to produce less original work in later stages of the design process. Other studies support this concern; multiple researchers have noted that over-reliance on AI tools in creative work can lead to what they describe as "automation complacency," where professionals stop questioning the output because the tool makes decisions faster than they can (Okafor, 2024; Voss &amp; Hernandez, 2025).
+          <span class="ted-label ted-d">D</span>What stands out across all of these sources is that the worry is not really about the technology itself &mdash; it is about what gets lost when the messy, slow, human part of designing is skipped over. The Reddit user, the news article, and the research all point to the same tension: AI can save time, but the time it saves might be exactly where the real creative work happens.
+        </p>
+      </div>
+    </div>
+
+    <p style="padding: 0.75rem 1rem; font-size: 0.88rem; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; background: var(--accent-box-bg);">
+      This example paragraph was generated by AI for instructional purposes only. All authors, sources, usernames, publications, and findings are fictional and do not represent real research. It is meant to show what a TED paragraph looks like &mdash; not to serve as a model of actual research.
+    </p>
+
+    <!-- Breakdown -->
+    <h2 id="breakdown">The Breakdown</h2>
+    <p>Here's the same paragraph broken into its TED parts:</p>
+
+    <div class="ted-breakdown">
+
+      <div class="ted-section ted-section-t">
+        <h4>T &mdash; Topic Sentence</h4>
+        <p class="excerpt">"One of the biggest concerns designers have about AI art tools is that they could take away the creative thinking that makes design work meaningful."</p>
+        <p>This sentence tells the reader exactly what the paragraph will argue. It's specific (AI art tools + creativity concerns), and it connects to the broader section about designers and AI.</p>
+      </div>
+
+      <div class="ted-section ted-section-e">
+        <h4>E &mdash; Evidence (Social Media)</h4>
+        <p class="excerpt">"In a discussion on the r/techtheatre subreddit, one scenic designer wrote that using AI-generated concept art 'feels like skipping the part of the process where you actually learn something' (u/setdesigner_mk, 2025)."</p>
+        <p>A short direct quote from a real person's experience. Social media sources are great for showing how people in the field actually feel and talk about an issue.</p>
+      </div>
+
+      <div class="ted-section ted-section-e">
+        <h4>E &mdash; Evidence (News)</h4>
+        <p class="excerpt">"Rivera (2025) reported in <em>Stage Directions</em> that several regional theatres have started using AI tools to speed up early design work, and that some designers feel pressured to adopt them just to keep up with production timelines."</p>
+        <p>A paraphrased news article that adds context. It shows this isn't just one person complaining online &mdash; the pressure to adopt AI is an industry-wide trend.</p>
+      </div>
+
+      <div class="ted-section ted-section-e">
+        <h4>E &mdash; Evidence (Scholarly Research)</h4>
+        <p class="excerpt">"Torres and Kim (2024) found that when visual artists relied on AI-generated images during early brainstorming, they tended to produce less original work in later stages of the design process."</p>
+        <p>A paraphrased scholarly finding. Notice this is a summary of what the researchers found &mdash; no direct quote needed. Scholarly sources give you research-backed evidence for the pattern your other sources are pointing to.</p>
+      </div>
+
+      <div class="ted-section ted-section-e">
+        <h4>E &mdash; Evidence (Multiple Scholarly Sources)</h4>
+        <p class="excerpt">"Multiple researchers have noted that over-reliance on AI tools in creative work can lead to what they describe as 'automation complacency'... (Okafor, 2024; Voss &amp; Hernandez, 2025)."</p>
+        <p>When more than one source says a similar thing, you can summarize the shared finding and list them together in one parenthetical citation. This is a great way to show that an idea has broader support without repeating yourself.</p>
+      </div>
+
+      <div class="ted-section ted-section-d">
+        <h4>D &mdash; Discussion</h4>
+        <p class="excerpt">"What stands out across all of these sources is that the worry is not really about the technology itself &mdash; it is about what gets lost when the messy, slow, human part of designing is skipped over."</p>
+        <p>This is where you step in as the writer. The discussion pulls the sources together and explains the bigger point. Notice it doesn't just repeat what the sources said &mdash; it tells the reader what all of this evidence <em>means</em> when you look at it together.</p>
+      </div>
+
+    </div>
+
+
+    <!-- Tips -->
+    <h2 id="tips">Tips for Using TED</h2>
+
+    <div class="tips-accent-box">
+      <h3>Things to Keep in Mind</h3>
+      <ul>
+        <li><b>Evidence and Discussion can alternate.</b> You don't have to dump all your sources first and then discuss. It's often more natural to bring in a source, comment on it, then bring in the next one.</li>
+        <li><b>Discussion is not a summary.</b> Don't just restate what your sources said. Tell the reader <em>why</em> it matters, what it means for your argument, or how the sources connect to each other.</li>
+        <li><b>Your topic sentence should be your own idea.</b> Don't start a paragraph with a citation. Start with the point <em>you</em> want to make, then use sources to support it.</li>
+        <li><b>Not every paragraph needs every source type.</b> Some paragraphs might lean heavily on scholarly research. Others might center a social media conversation. TED works regardless &mdash; the structure is the same.</li>
+        <li><b>Use paraphrasing and summary for scholarly sources.</b> You don't need to quote researchers directly. Putting their findings in your own words shows you understand the material and keeps your writing smoother.</li>
+        <li><b>When multiple sources agree, group them.</b> If two or three scholars found similar things, summarize the shared finding once and cite them all together: (Author, Year; Author, Year). This avoids repetition and shows broader support.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- main navigation and page scripts -->
+  <script src="/nav.js" defer></script>
+  <script src="/footer.js" defer></script>
+</body>
+</html>

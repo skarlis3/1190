@@ -108,6 +108,7 @@
             { label: "APA Style & Citations", href: "/resources/apa-style-citations.html" },
             { label: "APA Quick & Dirty Guide", href: "/resources/apa-citations.html" },
             { label: "APA in Action", href: "/resources/apa-in-action.html" },
+            { label: "TED Paragraphs", href: "/resources/ted-paragraphs.html" },
           ]
         },
         {
@@ -121,7 +122,8 @@
                { label: "Reading & Video on Bias", href: "/readings/reading-bias.html" },
                { label: "Popular vs. Scholarly Sources", href: "/readings/popular-scholarly.html" },
                { label: "Popular & Professional News", href: "/readings/popular-professional-news.html" },
-               { label: "Primary, Secondary, and Tertiary Sources", href: "/readings/primary-secondary.html" }
+               { label: "Primary, Secondary, and Tertiary Sources", href: "/readings/primary-secondary.html" },
+               { label: "Synthesizing in Your Writing", href: "/readings/synthesizing.html" }
               ]
         },
 
