@@ -6,70 +6,261 @@
   <title>In-Class Peer Review for Project 1 | ENGL 1190</title>
   <link rel="stylesheet" href="/style.css" />
   <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <style>
+    /* ===== Inline Term Popover ===== */
+    .term-trigger {
+      cursor: pointer;
+      border-bottom: 1.5px dashed var(--bright);
+      font-weight: 600;
+      position: relative;
+    }
+    .term-trigger:hover {
+      color: var(--accent2);
+    }
+    .term-trigger:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .term-popover {
+      display: none;
+      position: absolute;
+      z-index: 100;
+      width: 300px;
+      background: #1a2a4a;
+      color: #eef2f7;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-family: "Lato", system-ui, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      line-height: 1.55;
+      text-align: left;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      pointer-events: none;
+      left: 0;
+      top: 100%;
+      margin-top: 6px;
+    }
+    .term-popover.is-open {
+      display: block;
+      pointer-events: auto;
+      animation: termPopIn 0.2s ease;
+    }
+    @keyframes termPopIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .term-popover .pop-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 0.3rem;
+      color: #a8d4ff;
+    }
+    .term-popover .pop-close {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: none;
+      border: none;
+      color: #8899aa;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 2px 5px;
+      line-height: 1;
+      font-family: "Lato", system-ui, sans-serif;
+    }
+    .term-popover .pop-close:hover { color: #ffffff; }
+
+    @media (max-width: 740px) {
+      .term-popover { width: 260px; font-size: 0.84rem; }
+    }
+    @media (max-width: 480px) {
+      .term-popover { width: 220px; }
+    }
+
+    /* ===== Part Labels ===== */
+    .part-label {
+      display: inline-block;
+      font-family: "Lato", system-ui, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2em 0.6em;
+      border-radius: 4px;
+      margin-right: 0.4em;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .part-a { background: #2a6496; color: #fff; }
+    .part-b { background: #5b8c3e; color: #fff; }
+
+    /* ===== Part Boxes ===== */
+    .part-box {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.75rem 1rem;
+      margin: 1.25rem 0 1.75rem;
+      background: var(--accent-box-bg);
+    }
+    .part-box-a {
+      border-left: 5px solid #2a6496;
+    }
+    .part-box-b {
+      border-left: 5px solid #5b8c3e;
+    }
+    [data-theme="dark"] .part-box-a { border-left-color: #6db3f2; }
+    [data-theme="dark"] .part-box-b { border-left-color: #8bc66a; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .part-box-a { border-left-color: #6db3f2; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .part-box-b { border-left-color: #8bc66a; }
+    }
+
+    .part-box h3 {
+      margin-top: 0;
+      font-family: "Judson", serif;
+      font-size: 1.2rem;
+    }
+    .part-box-a h3 { color: #2a6496; }
+    .part-box-b h3 { color: #5b8c3e; }
+    [data-theme="dark"] .part-box-a h3 { color: #6db3f2; }
+    [data-theme="dark"] .part-box-b h3 { color: #8bc66a; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .part-box-a h3 { color: #6db3f2; }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .part-box-b h3 { color: #8bc66a; }
+    }
+  </style>
 </head>
 <body>
   <div id="page-content">
 
     <h1>In-Class Peer Review</h1>
 
+    <!-- At a Glance -->
+    <div class="glance-accent-box">
+      <h3>At a Glance</h3>
+      <ul>
+        <li>You will review <b>two</b> of your classmates' rough drafts today (~50 minutes per paper).</li>
+        <li>For each paper, you'll do two things:
+          <ol style="margin-top: 0.3em;">
+            <li><span class="part-label part-a">Part A</span> Build a <b>Paper Map</b> &mdash; a quick reverse outline that helps you (and the author) see the paper's structure.</li>
+            <li><span class="part-label part-b">Part B</span> Leave <b>feedback on the draft</b> &mdash; comments on specific spots where things are working well or could be stronger.</li>
+          </ol>
+        </li>
+        <li>Focus only on <span class="term-trigger" tabindex="0" role="button" aria-expanded="false" data-term="hoc">high-order concerns<span class="term-popover" id="pop-hoc-glance"><button class="pop-close" aria-label="Close">&times;</button><span class="pop-title">High-Order Concerns</span>The big-picture stuff: Does the paper meet the assignment requirements? Is there a clear argument? Does it stay on topic? Are sources used from all three required types? Is the overall organization logical?</span></span> and <span class="term-trigger" tabindex="0" role="button" aria-expanded="false" data-term="moc">middle-order concerns<span class="term-popover" id="pop-moc-glance"><button class="pop-close" aria-label="Close">&times;</button><span class="pop-title">Middle-Order Concerns</span>The paragraph-level stuff: Are paragraphs well-developed? Do they follow a clear structure (like TED)? Are there transitions between ideas? Are sources actually discussed, or just dropped in? Does the writing flow?</span></span>.</li>
+      </ul>
+    </div>
+
     <!-- Table of Contents -->
     <div class="toc">
       <h3>Table of Contents</h3>
       <ul>
-        <li><a href="#instructions">Peer Review Instructions</a></li>
-        <li><a href="#additional">Additional Information</a></li>
-        <li><a href="#hoc-moc">High- and Middle-Order Concerns</a></li>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#part-a">Part A: Paper Map</a></li>
+        <li><a href="#part-b">Part B: Feedback on the Draft</a></li>
+        <li><a href="#tips">Tips for Giving Good Feedback</a></li>
         <li><a href="#canvas-howto">Instructions for Using Canvas for Peer Review</a></li>
         <li><a href="#viewing-feedback">Viewing Peer Review Feedback</a></li>
       </ul>
     </div>
 
-    <h2 id="instructions">Peer Review Instructions</h2>
+    <!-- Overview -->
+    <h2 id="overview">Overview</h2>
+    <p>
+      Your job today is to read your classmates' papers as a reader &mdash; not as an editor. You're helping the author see their paper from the outside: what's coming through clearly, what's confusing, where the support feels strong, and where it feels thin.
+    </p>
+    <p>
+      For each paper you review, you'll complete two parts:
+    </p>
     <ul>
-      <li>Leave feedback on the paper using Canvas (see instructions below).</li>
-      <li>Leave <strong>at least one</strong> comment that:
-        <ul>
-          <li>addresses a <strong>high- or middle-order concern</strong> that could use improvement (organization, details, paragraph structure, examples, flow, transitions, etc.).</li>
-          <li>points to a <strong>specific spot</strong> in the paper that illustrates the issue.</li>
-        </ul>
-      </li>
-      <li>Leave <strong>at least one</strong> comment about something that's working well (ideally connected to a high-/middle-order concern).</li>
-      <li><strong>Do not</strong> leave later-order concerns (grammar/spelling/mechanics) unless they block readability. If so, make <strong>one</strong> note to explain the issue.</li>
-      <li><strong>Do not edit</strong> your classmate's draft (no direct grammar fixing in the text).</li>
+      <li><span class="part-label part-a">Part A</span> <b>Paper Map</b> &mdash; Read through the paper and build a quick outline of what you see. Post this in the <b>comments section</b> in Canvas.</li>
+      <li><span class="part-label part-b">Part B</span> <b>Feedback on the Draft</b> &mdash; Leave comments <b>directly on the paper</b> in Canvas using the annotation tools, pointing to specific spots that are working well or could use improvement.</li>
     </ul>
+    <p>
+      You may also discuss papers verbally, but make sure all feedback is left in Canvas so the author can refer back to it later.
+    </p>
 
-    <h2 id="additional">Additional Information</h2>
-    <ul>
-      <li>Focus on ideas that could <strong>improve the paper</strong>. You don't have to prescribe exact fixes.</li>
-      <li>It's fine to comment as a <strong>reader</strong>—describe what you notice rather than trying to "be the editor."</li>
-      <li>Use <strong>feedback sandwiches</strong> when possible (from the "In-Class Peer Review" reading).</li>
-      <li>Leave <strong>only</strong> high- and middle-order concern feedback.
-        <ul>
-          <li>No grammar/spelling feedback.</li>
-          <li><em>Exception:</em> For a consistent issue (e.g., fragments/run-ons) that hurts readability or flow, you can mark it <strong>once</strong> to flag the trend.</li>
-        </ul>
-      </li>
-      <li>For in-person classes: you may discuss papers verbally, but make sure feedback is also left on the draft in Canvas.</li>
-    </ul>
+    <!-- Part A: Paper Map -->
+    <h2 id="part-a"><span class="part-label part-a">Part A</span> Paper Map</h2>
+    <p>
+      Start by reading the paper all the way through and building a Paper Map. This is a quick reverse outline that helps you get the lay of the land before you start leaving detailed feedback. It also gives the author a useful picture of how their paper reads to someone seeing it for the first time.
+    </p>
+    <p>
+      <b>Post your Paper Map in the comments section in Canvas</b> (not as annotations on the paper). Answer the following:
+    </p>
 
-    <h2 id="hoc-moc">High- and Middle-Order Concerns</h2>
+    <div class="part-box part-box-a">
+      <h3>Paper Map Questions</h3>
+      <ol>
+        <li><b>What is the topic and field?</b><br>
+          In a sentence, what is this paper about?
+        </li>
+        <li style="margin-top: 0.75em;"><b>What does the introduction set up?</b><br>
+          Based on the intro, what main argument or direction does it seem like the paper is heading? If you can't tell, note that &mdash; that's useful feedback for the author.
+        </li>
+        <li style="margin-top: 0.75em;"><b>What are the major sections or sub-points?</b><br>
+          List the main chunks of the paper and what each one is about. These might have section headings, or they might not &mdash; just describe what you see.<br>
+          <em>If you're having trouble identifying distinct sections or sub-points, that's worth noting to the author. It likely means the paper's organization could be clearer.</em>
+        </li>
+        <li style="margin-top: 0.75em;"><b>What sources show up in each section?</b><br>
+          For each section, do a quick tally of what types of evidence you see:
+          <ul>
+            <li>Social media / public conversations: ___</li>
+            <li>News articles: ___</li>
+            <li>Scholarly sources: ___</li>
+          </ul>
+          This doesn't need to be exact &mdash; a quick scan is fine.
+        </li>
+        <li style="margin-top: 0.75em;"><b>Overall, does the support feel sufficient?</b><br>
+          Are there sections that feel thin or unsupported? Are any source types missing entirely? Does the evidence feel balanced across the paper, or does it cluster in some sections and disappear in others?
+        </li>
+      </ol>
+    </div>
 
-    <h3>High-Order Concerns: The Big Stuff</h3>
-    <p>Think about assignment requirements, overall organization, audience, purpose, and use of sources.</p>
-    <ul>
-      <li>Does the paper meet the assignment requirements and incorporate evidence from public conversations, news sources, and scholarly articles?</li>
-      <li>Is it written as a research paper for an appropriate audience?</li>
-      <li>Do ideas appear in a logical order, and does the paper stay on topic?</li>
-    </ul>
-    <p>Leave feedback on any area that could be improved.</p>
+    <!-- Part B: Feedback on the Draft -->
+    <h2 id="part-b"><span class="part-label part-b">Part B</span> Feedback on the Draft</h2>
+    <p>
+      After completing the Paper Map, go back through the paper and <b>leave comments directly on the draft</b> using the Canvas annotation tools (see <a href="#canvas-howto">instructions below</a>). Focus on <span class="term-trigger" tabindex="0" role="button" aria-expanded="false" data-term="hoc">high-order<span class="term-popover"><button class="pop-close" aria-label="Close">&times;</button><span class="pop-title">High-Order Concerns</span>The big-picture stuff: Does the paper meet the assignment requirements? Is there a clear argument? Does it stay on topic? Are sources used from all three required types? Is the overall organization logical?</span></span> and <span class="term-trigger" tabindex="0" role="button" aria-expanded="false" data-term="moc">middle-order<span class="term-popover"><button class="pop-close" aria-label="Close">&times;</button><span class="pop-title">Middle-Order Concerns</span>The paragraph-level stuff: Are paragraphs well-developed? Do they follow a clear structure (like TED)? Are there transitions between ideas? Are sources actually discussed, or just dropped in? Does the writing flow?</span></span> concerns.
+    </p>
 
-    <h3>Middle-Order Concerns: The Effective Writing Stuff</h3>
-    <ul>
-      <li>Are paragraphs well-developed (e.g., Topic-Evidence-Discussion)? Are claims supported with quotes, data, or examples from sources?</li>
-      <li>Are there transitions connecting ideas? Does the draft feel choppy or disconnected?</li>
-      <li>Any sentences that are too long, awkward, or hard to read?</li>
-    </ul>
-    <p>Leave feedback on any area that could be improved.</p>
+    <div class="part-box part-box-b">
+      <h3>What to Look For</h3>
+      <ul>
+        <li>Does the introduction give enough background for someone unfamiliar with the field to follow the rest of the paper?</li>
+        <li>Are sources in conversation with each other, or are they just listed one after another without connection?</li>
+        <li>Are there places where evidence is dropped in without any discussion of what it means? (See the <a href="/resources/ted-paragraphs.html">TED Paragraphs</a> resource for what this should look like.)</li>
+        <li>Does the paper flow logically from one section to the next? Are there transitions, or does it feel like jumping between unrelated ideas?</li>
+        <li>Are there spots where you got confused or had to re-read to understand what was being said?</li>
+      </ul>
+
+      <h3>Feedback Requirements</h3>
+      <ul>
+        <li>Leave feedback on the paper using Canvas (see <a href="#canvas-howto">instructions below</a>).</li>
+        <li>Leave <b>at least one</b> comment that:
+          <ul>
+            <li>addresses a <b>high- or middle-order concern</b> that could use improvement (organization, details, paragraph structure, examples, flow, transitions, etc.).</li>
+            <li>points to a <b>specific spot</b> in the paper that illustrates the issue.</li>
+          </ul>
+        </li>
+        <li>Leave <b>at least one</b> comment about something that's working well (ideally connected to a high-/middle-order concern).</li>
+        <li><b>Do not</b> leave later-order concerns (grammar/spelling/mechanics) unless they block readability. If so, make <b>one</b> note to explain the issue.</li>
+        <li><b>Do not edit</b> your classmate's draft (no direct grammar fixing in the text).</li>
+      </ul>
+    </div>
+
+    <!-- Tips -->
+    <h2 id="tips">Tips for Giving Good Feedback</h2>
+    <div class="tips-accent-box">
+      <h3>Keep in Mind</h3>
+      <ul>
+        <li><b>You don't have to prescribe exact fixes.</b> Focus on describing what you notice as a reader. "This section felt like it jumped topics" is more helpful than trying to rewrite it for them.</li>
+        <li><b>Use feedback sandwiches when possible.</b> Pair suggestions for improvement with something that's working well nearby.</li>
+        <li><b>Be specific.</b> "The third paragraph is confusing" is okay. "The third paragraph starts talking about job loss but then shifts to ethics without a transition" is much better.</li>
+        <li><b>It's a rough draft.</b> Expect it to be rough. Your job is to help the author figure out where to focus their revision energy, not to find everything that needs fixing.</li>
+      </ul>
+    </div>
 
     <h2 id="canvas-howto">Instructions for Using Canvas for Peer Review</h2>
     <ol>
@@ -96,5 +287,46 @@
   <!-- main navigation and page scripts -->
   <script src="/nav.js" defer></script>
   <script src="/footer.js" defer></script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const triggers = document.querySelectorAll(".term-trigger");
+
+    function closeAllPopovers() {
+      document.querySelectorAll(".term-popover.is-open").forEach(p => p.classList.remove("is-open"));
+      document.querySelectorAll('.term-trigger[aria-expanded="true"]').forEach(t => t.setAttribute("aria-expanded", "false"));
+    }
+
+    triggers.forEach(trigger => {
+      const pop = trigger.querySelector(".term-popover");
+      if (!pop) return;
+
+      const toggle = () => {
+        const isOpen = trigger.getAttribute("aria-expanded") === "true";
+        closeAllPopovers();
+        if (!isOpen) {
+          trigger.setAttribute("aria-expanded", "true");
+          pop.classList.add("is-open");
+        }
+      };
+
+      trigger.addEventListener("click", (e) => { e.stopPropagation(); toggle(); });
+      trigger.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); toggle(); }
+      });
+    });
+
+    document.querySelectorAll(".pop-close").forEach(btn => {
+      btn.addEventListener("click", (e) => { e.stopPropagation(); closeAllPopovers(); });
+    });
+
+    document.addEventListener("click", closeAllPopovers);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeAllPopovers(); });
+
+    document.querySelectorAll(".term-popover").forEach(p => {
+      p.addEventListener("click", (e) => e.stopPropagation());
+    });
+  });
+  </script>
 </body>
 </html>
