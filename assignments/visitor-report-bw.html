@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Museum Guide (B&amp;W)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    @page {
+      size: letter landscape;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 10pt;
+      line-height: 1.4;
+      color: #1a1a1a;
+      background: white;
+    }
+
+    /* ── SHEET ── */
+    .sheet {
+      width: 11in;
+      height: 8.5in;
+      position: relative;
+      display: flex;
+      page-break-after: always;
+    }
+
+    .sheet:last-child {
+      page-break-after: avoid;
+    }
+
+    /* ── PANEL ── */
+    .panel {
+      width: 5.5in;
+      height: 8.5in;
+      padding: 0.45in 0.5in;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Fold line — visible on screen only */
+    .sheet::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 100%;
+      border-left: 1px dashed #ccc;
+    }
+
+    /* ── FRONT COVER ── */
+    .cover-front {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .cover-icon {
+      font-size: 16pt;
+      letter-spacing: 0.4em;
+      color: #555;
+      font-family: 'Share Tech Mono', monospace;
+      margin-bottom: 0.15in;
+    }
+
+    .cover-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 22pt;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      line-height: 1.15;
+      margin-bottom: 0.08in;
+    }
+
+    .cover-tagline {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 400;
+      font-size: 10pt;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    .cover-divider {
+      width: 2in;
+      height: 1.5pt;
+      background: #1a1a1a;
+      margin: 0.2in auto;
+    }
+
+    .cover-guide-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 14pt;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin-bottom: 0.06in;
+    }
+
+    .cover-hours {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 8pt;
+      color: #555;
+      letter-spacing: 0.06em;
+      margin-top: 0.3in;
+    }
+
+    /* ── BACK COVER ── */
+    .cover-back {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .back-header {
+      text-align: center;
+      margin-bottom: 0.15in;
+    }
+
+    .back-header .museum-name-small {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 9pt;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+    }
+
+    .back-header .report-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 7.5pt;
+      color: #555;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── INSIDE PANELS ── */
+    .inside-panel-header {
+      text-align: center;
+      padding-bottom: 0.08in;
+      border-bottom: 2pt solid #1a1a1a;
+      margin-bottom: 0.15in;
+      position: relative;
+    }
+
+    .inside-panel-header::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 0.75pt;
+      background: #1a1a1a;
+      position: absolute;
+      bottom: -4pt;
+      left: 0;
+    }
+
+    .inside-panel-header .museum-name-small {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 9pt;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+    }
+
+    /* ── WELCOME ── */
+    .welcome p {
+      font-size: 9pt;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    .welcome p + p {
+      margin-top: 0.08in;
+    }
+
+    .welcome {
+      margin-bottom: 0.15in;
+    }
+
+    /* ── GUIDELINES ── */
+    .guidelines {
+      border: 1.5pt solid #555;
+      border-radius: 4pt;
+      padding: 0.1in 0.15in;
+      background: #f5f5f5;
+    }
+
+    .guidelines-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 9.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #1a1a1a;
+      margin-bottom: 0.05in;
+    }
+
+    .guidelines ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .guidelines li {
+      font-size: 8pt;
+      line-height: 1.45;
+      padding-left: 0.18in;
+      position: relative;
+      margin-bottom: 0.03in;
+      color: #333;
+    }
+
+    .guidelines li::before {
+      content: '▸';
+      position: absolute;
+      left: 0.04in;
+      color: #555;
+      font-size: 7.5pt;
+    }
+
+    /* ── SECTION DIVIDER ── */
+    .section-divider {
+      background: #1a1a1a;
+      color: white;
+      padding: 0.06in 0.15in;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 11pt;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 0.1in;
+    }
+
+    /* ── NAME FIELD ── */
+    .name-field {
+      display: flex;
+      align-items: baseline;
+      gap: 0.08in;
+      margin-bottom: 0.15in;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 10pt;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .name-field .label {
+      white-space: nowrap;
+      color: #1a1a1a;
+    }
+
+    .name-field .line {
+      flex: 1;
+      border-bottom: 1.5pt solid #1a1a1a;
+      min-height: 1em;
+    }
+
+    /* ── QUESTION SECTIONS ── */
+    .question-block {
+      margin-bottom: 0.18in;
+    }
+
+    .question-header {
+      display: flex;
+      align-items: center;
+      gap: 0.08in;
+      margin-bottom: 0.06in;
+    }
+
+    .question-number {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 18pt;
+      color: white;
+      background: #1a1a1a;
+      width: 0.28in;
+      height: 0.28in;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3pt;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .question-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 12pt;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #1a1a1a;
+    }
+
+    .question-category {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 7pt;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .question-prompt {
+      font-size: 9pt;
+      color: #333;
+      margin-bottom: 0.08in;
+      line-height: 1.4;
+    }
+
+    .writing-lines {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .writing-lines .line {
+      height: 0.3in;
+      border-bottom: 0.75pt solid #aaa;
+    }
+
+    /* ── SUBFIELD LABELS ── */
+    .subfield {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #555;
+      margin-top: 0.06in;
+      margin-bottom: 0.02in;
+    }
+
+    /* ── FOOTER ── */
+    .panel-footer {
+      position: absolute;
+      bottom: 0.35in;
+      left: 0.5in;
+      right: 0.5in;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 6.5pt;
+      color: #888;
+      letter-spacing: 0.06em;
+      padding-top: 0.06in;
+      border-top: 0.5pt solid #ccc;
+    }
+
+    .panel-footer .gift-shop {
+      font-style: italic;
+      margin-bottom: 0.03in;
+      display: block;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      .sheet {
+        margin: 0;
+      }
+
+      .sheet::after {
+        display: none;
+      }
+    }
+
+    /* ── SCREEN PREVIEW ── */
+    @media screen {
+      body {
+        background: #e0e0e0;
+        padding: 0.25in;
+      }
+
+      .sheet {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+        margin: 0 auto 0.3in;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════
+       SHEET 1 (outside): Back Cover + Front Cover
+       ════════════════════════════════════════ -->
+  <div class="sheet">
+
+    <!-- BACK COVER -->
+    <div class="panel cover-back">
+
+      <div class="back-header">
+        <div class="museum-name-small">The Historical Museum of Artificial Intelligence</div>
+        <div class="report-label">VISITOR REPORT — CONTINUED</div>
+      </div>
+
+      <div class="question-block">
+        <div class="question-header">
+          <div class="question-number">3</div>
+          <div>
+            <div class="question-label">Something Interesting</div>
+            <div class="question-category">Real Artifacts — Present Day</div>
+          </div>
+        </div>
+        <div class="question-prompt">Write down one specific piece of information you learned from someone's display from one of their <strong>real</strong> (current) artifacts.</div>
+        <div class="subfield">Exhibit Name</div>
+        <table class="writing-lines"><tr><td class="line"></td></tr></table>
+        <div class="subfield">What did you learn?</div>
+        <table class="writing-lines">
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+        </table>
+      </div>
+
+      <div class="question-block">
+        <div class="question-header">
+          <div class="question-number">4</div>
+          <div>
+            <div class="question-label">Most Creative</div>
+            <div class="question-category">Future Artifacts — 2027–2050</div>
+          </div>
+        </div>
+        <div class="question-prompt">Which <strong>future</strong> artifact was the most creative? This could be based on humor, out-of-the-box thinking, or something else. What made it stand out?</div>
+        <div class="subfield">Exhibit Name</div>
+        <table class="writing-lines"><tr><td class="line"></td></tr></table>
+        <div class="subfield">Which artifact and what made it creative?</div>
+        <table class="writing-lines">
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+        </table>
+      </div>
+
+      <div class="panel-footer">
+        <span class="gift-shop">The Museum Gift Shop is located near the exit. All proceeds support the preservation of analog artifacts.</span>
+        THE HISTORICAL MUSEUM OF ARTIFICIAL INTELLIGENCE
+      </div>
+    </div>
+
+    <!-- FRONT COVER -->
+    <div class="panel cover-front">
+      <div class="cover-icon">◆ ◇ ◆</div>
+      <div class="cover-name">The Historical Museum<br>of Artificial Intelligence</div>
+      <div class="cover-tagline">Preserving Our Technological Heritage</div>
+      <div class="cover-divider"></div>
+      <div class="cover-guide-label">Museum Guide</div>
+      <div class="cover-hours">Open Daily 10:00 AM – 5:00 PM</div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SHEET 2 (inside): Inside Left + Inside Right
+       ════════════════════════════════════════ -->
+  <div class="sheet">
+
+    <!-- INSIDE LEFT -->
+    <div class="panel">
+
+      <div class="inside-panel-header">
+        <div class="museum-name-small">The Historical Museum of Artificial Intelligence</div>
+      </div>
+
+      <div class="welcome">
+        <p>Welcome to the Historical Museum of Artificial Intelligence. Today's exhibits explore how artificial intelligence transformed industries and professions between 2025 and 2050. Each exhibit has been curated by a specialist in the field and presents a unique perspective on this pivotal era.</p>
+        <p>We encourage you to take your time and visit every exhibit. Read the placards carefully, examine the artifacts, and don't forget to open the classified documents — you may find that the real story is more complicated than it appears.</p>
+      </div>
+
+      <div class="guidelines">
+        <div class="guidelines-title">Visitor Guidelines</div>
+        <ul>
+          <li>This report is printed on <strong>paper</strong> — a writing medium once used in offices, schools, and libraries worldwide. As part of your visit, we invite you to experience this historical practice firsthand. Pens are available at the front desk.</li>
+          <li>Virtual reality recording devices are permitted in designated zones only.</li>
+          <li>Service androids must remain in standby mode during your visit.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- INSIDE RIGHT -->
+    <div class="panel">
+
+      <div class="section-divider">Visitor Report</div>
+
+      <div class="name-field">
+        <span class="label">Visitor Name:</span>
+        <span class="line"></span>
+      </div>
+
+      <div class="question-block">
+        <div class="question-header">
+          <div class="question-number">1</div>
+          <div>
+            <div class="question-label">Best Warning</div>
+            <div class="question-category">System Failure Exhibits</div>
+          </div>
+        </div>
+        <div class="question-prompt">Which "System Failure" exhibit had the most concerning or scariest data point? What was it?</div>
+        <div class="subfield">Exhibit Name</div>
+        <table class="writing-lines"><tr><td class="line"></td></tr></table>
+        <div class="subfield">Response</div>
+        <table class="writing-lines">
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+        </table>
+      </div>
+
+      <div class="question-block">
+        <div class="question-header">
+          <div class="question-number">2</div>
+          <div>
+            <div class="question-label">Best Hope</div>
+            <div class="question-category">Golden Age Exhibits</div>
+          </div>
+        </div>
+        <div class="question-prompt">Which "Golden Age" exhibit had the most exciting innovation? What was it?</div>
+        <div class="subfield">Exhibit Name</div>
+        <table class="writing-lines"><tr><td class="line"></td></tr></table>
+        <div class="subfield">Response</div>
+        <table class="writing-lines">
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+          <tr><td class="line"></td></tr>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
