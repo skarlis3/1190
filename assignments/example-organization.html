@@ -7,53 +7,99 @@
   <link rel="stylesheet" href="/style.css" />
   <link rel="icon" href="/1190icon.png" type="image/x-icon">
   <style>
-    /* Accordion styles using native details/summary */
+    /* Accordion card styles */
     details.model-accordion {
-      border: 1px solid var(--border, #ddd);
+      border: 2px solid var(--border, #ddd);
       border-radius: 10px;
       margin-bottom: 1.5rem;
       overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    details.model-accordion:hover {
+      border-color: var(--accent, #041f44);
     }
     details.model-accordion summary {
-      padding: 1rem 1.5rem;
+      padding: 1.25rem 1.5rem;
       background: var(--accent-box-bg, #f5f7fa);
       cursor: pointer;
+      list-style: none;
+      display: block;
+    }
+    details.model-accordion summary::-webkit-details-marker { display: none; }
+    details.model-accordion summary:hover {
+      background: var(--hover, #eef1f5);
+    }
+    details.model-accordion summary .model-title {
       font-size: 1.2rem;
       font-weight: 700;
       font-family: "Judson", serif;
       color: var(--text, #1a1a1a);
-      list-style: none;
-      display: flex;
+      margin-bottom: 0.5rem;
+    }
+    details.model-accordion summary .model-desc {
+      font-size: 0.95rem;
+      color: var(--muted, #555);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+    details.model-accordion summary .model-expand {
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent, #041f44);
+      background: var(--accent-contrast, #fff);
+      border: 1.5px solid var(--accent, #041f44);
+      border-radius: 6px;
+      padding: 0.3rem 0.75rem;
     }
-    details.model-accordion summary::-webkit-details-marker { display: none; }
-    details.model-accordion summary::after {
-      content: '▸';
-      font-size: 1.2rem;
+    details.model-accordion summary .model-expand .arrow {
       transition: transform 0.2s ease;
-      flex-shrink: 0;
+      display: inline-block;
     }
-    details.model-accordion[open] summary::after {
+    details.model-accordion[open] summary .model-expand .arrow {
       transform: rotate(90deg);
     }
-    details.model-accordion summary:hover {
-      background: var(--hover, #eef1f5);
+    details.model-accordion[open] summary .model-expand {
+      background: var(--accent, #041f44);
+      color: var(--accent-contrast, #fff);
     }
     details.model-accordion .accordion-body {
       padding: 1.25rem 1.5rem;
+      border-top: 1px solid var(--border, #ddd);
     }
 
+    /* Dark mode */
     [data-theme="dark"] details.model-accordion {
       border-color: var(--border, #2d3138);
     }
+    [data-theme="dark"] details.model-accordion:hover {
+      border-color: var(--bright, #5ee0b3);
+    }
     [data-theme="dark"] details.model-accordion summary {
       background: var(--accent-box-bg, #1e2329);
-      color: var(--text, #e8eaed);
     }
     [data-theme="dark"] details.model-accordion summary:hover {
       background: var(--hover, #252930);
+    }
+    [data-theme="dark"] details.model-accordion summary .model-title {
+      color: var(--text, #e8eaed);
+    }
+    [data-theme="dark"] details.model-accordion summary .model-desc {
+      color: var(--muted, #a8adb5);
+    }
+    [data-theme="dark"] details.model-accordion summary .model-expand {
+      color: var(--bright, #5ee0b3);
+      border-color: var(--bright, #5ee0b3);
+      background: transparent;
+    }
+    [data-theme="dark"] details.model-accordion[open] summary .model-expand {
+      background: var(--bright, #5ee0b3);
+      color: var(--bg, #121417);
+    }
+    [data-theme="dark"] details.model-accordion .accordion-body {
+      border-top-color: var(--border, #2d3138);
     }
   </style>
 </head>
@@ -96,26 +142,16 @@
       <a href="research-paper-overview.html">Project 1: Research Paper Overview</a>.
     </p>
 
-    <h3>Possible Organization Models Summary</h3>
-    <div class="indented-text">
-      <h4 style="margin-bottom: 0.3em; margin-top: 0.8em;">Model 1: Organized by Sub-Topic</h4>
-      <p>This model organizes your paper around <b>2–3 major sub-topics</b> or themes that came up in your research. Each section mixes together public conversations, news, and scholarly sources.</p>
-
-      <h4 style="margin-bottom: 0.3em;">Model 2: Organized by Stakeholders</h4>
-      <p>This model organizes your paper by <b>who</b> is affected by AI in your field. Each section focuses on a different stakeholder group and mixes together public conversations, news, and scholarly sources.</p>
-
-      <h4 style="margin-bottom: 0.3em;">Model 3: Organized by Research Type</h4>
-      <p>This model organizes your paper by <b>type of source</b>: public conversations, news coverage, and scholarly research. You then add a separate section where you put these groups in conversation with each other.</p>
-
-      <h4 style="margin-bottom: 0.3em;">Model 4: Hybrid — Public Conversation First, Then Sub-Topics</h4>
-      <p>This model starts with a section on <b>public conversations and professional perspectives</b> to establish what people in the field are currently saying and feeling about AI. Then it moves into <b>2–3 sub-topics</b> that mix all source types together.</p>
-    </div>
-    <p>Click on each model below for further details and example outlines.</p>
+    <p>Click on any model below to see outlines and examples.</p>
 
 
     <!-- Model 1: Sub-Topics -->
     <details class="model-accordion" id="model1">
-      <summary>Model 1: Organized by Sub-Topics</summary>
+      <summary>
+        <div class="model-title">Model 1: Organized by Sub-Topics</div>
+        <div class="model-desc">Organizes your paper around <b>2–3 major sub-topics</b> or themes from your research. Each section mixes together public conversations, news, and scholarly sources.</div>
+        <span class="model-expand"><span class="arrow">&#9654;</span> View outlines &amp; examples</span>
+      </summary>
       <div class="accordion-body">
         <p>
           This model organizes your paper around <b>2–3 major sub-topics</b> or themes that came up in your research.
@@ -217,7 +253,11 @@
 
     <!-- Model 2: Stakeholders -->
     <details class="model-accordion" id="model2">
-      <summary>Model 2: Organized by Stakeholders</summary>
+      <summary>
+        <div class="model-title">Model 2: Organized by Stakeholders</div>
+        <div class="model-desc">Organizes your paper by <b>who</b> is affected by AI in your field. Each section focuses on a different stakeholder group and mixes together public conversations, news, and scholarly sources.</div>
+        <span class="model-expand"><span class="arrow">&#9654;</span> View outlines &amp; examples</span>
+      </summary>
       <div class="accordion-body">
         <p>
           This model organizes your paper by <b>who</b> is affected by AI in your field.
@@ -332,7 +372,11 @@
 
     <!-- Model 3: Research Type -->
     <details class="model-accordion" id="model3">
-      <summary>Model 3: Organized by Research Type</summary>
+      <summary>
+        <div class="model-title">Model 3: Organized by Research Type</div>
+        <div class="model-desc">Organizes your paper by <b>type of source</b>: public conversations, news coverage, and scholarly research. You then add a separate section where you put these groups in conversation with each other.</div>
+        <span class="model-expand"><span class="arrow">&#9654;</span> View outlines &amp; examples</span>
+      </summary>
       <div class="accordion-body">
         <p>
           This model organizes your paper by <b>type of source</b>:
@@ -435,7 +479,11 @@
 
     <!-- Model 4: Hybrid -->
     <details class="model-accordion" id="model4">
-      <summary>Model 4: Hybrid — Public Conversation First, Then Sub-Topics</summary>
+      <summary>
+        <div class="model-title">Model 4: Hybrid — Public Conversation First, Then Sub-Topics</div>
+        <div class="model-desc">Starts with a section on <b>public conversations and professional perspectives</b> to establish what people in the field are currently saying and feeling about AI. Then moves into <b>2–3 sub-topics</b> that mix all source types together.</div>
+        <span class="model-expand"><span class="arrow">&#9654;</span> View outlines &amp; examples</span>
+      </summary>
       <div class="accordion-body">
         <p>
           This model starts with a section on <b>public conversations and professional perspectives</b> — what people in the field are currently saying, feeling, and debating about AI. This opening section establishes the current mood and real-world context before you move into deeper analysis. After that, the paper shifts into <b>2–3 sub-topics</b> that mix all source types together.
