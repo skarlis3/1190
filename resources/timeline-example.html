@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example Timeline: AI in Higher Ed | ENGL 1190</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <style>
+    /* ===== Timeline layout ===== */
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 2rem auto;
+    }
+
+    /* --- Nodes --- */
+    .node {
+      position: relative;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.85rem 1.1rem;
+      margin-bottom: 0.5rem;
+      background: var(--accent-box-bg);
+      max-width: 520px;
+    }
+    .node h4 {
+      margin: 0 0 0.3rem;
+      font-size: 0.95rem;
+      color: var(--accent);
+    }
+    [data-theme="dark"] .node h4 { color: var(--bright); }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .node h4 { color: var(--bright); }
+    }
+    .node p, .node ul {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+    .node ul {
+      padding-left: 1.2rem;
+      margin-top: 0.25rem;
+    }
+    .node ul li {
+      margin-bottom: 0.2rem;
+    }
+
+    .node-start {
+      border-width: 3px;
+      border-style: dashed;
+      max-width: 520px;
+    }
+    .node-end {
+      border-width: 3px;
+      background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+      max-width: 520px;
+    }
+
+    /* --- Arrows --- */
+    .arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--muted);
+      padding: 0.15rem 0;
+      max-width: 520px;
+    }
+    .arrow::after {
+      content: "\2193"; /* down arrow */
+    }
+
+    /* --- Branch container --- */
+    .branch-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 0.5rem;
+      max-width: 900px;
+    }
+    .branch {
+      position: relative;
+    }
+    .branch-label {
+      font-family: "Judson", serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    /* --- Fork indicator --- */
+    .fork-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: "Judson", serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin: 0.75rem 0 0.5rem;
+      max-width: 900px;
+    }
+    .fork-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* --- Three-branch initial split --- */
+    .branch-three {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+      max-width: 900px;
+    }
+    .branch-three .node {
+      max-width: 100%;
+    }
+
+    /* --- Merge indicator --- */
+    .merge-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: "Judson", serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin: 0.75rem 0 0.5rem;
+      max-width: 900px;
+    }
+    .merge-label::before,
+    .merge-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* --- Post-it note --- */
+    .post-it {
+      background: #fff9c4;
+      color: #4a4a00;
+      border: none;
+      border-radius: 2px;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      font-style: italic;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.12);
+      transform: rotate(1.5deg);
+      max-width: 280px;
+      margin: 0.75rem 0;
+      line-height: 1.4;
+    }
+    [data-theme="dark"] .post-it {
+      background: #e8e3a0;
+      color: #3a3a00;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .post-it {
+        background: #e8e3a0;
+        color: #3a3a00;
+      }
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 740px) {
+      .branch-split, .branch-three {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* --- Print --- */
+    @media print {
+      nav, .topnav, .sidenav, .bottomnav, footer,
+      #site-footer, .footer-wrapper,
+      .sidenav-overlay, .hamburger-btn,
+      [aria-label="Main navigation"],
+      [aria-label="Bottom navigation"] {
+        display: none !important;
+      }
+      body { font-size: 10pt; color: #000; background: #fff; }
+      #page-content { max-width: 100%; margin: 0; padding: 0; }
+      .node { border-color: #333; background: #f5f5f5 !important; }
+      .node-end { background: #e8e8e8 !important; }
+      .post-it { background: #fff9c4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      @page { size: letter; margin: 0.5in; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="page-content">
+
+    <h1>Example Timeline</h1>
+    <h2>AI in Higher Ed &amp; Writing Studies (Dystopian / System Failure)</h2>
+
+    <p>This is an example of what a brainstorming timeline might look like. Notice how it branches, how some branches lead to dead ends, and how the ideas escalate as they move forward in time. This example is based on my own field &mdash; yours will look different.</p>
+
+    <div class="timeline">
+
+      <!-- START -->
+      <div class="node node-start">
+        <h4>Current Situation</h4>
+        <ul>
+          <li>AI having major impact on higher ed / writing studies</li>
+          <li>Students overusing AI &mdash; may be impacting cognitive skills / weakening connections &mdash; ways to use going forward?</li>
+          <li>Faculty needing to figure out what it means for their field</li>
+        </ul>
+      </div>
+
+      <div class="fork-label">Three things are happening at once</div>
+
+      <!-- THREE BRANCHES -->
+      <div class="branch-three">
+
+        <div class="branch">
+          <div class="branch-label">Branch 1</div>
+          <div class="node">
+            <p>Literacy rates &amp; critical thinking skills continue to decline</p>
+          </div>
+        </div>
+
+        <div class="branch">
+          <div class="branch-label">Branch 2</div>
+          <div class="node">
+            <p>Students continue to use AI in a way where learning isn't happening</p>
+          </div>
+        </div>
+
+        <div class="branch">
+          <div class="branch-label">Branch 3</div>
+          <div class="node">
+            <p>Online classes being overrun by agentic AI (financial aid fraud rises)</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SPLIT INTO TWO PATHS -->
+      <div class="branch-split">
+
+        <!-- LEFT: Branches 1 & 2 merge -->
+        <div class="branch">
+          <div class="merge-label">Branches 1 &amp; 2 merge</div>
+
+          <div class="node">
+            <h4>Degrees Become Meaningless</h4>
+            <ul>
+              <li>Employers start giving exams or more tasks for hiring</li>
+              <li>On-job training programs increase (but without multidisciplinary education)</li>
+            </ul>
+          </div>
+          <div class="arrow"></div>
+
+          <div class="node">
+            <h4>Corporate Training Takes Over</h4>
+            <ul>
+              <li>Training programs that are corporate run become the norm</li>
+              <li>People join them and then must work at that company after (and/or during)</li>
+            </ul>
+          </div>
+          <div class="arrow"></div>
+
+          <div class="node">
+            <h4>Universities Start to Close Down</h4>
+            <ul>
+              <li>Liberal arts, ethics, philosophy, fine arts programs disappear</li>
+              <li>Focus is on being employable &amp; productive &amp; making company profitable</li>
+              <li>Civic participation lowers &mdash; fewer universities to get degrees in law (that isn't sponsored by a company)</li>
+            </ul>
+          </div>
+          <div class="arrow"></div>
+
+          <!-- END RESULT -->
+          <div class="node node-end">
+            <h4>End Result: Corporate State</h4>
+            <ul>
+              <li>Corporations hold all political power &amp; employees must commit to a company in order to receive training</li>
+              <li>Social mobility is limited</li>
+              <li>Education has become an entirely corporate sponsored system</li>
+              <li>Ideas not supported by corporations are banned</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Branch 3 continues -->
+        <div class="branch">
+          <div class="merge-label">Branch 3 continues</div>
+
+          <div class="node">
+            <h4>HLC Responds</h4>
+            <p>HLC determines that online classes must require validation the students are real humans</p>
+          </div>
+          <div class="arrow"></div>
+
+          <div class="node">
+            <h4>Monitoring Increases</h4>
+            <p>Monitoring increases, required in-person exams</p>
+          </div>
+          <div class="arrow"></div>
+
+          <div class="node">
+            <h4>Online Classes Disappear</h4>
+            <ul>
+              <li>Online classes disappear over time</li>
+              <li>Classes are monitored with in-person exams</li>
+              <li>More careers start requiring accreditation and exams</li>
+            </ul>
+          </div>
+
+          <div class="post-it">
+            This branch isn't really going anywhere dystopian enough &mdash; it's just ending up with more in-person classes and testing, which isn't that extreme. Going to follow the other branch instead.
+          </div>
+
+        </div>
+
+      </div><!-- /branch-split -->
+
+    </div><!-- /timeline -->
+
+  </div>
+
+  <script src="/nav.js"></script>
+  <script src="/footer.js" defer></script>
+</body>
+</html>
