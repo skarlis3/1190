@@ -7,6 +7,29 @@
   <link rel="stylesheet" href="/style.css" />
   <link rel="icon" href="/1190icon.png" type="image/x-icon">
   <style>
+    /* ===== Back button ===== */
+    .back-btn {
+      display: inline-block;
+      font-family: "Lato", system-ui, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.45rem 1rem;
+      margin-bottom: 1.25rem;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .back-btn:hover {
+      background: var(--hover);
+      border-color: var(--accent);
+    }
+    [data-theme="dark"] .back-btn { color: var(--bright); }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .back-btn { color: var(--bright); }
+    }
+
     /* ===== Handout-specific styles ===== */
 
     .step-block {
@@ -52,7 +75,8 @@
       #site-footer, .footer-wrapper,
       .sidenav-overlay, .hamburger-btn,
       [aria-label="Main navigation"],
-      [aria-label="Bottom navigation"] {
+      [aria-label="Bottom navigation"],
+      .back-btn {
         display: none !important;
       }
 
@@ -116,8 +140,10 @@
   </style>
 </head>
 
-<body>
+<body class="no-sidenav">
   <div id="page-content">
+
+    <a href="/resources/in-class.html" class="back-btn">&larr; Back to In-Class Resources &amp; Handouts</a>
 
     <h1>Project 2: Timeline Brainstorming</h1>
     <p><em>A reference guide for building your exhibit timeline. This is a brainstorming activity &mdash; nothing here is a commitment. Get your ideas out first, decide later.</em></p>
