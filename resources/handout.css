@@ -2,12 +2,13 @@
    Handout Styles — Standalone CSS for printable handout/resource pages
    Replaces style.css on handout pages for full-width layout and clean print.
    Fonts: Lato (300/400) + Judson (headings) — same as main site
+   Always light mode.
    ========================================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap");
 
-/* ==================== Tokens ==================== */
+/* ==================== Tokens (light mode only) ==================== */
 :root {
   --bg: #ffffff;
   --text: #141414;
@@ -23,36 +24,22 @@
   --accent-box-text: #000;
 }
 
-/* ==================== Dark Mode ==================== */
-[data-theme="dark"] {
-  --bg: #111315;
-  --text: #e0e0e0;
-  --muted: #a0a4aa;
-  --border: #2e3238;
-  --hover: #1d2025;
-  --accent: #a3c4f3;
-  --accent-contrast: #111315;
-  --focus: #6da8e8;
-  --focus-ring: #6da8e8;
-  --bright: #7dbcf5;
-  --accent-box-bg: color-mix(in srgb, var(--focus) 12%, #111315);
-  --accent-box-text: #e0e0e0;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    --bg: #111315;
-    --text: #e0e0e0;
-    --muted: #a0a4aa;
-    --border: #2e3238;
-    --hover: #1d2025;
-    --accent: #a3c4f3;
-    --accent-contrast: #111315;
-    --focus: #6da8e8;
-    --focus-ring: #6da8e8;
-    --bright: #7dbcf5;
-    --accent-box-bg: color-mix(in srgb, var(--focus) 12%, #111315);
-    --accent-box-text: #e0e0e0;
-  }
+/* ==================== Force Light Mode ==================== */
+/* Override any stored dark mode preference from the main site */
+html, html[data-theme="dark"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --text: #141414;
+  --muted: #525860;
+  --border: #e2e3e5;
+  --hover: #f5f1f1;
+  --accent: #041f44;
+  --accent-contrast: #ffffff;
+  --focus: #002e6f;
+  --focus-ring: #002e6f;
+  --bright: #0c4590;
+  --accent-box-bg: color-mix(in srgb, var(--focus) 7%, white);
+  --accent-box-text: #000;
 }
 
 /* ==================== Base ==================== */
@@ -82,16 +69,6 @@ h1, h2, h3, h4 {
   font-family: "Judson", serif;
   color: var(--accent);
   line-height: 1.25;
-}
-[data-theme="dark"] h1,
-[data-theme="dark"] h2,
-[data-theme="dark"] h3,
-[data-theme="dark"] h4 { color: var(--bright); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) h1,
-  :root:not([data-theme="light"]):not([data-theme="dark"]) h2,
-  :root:not([data-theme="light"]):not([data-theme="dark"]) h3,
-  :root:not([data-theme="light"]):not([data-theme="dark"]) h4 { color: var(--bright); }
 }
 
 h1 { font-size: 1.75rem; margin: 0 0 0.25rem; }
@@ -135,24 +112,6 @@ strong { font-weight: 400; }
   box-shadow: 0 3px 12px rgba(0,0,0,0.25);
   background: var(--focus);
   color: var(--accent-contrast);
-}
-[data-theme="dark"] .back-btn {
-  background: var(--bright);
-  color: #111315;
-}
-[data-theme="dark"] .back-btn:hover {
-  background: var(--accent);
-  color: #111315;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .back-btn {
-    background: var(--bright);
-    color: #111315;
-  }
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .back-btn:hover {
-    background: var(--accent);
-    color: #111315;
-  }
 }
 
 /* ==================== Accent boxes (from main site) ==================== */
@@ -224,10 +183,6 @@ strong { font-weight: 400; }
   font-size: 0.95rem;
   color: var(--accent);
 }
-[data-theme="dark"] .node h4 { color: var(--bright); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .node h4 { color: var(--bright); }
-}
 .node p, .node ul { margin: 0; font-size: 0.9rem; }
 .node ul { padding-left: 1.2rem; margin-top: 0.25rem; }
 .node ul li { margin-bottom: 0.2rem; }
@@ -268,13 +223,13 @@ strong { font-weight: 400; }
 .branch-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  gap: 3.5rem;
   margin-bottom: 0.5rem;
 }
 .branch-three {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.5rem;
+  gap: 2rem;
   margin-bottom: 0.5rem;
 }
 .branch-label {
@@ -387,12 +342,32 @@ strong { font-weight: 400; }
   margin: 1rem 0;
   line-height: 1.4;
 }
-[data-theme="dark"] .post-it { background: #e8e3a0; color: #3a3a00; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .post-it {
-    background: #e8e3a0; color: #3a3a00;
-  }
+
+/* ==================== Footer (from main site) ==================== */
+.site-footer {
+  background: #0b0d0e;
+  color: #e9ecef;
+  margin-top: 3rem;
+  padding: 2.5rem 1rem 2.5rem 2rem;
+  border-top: 1px solid rgba(255,255,255,.08);
 }
+.site-footer a { color: #d1e9f9; text-decoration: none; }
+.site-footer a:hover { color: #a9b8f5; text-decoration: underline; }
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: 2.4fr 1fr 1fr;
+  column-gap: 1rem;
+  max-width: 880px;
+  margin-inline: auto;
+  align-items: start;
+}
+.site-footer__inner > :first-child { line-height: 1.6; max-width: 700px; }
+.site-footer__inner > :last-child { padding-right: .25rem; }
+@media (min-width: 900px) { .site-footer__inner { grid-template-columns: 2.5fr .8fr .9fr; column-gap: 1rem; } }
+@media (max-width: 800px) { .site-footer__inner { grid-template-columns: 1fr; row-gap: 1.5rem; } }
+.site-footer h4 { margin: 0 0 .6rem 0; font: 600 1rem "Lato", system-ui, sans-serif; color: #fff; }
+.site-footer p, .site-footer li { margin: 0 0 .4rem 0; color: #e9ecef; font: 400 .95rem "Lato", system-ui, sans-serif; }
+.site-footer ul { list-style: none; padding: 0; margin: 0; }
 
 /* ==================== Responsive ==================== */
 @media (max-width: 740px) {
@@ -402,7 +377,7 @@ strong { font-weight: 400; }
 
 /* ==================== Print ==================== */
 @media print {
-  .back-btn { display: none !important; }
+  .back-btn, .site-footer { display: none !important; }
 
   body {
     font-size: 10.5pt;
