@@ -181,7 +181,7 @@ strong { font-weight: 400; }
 }
 .node h4 {
   margin: 0 0 0.3rem;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   color: var(--accent);
 }
 .node p, .node ul { margin: 0; font-size: 0.95rem; }
