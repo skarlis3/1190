@@ -87,31 +87,32 @@ a:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; bor
 em { font-style: italic; }
 strong { font-weight: 400; }
 
-/* ==================== Back button (floating) ==================== */
+/* ==================== Back button (floating, glass style) ==================== */
 .back-btn {
   position: fixed;
-  bottom: 1.25rem;
-  left: 1.25rem;
+  bottom: 1.5rem;
+  left: 1.5rem;
   z-index: 900;
   display: inline-block;
   font-family: "Lato", system-ui, sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 400;
-  color: var(--accent-contrast);
+  color: var(--accent);
   text-decoration: none;
-  background: var(--accent);
-  border: none;
-  border-radius: 8px;
-  padding: 0.55rem 1.1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-  transition: background 0.15s ease, box-shadow 0.15s ease;
-  opacity: 0.88;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(4, 31, 68, 0.15);
+  border-radius: 12px;
+  padding: 0.7rem 1.4rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .back-btn:hover {
-  opacity: 1;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.25);
-  background: var(--focus);
-  color: var(--accent-contrast);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(4, 31, 68, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14), 0 2px 5px rgba(0, 0, 0, 0.08);
+  color: var(--accent);
 }
 
 /* ==================== Accent boxes (from main site) ==================== */
@@ -183,7 +184,7 @@ strong { font-weight: 400; }
   font-size: 0.95rem;
   color: var(--accent);
 }
-.node p, .node ul { margin: 0; font-size: 0.9rem; }
+.node p, .node ul { margin: 0; font-size: 0.95rem; }
 .node ul { padding-left: 1.2rem; margin-top: 0.25rem; }
 .node ul li { margin-bottom: 0.2rem; }
 
@@ -235,10 +236,10 @@ strong { font-weight: 400; }
 .branch-label {
   font-family: "Judson", serif;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--muted);
+  color: var(--accent);
   margin-bottom: 0.4rem;
 }
 
@@ -278,9 +279,9 @@ strong { font-weight: 400; }
 }
 .fork-indicator .fork-text {
   font-family: "Judson", serif;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  color: var(--muted);
+  color: var(--accent);
   white-space: nowrap;
   padding: 0 0.25rem;
 }
@@ -320,9 +321,9 @@ strong { font-weight: 400; }
 }
 .merge-indicator .merge-text {
   font-family: "Judson", serif;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  color: var(--muted);
+  color: var(--accent);
   white-space: nowrap;
   padding: 0 0.25rem;
 }

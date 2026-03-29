@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project 2: Artifact Planning | ENGL 1190</title>
+  <link rel="stylesheet" href="/resources/handout.css" />
+  <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <style>
+    /* ===== Example timeline event block ===== */
+    .event-block {
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+      background: var(--accent-box-bg);
+    }
+    .event-block h4 {
+      margin: 0 0 0.3rem;
+      font-size: 1rem;
+      color: var(--accent);
+    }
+    .event-block ul {
+      margin: 0.25rem 0 0;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    /* ===== Artifact idea cards ===== */
+    .artifact-idea {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.85rem 1.1rem;
+      margin: 0.75rem 0;
+      background: #fff;
+      position: relative;
+    }
+    .artifact-idea .genre-tag {
+      display: inline-block;
+      font-family: "Judson", serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--accent-contrast);
+      background: var(--accent);
+      border-radius: 4px;
+      padding: 0.15rem 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .artifact-idea p {
+      margin: 0.3rem 0 0;
+      font-size: 0.9rem;
+    }
+
+    /* ===== Post-it note (handwritten style) ===== */
+    .post-it {
+      background: #fff9c4;
+      color: #4a4a00;
+      border: none;
+      border-radius: 2px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.82rem;
+      font-style: italic;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.12);
+      transform: rotate(1.2deg);
+      max-width: 320px;
+      margin: 0.5rem 0 0 1rem;
+      line-height: 1.4;
+    }
+
+    /* ===== Breakdown card ===== */
+    .breakdown {
+      border: 2px solid var(--bright);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+      background: color-mix(in srgb, var(--bright) 4%, white);
+    }
+    .breakdown h4 {
+      margin: 0 0 0.6rem;
+      font-size: 1rem;
+      color: var(--bright);
+    }
+    .breakdown dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.3rem 1rem;
+      font-size: 0.9rem;
+    }
+    .breakdown dt {
+      font-weight: 400;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .breakdown dd {
+      margin: 0;
+    }
+
+    /* ===== Blank template ===== */
+    .template-card {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 0.75rem 0;
+      background: #fff;
+    }
+    .template-card dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.4rem 1rem;
+      font-size: 0.9rem;
+    }
+    .template-card dt {
+      font-weight: 400;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .template-card dd {
+      margin: 0;
+      border-bottom: 1px solid var(--border);
+      min-height: 1.4rem;
+    }
+
+    /* ===== Arrow between sections ===== */
+    .section-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.5rem 0;
+    }
+    .section-arrow::before {
+      content: "";
+      display: block;
+      width: 2px;
+      height: 20px;
+      background: var(--muted);
+    }
+    .section-arrow::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 11px solid var(--muted);
+    }
+
+    /* ===== Step labels ===== */
+    .step-label {
+      font-family: "Judson", serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin: 1.5rem 0 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="handout-content">
+
+    <a href="/resources/in-class.html" class="back-btn">&larr; Back to Class Site</a>
+
+    <h1>Project 2: Artifact Planning</h1>
+    <p><em>A guide for turning your timeline events into museum artifacts. For each moment on your timeline, you'll figure out what's happening, what kind of document or text would naturally exist there, and then plan out the details.</em></p>
+
+    <h2>The Process</h2>
+    <p>For each event on your timeline, work through these steps:</p>
+
+    <div class="step-block">
+      <h4>1. What's happening at this moment?</h4>
+      <p>Look at one event or node on your timeline. What's going on? What are the key things a museum visitor would need to understand about this point in time?</p>
+    </div>
+
+    <div class="step-block">
+      <h4>2. What would exist here?</h4>
+      <p>If this event really happened, what kinds of documents, posts, articles, or communications would people be creating? Think about who's involved and what they'd be writing, posting, or publishing. You might come up with several possibilities &mdash; write them all down, then pick the one that works best for your exhibit.</p>
+    </div>
+
+    <div class="step-block">
+      <h4>3. Break it down</h4>
+      <p>For the artifact you choose, plan out the details: What year is it from? What genre is it? Who's the audience? What's the purpose? What's the content or message? These details will guide you when you actually write or create the artifact.</p>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!--  FULL EXAMPLE                                                 -->
+    <!-- ============================================================ -->
+
+    <h2>Example: Walking Through It</h2>
+    <p>Here's an example using one event from the <a href="/resources/timeline-example.html">example timeline</a> about AI in higher ed.</p>
+
+    <div class="step-label">Step 1: What's happening?</div>
+
+    <div class="event-block">
+      <h4>Degrees Become Meaningless</h4>
+      <ul>
+        <li>Employers start giving exams or more tasks for hiring</li>
+        <li>On-job training programs increase (but without multidisciplinary education)</li>
+      </ul>
+    </div>
+
+    <div class="section-arrow"></div>
+
+    <div class="step-label">Step 2: What would exist here?</div>
+    <p>If degrees are becoming meaningless and employers are switching to exams and training programs, what kinds of documents would exist in this world? Here are a few ideas:</p>
+
+    <div class="artifact-idea">
+      <span class="genre-tag">LinkedIn Blog Post</span>
+      <p>A career coach or recruiter writing a post titled something like "How to Crush Your Interview Exams and Practical Demonstrations" &mdash; advice content that treats employer exams as the new normal.</p>
+    </div>
+
+    <div class="artifact-idea">
+      <span class="genre-tag">Job Posting</span>
+      <p>A job listing that includes a degree as "nice to have" but under the training requirements section states that all new hires will be required to complete a company training program regardless of degree.</p>
+      <div class="post-it">
+        Not sure this one really gets the point across on its own &mdash; a job posting is kind of subtle. Might need a different genre, or maybe pair it with something else? Something to think about.
+      </div>
+    </div>
+
+    <div class="artifact-idea">
+      <span class="genre-tag">Reddit Post</span>
+      <p>Someone venting on a career subreddit about how many classes they have to take after starting a new job, and that if they don't pass the exams they get fired. Other commenters sharing similar experiences.</p>
+    </div>
+
+    <div class="section-arrow"></div>
+
+    <div class="step-label">Step 3: Break it down</div>
+    <p>Pick one and plan the details. Here's the Reddit post:</p>
+
+    <div class="breakdown">
+      <h4>Artifact Breakdown</h4>
+      <dl>
+        <dt>Year:</dt>
+        <dd>2035</dd>
+
+        <dt>Genre:</dt>
+        <dd>Reddit post</dd>
+
+        <dt>Audience:</dt>
+        <dd>Other redditors who are looking for work or discussing employment and onboarding</dd>
+
+        <dt>Purpose:</dt>
+        <dd>To complain and maybe get advice about how to get through this</dd>
+
+        <dt>Content / Message:</dt>
+        <dd>Frustrated about the number of required classes and exams after starting a job; worried about getting fired if they fail; looking for solidarity or tips from others in the same situation</dd>
+      </dl>
+    </div>
+
+    <div class="glance-accent-box">
+      <h3>Why This Matters</h3>
+      <p>Every choice you make here is a <strong>rhetorical choice</strong>. You're choosing a genre, an audience, a purpose, and a message &mdash; just like the writers and creators you studied in Project 1 did. The difference is that now <em>you're</em> the one making those decisions. The genre you pick shapes how visitors experience your exhibit: a Reddit rant hits differently than a corporate job posting, even if they're both about the same event on your timeline.</p>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!--  BLANK TEMPLATES                                              -->
+    <!-- ============================================================ -->
+
+    <h2>Your Turn</h2>
+    <p>Use this structure for each artifact you're planning. Start with the events on your timeline and work through the steps.</p>
+
+    <h3>Event on Your Timeline</h3>
+    <p>What's happening at this point? What event or change are you trying to show?</p>
+
+    <div class="template-card">
+      <dl>
+        <dt>Event:</dt>
+        <dd>&nbsp;</dd>
+        <dt>What's going on:</dt>
+        <dd>&nbsp;</dd>
+      </dl>
+    </div>
+
+    <h3>Possible Artifacts</h3>
+    <p>What kinds of documents, posts, or texts would exist if this really happened? List a few ideas before you commit to one.</p>
+
+    <div class="template-card">
+      <dl>
+        <dt>Idea 1:</dt>
+        <dd>&nbsp;</dd>
+        <dt>Idea 2:</dt>
+        <dd>&nbsp;</dd>
+        <dt>Idea 3:</dt>
+        <dd>&nbsp;</dd>
+      </dl>
+    </div>
+
+    <h3>Artifact Breakdown</h3>
+    <p>Pick one and plan it out.</p>
+
+    <div class="template-card">
+      <dl>
+        <dt>Year:</dt>
+        <dd>&nbsp;</dd>
+        <dt>Genre:</dt>
+        <dd>&nbsp;</dd>
+        <dt>Audience:</dt>
+        <dd>&nbsp;</dd>
+        <dt>Purpose:</dt>
+        <dd>&nbsp;</dd>
+        <dt>Content / Message:</dt>
+        <dd>&nbsp;</dd>
+      </dl>
+    </div>
+
+  </div>
+
+  <script src="/footer.js" defer></script>
+</body>
+</html>
