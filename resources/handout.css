@@ -23,7 +23,7 @@
   --bright: #0c4590;
   --accent-box-bg: color-mix(in srgb, var(--focus) 7%, white);
   --accent-box-text: #000;
-  --pop: #d6368b;       /* fuchsia-pink light — decorative, buttons, gradients */
+  --pop: #f0a0a0;       /* pastel salmon — decorative, buttons, gradients */
   --pop-dark: #9e3e55;  /* coral-pink dark — AAA on white (7.2:1), text-safe */
 }
 
@@ -100,39 +100,39 @@ strong { font-weight: 400; }
   font-family: "Lato", system-ui, sans-serif;
   font-size: 0.95rem;
   font-weight: 400;
-  color: #ffffff;
+  color: #1a1a1a;
   text-decoration: none;
   background:
     linear-gradient(160deg,
-      rgba(255, 255, 255, 0.25) 0%,
-      rgba(255, 255, 255, 0.08) 40%,
-      rgba(0, 0, 0, 0.05) 100%
+      rgba(255, 255, 255, 0.35) 0%,
+      rgba(255, 255, 255, 0.1) 40%,
+      rgba(0, 0, 0, 0.03) 100%
     ),
     var(--pop);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 12px;
   padding: 0.7rem 1.4rem;
   box-shadow:
-    0 4px 16px rgba(214, 54, 139, 0.3),
-    0 1px 3px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 4px 16px rgba(200, 120, 120, 0.25),
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
   transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 .back-btn:hover {
   background:
     linear-gradient(160deg,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0.1) 40%,
-      rgba(0, 0, 0, 0.08) 100%
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.12) 40%,
+      rgba(0, 0, 0, 0.05) 100%
     ),
-    #c42e7a;
+    #e89090;
   box-shadow:
-    0 6px 22px rgba(214, 54, 139, 0.35),
-    0 2px 5px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  color: #ffffff;
+    0 6px 22px rgba(200, 120, 120, 0.3),
+    0 2px 5px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  color: #1a1a1a;
 }
 
 /* ==================== Accent boxes (from main site) ==================== */
