@@ -7,6 +7,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap");
 
 /* ==================== Tokens (light mode only) ==================== */
 :root {
@@ -348,20 +349,22 @@ strong { font-weight: 400; }
   padding: 0 0.25rem;
 }
 
-/* --- Post-it note --- */
+/* --- Post-it note (handwritten style) --- */
 .post-it {
-  background: #fff9c4;
-  color: #4a4a00;
+  background: #fff8b5;
+  color: #1a1a00;
   border: none;
   border-radius: 2px;
-  padding: 0.75rem 1rem;
-  font-size: 0.85rem;
-  font-style: italic;
+  padding: 0.85rem 1.1rem;
+  font-family: "Caveat", cursive;
+  font-weight: 500;
+  font-size: 1.15rem;
+  font-style: normal;
+  line-height: 1.4;
   box-shadow: 2px 3px 8px rgba(0,0,0,0.12);
   transform: rotate(1.5deg);
-  max-width: 300px;
+  max-width: 320px;
   margin: 1rem 0;
-  line-height: 1.4;
 }
 
 /* ==================== Footer (from main site) ==================== */
