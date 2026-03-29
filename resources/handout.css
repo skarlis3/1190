@@ -22,6 +22,8 @@
   --bright: #0c4590;
   --accent-box-bg: color-mix(in srgb, var(--focus) 7%, white);
   --accent-box-text: #000;
+  --pop: #c95068;       /* coral-pink light — decorative, buttons, gradients */
+  --pop-dark: #9e3e55;  /* coral-pink dark — AAA on white (7.2:1), text-safe */
 }
 
 /* ==================== Force Light Mode ==================== */
@@ -97,22 +99,40 @@ strong { font-weight: 400; }
   font-family: "Lato", system-ui, sans-serif;
   font-size: 0.95rem;
   font-weight: 400;
-  color: var(--accent);
+  color: var(--pop-dark);
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(4, 31, 68, 0.15);
+  background:
+    linear-gradient(135deg,
+      rgba(201, 80, 104, 0.12) 0%,
+      rgba(255, 255, 255, 0.75) 30%,
+      rgba(255, 255, 255, 0.75) 70%,
+      rgba(201, 80, 104, 0.12) 100%
+    );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(201, 80, 104, 0.25);
   border-radius: 12px;
   padding: 0.7rem 1.4rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 16px rgba(201, 80, 104, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   transition: background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .back-btn:hover {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(4, 31, 68, 0.3);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14), 0 2px 5px rgba(0, 0, 0, 0.08);
-  color: var(--accent);
+  background:
+    linear-gradient(135deg,
+      rgba(201, 80, 104, 0.2) 0%,
+      rgba(255, 255, 255, 0.88) 30%,
+      rgba(255, 255, 255, 0.88) 70%,
+      rgba(201, 80, 104, 0.2) 100%
+    );
+  border-color: rgba(201, 80, 104, 0.4);
+  box-shadow:
+    0 6px 20px rgba(201, 80, 104, 0.15),
+    0 2px 5px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  color: var(--pop-dark);
 }
 
 /* ==================== Accent boxes (from main site) ==================== */
