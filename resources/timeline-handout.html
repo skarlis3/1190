@@ -4,144 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project 2: Timeline Brainstorming | ENGL 1190</title>
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/resources/handout.css" />
   <link rel="icon" href="/1190icon.png" type="image/x-icon">
-  <style>
-    /* ===== Back button ===== */
-    .back-btn {
-      display: inline-block;
-      font-family: "Lato", system-ui, sans-serif;
-      font-size: 0.9rem;
-      font-weight: 400;
-      color: var(--accent);
-      text-decoration: none;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.45rem 1rem;
-      margin-bottom: 1.25rem;
-      transition: background 0.15s ease, border-color 0.15s ease;
-    }
-    .back-btn:hover {
-      background: var(--hover);
-      border-color: var(--accent);
-    }
-    [data-theme="dark"] .back-btn { color: var(--bright); }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]):not([data-theme="dark"]) .back-btn { color: var(--bright); }
-    }
-
-    /* ===== Handout-specific styles ===== */
-
-    .step-block {
-      border-left: 4px solid var(--accent);
-      padding: 0.75rem 1.25rem;
-      margin-bottom: 1rem;
-      border-radius: 0 6px 6px 0;
-      background: var(--accent-box-bg);
-    }
-    .step-block h4 {
-      margin: 0 0 0.25rem;
-      font-size: 1rem;
-    }
-    .step-block p {
-      margin: 0;
-    }
-
-    .step-nudge {
-      border-left-color: var(--bright);
-      border-left-style: dashed;
-    }
-
-    .question-bank {
-      column-count: 2;
-      column-gap: 2rem;
-      margin: 1rem 0;
-    }
-    .question-bank li {
-      break-inside: avoid;
-      margin-bottom: 0.6rem;
-    }
-
-    @media (max-width: 700px) {
-      .question-bank {
-        column-count: 1;
-      }
-    }
-
-    /* ===== Print styles ===== */
-    @media print {
-      /* Hide site nav, footer, sidebar */
-      nav, .topnav, .sidenav, .bottomnav, footer,
-      #site-footer, .footer-wrapper,
-      .sidenav-overlay, .hamburger-btn,
-      [aria-label="Main navigation"],
-      [aria-label="Bottom navigation"],
-      .back-btn {
-        display: none !important;
-      }
-
-      body {
-        font-size: 10.5pt;
-        line-height: 1.45;
-        color: #000;
-        background: #fff;
-      }
-
-      #page-content {
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      h1 {
-        font-size: 16pt;
-        margin-bottom: 0.25rem;
-      }
-      h2 {
-        font-size: 13pt;
-        margin-top: 1rem;
-      }
-      h3 {
-        font-size: 11pt;
-      }
-
-      .glance-accent-box,
-      .tips-accent-box,
-      .step-block {
-        border: 1px solid #999;
-        background: #f8f8f8 !important;
-        color: #000 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-
-      .step-block {
-        border-left: 3px solid #333;
-        border-top: none;
-        border-right: none;
-        border-bottom: none;
-      }
-      .step-nudge {
-        border-left-style: dashed;
-      }
-
-      .question-bank {
-        column-count: 2;
-        column-gap: 1.5rem;
-      }
-
-      a { color: #000; text-decoration: none; }
-
-      @page {
-        size: letter;
-        margin: 0.6in 0.65in;
-      }
-    }
-  </style>
 </head>
 
-<body class="no-sidenav">
-  <div id="page-content">
+<body>
+  <div class="handout-content">
 
     <a href="/resources/in-class.html" class="back-btn">&larr; Back to In-Class Resources &amp; Handouts</a>
 
@@ -216,8 +84,6 @@
 
   </div>
 
-  <!-- main navigation and page scripts -->
-  <script src="/nav.js"></script>
   <script src="/footer.js" defer></script>
 </body>
 </html>
