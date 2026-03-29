@@ -110,27 +110,49 @@ a:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; bor
 em { font-style: italic; }
 strong { font-weight: 400; }
 
-/* ==================== Back button ==================== */
+/* ==================== Back button (floating) ==================== */
 .back-btn {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  z-index: 900;
   display: inline-block;
   font-family: "Lato", system-ui, sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 400;
-  color: var(--accent);
+  color: var(--accent-contrast);
   text-decoration: none;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.45rem 1rem;
-  margin-bottom: 1.25rem;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  padding: 0.55rem 1.1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+  opacity: 0.88;
 }
 .back-btn:hover {
-  background: var(--hover);
-  border-color: var(--accent);
+  opacity: 1;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+  background: var(--focus);
+  color: var(--accent-contrast);
 }
-[data-theme="dark"] .back-btn { color: var(--bright); }
+[data-theme="dark"] .back-btn {
+  background: var(--bright);
+  color: #111315;
+}
+[data-theme="dark"] .back-btn:hover {
+  background: var(--accent);
+  color: #111315;
+}
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .back-btn { color: var(--bright); }
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .back-btn {
+    background: var(--bright);
+    color: #111315;
+  }
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .back-btn:hover {
+    background: var(--accent);
+    color: #111315;
+  }
 }
 
 /* ==================== Accent boxes (from main site) ==================== */
