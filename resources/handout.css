@@ -47,9 +47,9 @@ html, html[data-theme="dark"] {
 
 body {
   font-family: "Lato", system-ui, sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.5;
   color: var(--text);
   background: var(--bg);
   margin: 0;
