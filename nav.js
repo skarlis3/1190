@@ -99,7 +99,7 @@
           label: "Resources",
           href: "/resources/index.html",
           children: [
-            { label: "In-Class Resources", href: "/resources/in-class.html" },
+            { label: "In-Class Resources & Handouts", href: "/resources/in-class.html" },
             { label: "Types of Sources", href: "/resources/source-types.html" },
             { label: "Finding Scholarly Sources", href: "/resources/find-scholarly.html" },
             { label: "How to Save a PDF", href: "/resources/save-pdf.html" },
