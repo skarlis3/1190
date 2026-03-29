@@ -7,7 +7,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Judson:ital,wght@0,400;0,700;1,400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&display=swap");
 
 /* ==================== Tokens (light mode only) ==================== */
 :root {
@@ -100,40 +100,39 @@ strong { font-weight: 400; }
   font-family: "Lato", system-ui, sans-serif;
   font-size: 0.95rem;
   font-weight: 400;
-  color: var(--pop-dark);
+  color: #ffffff;
   text-decoration: none;
   background:
-    linear-gradient(135deg,
-      rgba(214, 54, 139, 0.18) 0%,
-      rgba(255, 255, 255, 0.7) 35%,
-      rgba(255, 255, 255, 0.7) 65%,
-      rgba(214, 54, 139, 0.18) 100%
-    );
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(214, 54, 139, 0.3);
+    linear-gradient(160deg,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0.08) 40%,
+      rgba(0, 0, 0, 0.05) 100%
+    ),
+    var(--pop);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 12px;
   padding: 0.7rem 1.4rem;
   box-shadow:
-    0 4px 16px rgba(214, 54, 139, 0.12),
-    0 1px 3px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  transition: background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    0 4px 16px rgba(214, 54, 139, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 .back-btn:hover {
   background:
-    linear-gradient(135deg,
-      rgba(214, 54, 139, 0.28) 0%,
-      rgba(255, 255, 255, 0.82) 35%,
-      rgba(255, 255, 255, 0.82) 65%,
-      rgba(214, 54, 139, 0.28) 100%
-    );
-  border-color: rgba(214, 54, 139, 0.45);
+    linear-gradient(160deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.1) 40%,
+      rgba(0, 0, 0, 0.08) 100%
+    ),
+    #c42e7a;
   box-shadow:
-    0 6px 20px rgba(214, 54, 139, 0.18),
-    0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  color: var(--pop-dark);
+    0 6px 22px rgba(214, 54, 139, 0.35),
+    0 2px 5px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  color: #ffffff;
 }
 
 /* ==================== Accent boxes (from main site) ==================== */
@@ -356,9 +355,9 @@ strong { font-weight: 400; }
   border: none;
   border-radius: 2px;
   padding: 0.85rem 1.1rem;
-  font-family: "Caveat", cursive;
-  font-weight: 500;
-  font-size: 1.15rem;
+  font-family: "Shadows Into Light Two", cursive;
+  font-weight: 400;
+  font-size: 1.1rem;
   font-style: normal;
   line-height: 1.4;
   box-shadow: 2px 3px 8px rgba(0,0,0,0.12);
