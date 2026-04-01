@@ -191,6 +191,40 @@
       min-height: 1.4rem;
     }
 
+    /* ===== Dark mode overrides ===== */
+    /* --accent (#041f44) is never redefined in dark mode, so it's invisible
+       on dark backgrounds. Override elements that use it as a text/border color. */
+    [data-theme="dark"] .event-block {
+      border-color: var(--bright);
+    }
+    [data-theme="dark"] .event-block h4 {
+      color: var(--bright);
+    }
+    [data-theme="dark"] .genre-tag {
+      background: var(--bright);
+      color: #121212;
+    }
+    [data-theme="dark"] .breakdown dt,
+    [data-theme="dark"] .template-card dt {
+      color: var(--bright);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .event-block {
+        border-color: var(--bright);
+      }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .event-block h4 {
+        color: var(--bright);
+      }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .genre-tag {
+        background: var(--bright);
+        color: #121212;
+      }
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .breakdown dt,
+      :root:not([data-theme="light"]):not([data-theme="dark"]) .template-card dt {
+        color: var(--bright);
+      }
+    }
+
     /* ===== Arrow between sections ===== */
     .section-arrow {
       display: flex;
