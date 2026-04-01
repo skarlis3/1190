@@ -1,0 +1,100 @@
+/* ==========================================================================
+   In-Class / Presentation Mode
+   For standalone in-class activity and presentation pages.
+   Include on pages that do NOT use nav.js / style.css.
+   Adds a "Presentation Mode" toggle button that:
+     - Reflows content into columns to fit the viewport
+     - Requests a Wake Lock so the screen stays on
+   ========================================================================== */
+
+/* ---------- Toggle Button ---------- */
+.presentation-toggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 10000;
+  padding: 0.5rem 1rem;
+  border: 2px solid #888;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+  color: inherit;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  backdrop-filter: blur(4px);
+}
+
+.presentation-toggle:hover,
+.presentation-toggle:focus-visible {
+  background: rgba(255,255,255,0.2);
+  border-color: #ccc;
+  outline: 3px solid #7ec8e3;
+  outline-offset: 2px;
+}
+
+/* ---------- Presentation Mode Active ---------- */
+body.presentation-mode {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+body.presentation-mode .presentation-content {
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem 3rem;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* CSS columns: fill available viewport width, auto-balance content */
+  column-width: 26rem;
+  column-gap: 3rem;
+  column-fill: auto;
+}
+
+/* Prevent headings from being orphaned at the bottom of a column */
+body.presentation-mode .presentation-content h1,
+body.presentation-mode .presentation-content h2 {
+  break-after: avoid;
+}
+
+/* Keep grouped content together across columns */
+body.presentation-mode .presentation-content .note,
+body.presentation-mode .presentation-content .ideas {
+  break-inside: avoid;
+}
+
+/* Tighten spacing in presentation mode so more fits */
+body.presentation-mode .presentation-content h2 {
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+body.presentation-mode .presentation-content p {
+  margin: 0.3rem 0;
+}
+
+body.presentation-mode .presentation-content ul,
+body.presentation-mode .presentation-content ol {
+  margin: 0.3rem 0;
+}
+
+body.presentation-mode .presentation-content li {
+  margin-bottom: 0.15rem;
+}
+
+/* Move the toggle button to top-right and fade it in presentation mode */
+body.presentation-mode .presentation-toggle {
+  top: 0.75rem;
+  bottom: auto;
+  right: 0.75rem;
+  opacity: 0.2;
+  transition: opacity 0.2s;
+}
+
+body.presentation-mode .presentation-toggle:hover,
+body.presentation-mode .presentation-toggle:focus-visible {
+  opacity: 1;
+}

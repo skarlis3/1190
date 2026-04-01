@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artifact Planning | ENGL 1190</title>
+  <link rel="icon" href="/1190icon.png" type="image/x-icon">
+  <link rel="stylesheet" href="/inclass.css" />
+  <style>
+    body {
+      margin: 0;
+      background: #fff;
+      color: #111;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    .projector {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: 0 2.5rem;
+      height: 100vh;
+      padding: 2rem 3rem;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .proj-header {
+      grid-column: 1 / -1;
+      border-bottom: 4px solid #111;
+      padding-bottom: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #111;
+      margin: 0;
+    }
+
+    .proj-col { min-width: 0; }
+
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #111;
+      margin: 0.9rem 0 0.35rem;
+      padding-bottom: 0.15rem;
+      border-bottom: 2px solid #ccc;
+    }
+
+    h2:first-child { margin-top: 0; }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333;
+      margin: 0.75rem 0 0.2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin: 0.25rem 0;
+    }
+
+    ul {
+      padding-left: 1.4rem;
+      margin: 0.25rem 0;
+    }
+
+    li {
+      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    /* ===== Example breakdown card ===== */
+    .example-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #666;
+      margin: 0 0 0.4rem;
+    }
+
+    .example-event {
+      background: #f4f4f2;
+      border: 2px solid #333;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .example-event h3 {
+      margin: 0 0 0.2rem;
+      font-size: 1rem;
+      color: #111;
+    }
+
+    .example-event ul {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .example-event li {
+      font-size: 0.95rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .breakdown {
+      background: #f8f8f6;
+      border: 2px solid #0c4590;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+    }
+
+    .breakdown h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1rem;
+      color: #0c4590;
+    }
+
+    .breakdown dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.2rem 0.75rem;
+      font-size: 1rem;
+    }
+
+    .breakdown dt {
+      font-weight: 700;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .breakdown dd {
+      margin: 0;
+    }
+
+    /* ===== Divider arrow ===== */
+    .arrow-down {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.3rem 0;
+    }
+    .arrow-down::before {
+      content: "";
+      display: block;
+      width: 2px;
+      height: 14px;
+      background: #999;
+    }
+    .arrow-down::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 9px solid #999;
+    }
+
+    /* ===== Footer ===== */
+    .proj-footer {
+      grid-column: 1 / -1;
+      text-align: center;
+      border-top: 2px solid #ccc;
+      padding-top: 0.5rem;
+      margin-top: 0.75rem;
+      font-size: 1rem;
+      color: #444;
+    }
+
+    .proj-footer strong { color: #111; }
+  </style>
+</head>
+<body>
+
+  <div class="projector presentation-content">
+    <div class="proj-header">
+      <h1>Project 2: Artifact Planning</h1>
+    </div>
+
+    <!-- LEFT: Instructions (2/3) -->
+    <div class="proj-col">
+      <p><em>For each event on your timeline, figure out what's happening, what kind of text would exist there, and plan the details.</em></p>
+
+      <h2>1. What's happening?</h2>
+      <p>Look at one event on your timeline. What's going on? What would a museum visitor need to understand?</p>
+
+      <h2>2. What would exist here?</h2>
+      <p>If this really happened, what documents, posts, or texts would people be creating? Think about:</p>
+      <ul>
+        <li>Who's involved and what they'd write or post</li>
+        <li>What genre fits this moment?</li>
+        <li>Write down several ideas, then pick the strongest</li>
+      </ul>
+
+      <h2>3. Break it down</h2>
+      <p>For the artifact you choose, plan out:</p>
+      <ul>
+        <li><strong>Year</strong> &mdash; When is this from?</li>
+        <li><strong>Genre</strong> &mdash; What kind of text is it?</li>
+        <li><strong>Audience</strong> &mdash; Who reads/sees this?</li>
+        <li><strong>Purpose</strong> &mdash; Why does it exist?</li>
+        <li><strong>Content</strong> &mdash; What's the message?</li>
+      </ul>
+
+      <p>Repeat for each artifact on your timeline.</p>
+    </div>
+
+    <!-- RIGHT: Example breakdown (1/3) -->
+    <div class="proj-col">
+      <h2>Example</h2>
+
+      <p class="example-label">Timeline event:</p>
+      <div class="example-event">
+        <h3>Degrees Become Meaningless</h3>
+        <ul>
+          <li>Employers give exams instead of requiring degrees</li>
+          <li>On-job training programs increase</li>
+        </ul>
+      </div>
+
+      <div class="arrow-down"></div>
+
+      <p class="example-label">Chosen artifact:</p>
+      <div class="breakdown">
+        <h3>Reddit Post</h3>
+        <dl>
+          <dt>Year:</dt>
+          <dd>2035</dd>
+
+          <dt>Genre:</dt>
+          <dd>Reddit post</dd>
+
+          <dt>Audience:</dt>
+          <dd>Redditors discussing employment</dd>
+
+          <dt>Purpose:</dt>
+          <dd>Vent frustration, seek advice</dd>
+
+          <dt>Content:</dt>
+          <dd>Frustrated about required classes &amp; exams after starting a job; worried about getting fired if they fail</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="proj-footer">
+      Full instructions &amp; templates: <strong>class website &rarr; Resources &rarr; In-Class Resources &rarr; Artifact Planning</strong>
+    </div>
+  </div>
+
+  <script src="/inclass.js"></script>
+</body>
+</html>

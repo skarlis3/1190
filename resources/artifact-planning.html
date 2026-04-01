@@ -4,9 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project 2: Artifact Planning | ENGL 1190</title>
-  <link rel="stylesheet" href="/resources/handout.css" />
+  <link rel="stylesheet" href="/style.css" />
   <link rel="icon" href="/1190icon.png" type="image/x-icon">
   <style>
+    /* ===== Pill links at top ===== */
+    .activity-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .activity-pill {
+      display: inline-block;
+      padding: 0.6rem 1.25rem;
+      border-radius: 50px;
+      font-weight: 400;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .pill-primary {
+      background: var(--accent, #041f44);
+      color: var(--accent-contrast, #fff);
+      border: 2px solid var(--accent, #041f44);
+    }
+
+    .pill-primary:hover,
+    .pill-primary:focus {
+      background: transparent;
+      color: var(--accent, #041f44);
+    }
+
+    .pill-outline {
+      background: transparent;
+      color: var(--bright, #0c4590);
+      border: 2px solid var(--bright, #0c4590);
+    }
+
+    .pill-outline:hover,
+    .pill-outline:focus {
+      background: var(--bright, #0c4590);
+      color: var(--accent-contrast, #fff);
+    }
+
+    [data-theme="dark"] .pill-primary {
+      background: var(--bright, #5b9bd5);
+      color: #121417;
+      border-color: var(--bright, #5b9bd5);
+    }
+
+    [data-theme="dark"] .pill-primary:hover,
+    [data-theme="dark"] .pill-primary:focus {
+      background: transparent;
+      color: var(--bright, #5b9bd5);
+    }
+
+    [data-theme="dark"] .pill-outline {
+      color: var(--bright, #5b9bd5);
+      border-color: var(--bright, #5b9bd5);
+    }
+
+    [data-theme="dark"] .pill-outline:hover,
+    [data-theme="dark"] .pill-outline:focus {
+      background: var(--bright, #5b9bd5);
+      color: #121417;
+    }
+
     /* ===== Example timeline event block ===== */
     .event-block {
       border: 2px solid var(--accent);
@@ -32,7 +97,7 @@
       border-radius: 6px;
       padding: 0.85rem 1.1rem;
       margin: 0.75rem 0;
-      background: #fff;
+      background: var(--bg);
       position: relative;
     }
     .artifact-idea .genre-tag {
@@ -53,8 +118,21 @@
       font-size: 0.9rem;
     }
 
-    /* post-it: uses shared styles from handout.css, just adjust margin for inline use */
+    /* post-it style note */
     .post-it {
+      background: #fff8b5;
+      color: #1a1a00;
+      border: none;
+      border-radius: 2px;
+      padding: 0.75rem 1rem;
+      font-family: "Shadows Into Light Two", cursive;
+      font-weight: 400;
+      font-size: 1rem;
+      font-style: normal;
+      line-height: 1.4;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.12);
+      transform: rotate(1.5deg);
+      max-width: 320px;
       margin: 0.5rem 0 0 1rem;
     }
 
@@ -64,7 +142,7 @@
       border-radius: 8px;
       padding: 1rem 1.25rem;
       margin: 1.25rem 0;
-      background: color-mix(in srgb, var(--bright) 4%, white);
+      background: var(--accent-box-bg);
     }
     .breakdown h4 {
       margin: 0 0 0.6rem;
@@ -93,7 +171,7 @@
       border-radius: 8px;
       padding: 1rem 1.25rem;
       margin: 0.75rem 0;
-      background: #fff;
+      background: var(--bg);
     }
     .template-card dl {
       margin: 0;
@@ -148,33 +226,35 @@
       margin: 1.5rem 0 0.5rem;
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&display=swap" rel="stylesheet">
 </head>
-
 <body>
-  <div class="handout-content">
-
-    <a href="/resources/in-class.html" class="back-btn">&larr; Back to Class Site</a>
+  <div id="page-content">
+    <!-- start of page content -->
 
     <h1>Project 2: Artifact Planning</h1>
+
+    <div class="activity-links">
+      <a class="activity-pill pill-primary" href="/resources/timeline-example.html" target="_blank">Example Timeline &rarr;</a>
+      <a class="activity-pill pill-outline" href="/resources/artifact-planning-projector.html" target="_blank">Projector View &rarr;</a>
+    </div>
+
     <p><em>A guide for turning your timeline events into museum artifacts. For each moment on your timeline, you'll figure out what's happening, what kind of document or text would naturally exist there, and then plan out the details.</em></p>
 
     <h2>The Process</h2>
     <p>For each event on your timeline, work through these steps:</p>
 
-    <div class="step-block">
-      <h4>1. What's happening at this moment?</h4>
-      <p>Look at one event or node on your timeline. What's going on? What are the key things a museum visitor would need to understand about this point in time?</p>
-    </div>
+    <div class="step-label">Step 1</div>
+    <h3>What's happening at this moment?</h3>
+    <p>Look at one event or node on your timeline. What's going on? What are the key things a museum visitor would need to understand about this point in time?</p>
 
-    <div class="step-block">
-      <h4>2. What would exist here?</h4>
-      <p>If this event really happened, what kinds of documents, posts, articles, or communications would people be creating? Think about who's involved and what they'd be writing, posting, or publishing. You might come up with several possibilities &mdash; write them all down, then pick the one that works best for your exhibit.</p>
-    </div>
+    <div class="step-label">Step 2</div>
+    <h3>What would exist here?</h3>
+    <p>If this event really happened, what kinds of documents, posts, articles, or communications would people be creating? Think about who's involved and what they'd be writing, posting, or publishing. You might come up with several possibilities &mdash; write them all down, then pick the one that works best for your exhibit.</p>
 
-    <div class="step-block">
-      <h4>3. Break it down</h4>
-      <p>For the artifact you choose, plan out the details: What year is it from? What genre is it? Who's the audience? What's the purpose? What's the content or message? These details will guide you when you actually write or create the artifact.</p>
-    </div>
+    <div class="step-label">Step 3</div>
+    <h3>Break it down</h3>
+    <p>For the artifact you choose, plan out the details: What year is it from? What genre is it? Who's the audience? What's the purpose? What's the content or message? These details will guide you when you actually write or create the artifact.</p>
 
 
     <!-- ============================================================ -->
@@ -299,8 +379,9 @@
       </dl>
     </div>
 
+    <!-- end of page content -->
   </div>
-
+  <script src="/nav.js"></script>
   <script src="/footer.js" defer></script>
 </body>
 </html>
