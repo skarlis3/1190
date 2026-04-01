@@ -1190,6 +1190,11 @@ html {
 [data-theme="dark"] .modal-dialog .tip-box {
   border-left-color: var(--bright);
 }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .modal-dialog .tip-box {
+    border-left-color: var(--bright);
+  }
+}
 .modal-dialog .tip-box h4 {
   margin: 0 0 0.3rem;
   font-size: 0.95rem;
