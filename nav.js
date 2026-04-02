@@ -92,7 +92,17 @@
             { label: "Example Museum Exhibits", href: "/assignments/p2-examples.html" }
           ]
         },
-            { label: "Final Portfolio", href: "/assignments/final-portfolio.html" }
+        {
+          label: "Final Portfolio",
+          href: "/assignments/final-portfolio.html",
+          children: [
+            { label: "Portfolio Overview", href: "/assignments/final-portfolio.html" },
+            { label: "Portfolio Grading", href: "/assignments/fp-grading.html" },
+            { label: "Research Paper (Final Draft)", href: "/assignments/fp-research-paper.html" },
+            { label: "Final Reflection", href: "/assignments/fp-reflection.html" },
+            { label: "Submitting Your Portfolio", href: "/assignments/fp-submitting.html" }
+          ]
+        }
           ]
         },
         {
@@ -123,7 +133,8 @@
                { label: "Popular vs. Scholarly Sources", href: "/readings/popular-scholarly.html" },
                { label: "Popular & Professional News", href: "/readings/popular-professional-news.html" },
                { label: "Primary, Secondary, and Tertiary Sources", href: "/readings/primary-secondary.html" },
-               { label: "Synthesizing in Your Writing", href: "/readings/synthesizing.html" }
+               { label: "Synthesizing in Your Writing", href: "/readings/synthesizing.html" },
+               { label: "Genre", href: "/readings/genre.html" }
               ]
         },
 
