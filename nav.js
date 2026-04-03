@@ -88,9 +88,11 @@
             { label: "Project 2 Overview", href: "/assignments/p2-overview.html" },
             { label: "Project Roadmap", href: "/assignments/p2-roadmap.html" },
             { label: "Creating Artifacts", href: "/assignments/p2-artifacts.html" },
+            { label: "The Classified Document", href: "/assignments/p2-classified.html" },
             { label: "Building the Exhibit", href: "/assignments/p2-exhibit.html" },
             { label: "Exhibit Day & Visitor Report", href: "/assignments/p2-exhibit-day.html" },
-            { label: "Example Museum Exhibits", href: "/assignments/p2-examples.html" }
+            { label: "Example Museum Exhibits", href: "/assignments/p2-examples.html" },
+            { label: "Project 2 Checklist", href: "/assignments/p2-checklist.html" }
           ]
         },
         {

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project 2: Checklist | ENGL 1190</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/assignments.css" />
+  <link rel="icon" href="/1190icon.png" type="image/x-icon">
+</head>
+<body>
+  <div id="page-content">
+
+    <h1>Project 2: Checklist</h1>
+
+    <p>Use this checklist to make sure you have everything ready before Exhibit Day. Check off items as you complete them.</p>
+
+    <p class="checklist-note">Checkboxes save on this device only &mdash; they don't submit anything or sync across devices.</p>
+
+    <div class="checklist-box">
+      <h3>Artifacts</h3>
+      <ul>
+        <li><input type="checkbox" id="c1"><label for="c1">At least 3 real artifacts from your Project 1 research</label></li>
+        <li><input type="checkbox" id="c2"><label for="c2">At least 5 fictional future artifacts (2027&ndash;2050)</label></li>
+        <li><input type="checkbox" id="c3"><label for="c3">At least 1 visual artifact (chart, graphic, infographic, etc.)</label></li>
+        <li><input type="checkbox" id="c4"><label for="c4">Future artifacts escalate from plausible to extreme over time</label></li>
+        <li><input type="checkbox" id="c5"><label for="c5">Artifacts are rooted in your Project 1 research topics</label></li>
+      </ul>
+    </div>
+
+    <div class="checklist-box">
+      <h3>Classified Document</h3>
+      <ul>
+        <li><input type="checkbox" id="c6"><label for="c6">Reality check section (at least 300 words, references your Project 1 research)</label></li>
+        <li><input type="checkbox" id="c7"><label for="c7">References in APA format (covers all sources in the exhibit and document)</label></li>
+        <li><input type="checkbox" id="c8"><label for="c8">Reflection on the project (at least 150 words)</label></li>
+        <li><input type="checkbox" id="c9"><label for="c9">Physically sealed, folded, or presented as "classified" in your exhibit</label></li>
+      </ul>
+    </div>
+
+    <div class="checklist-box">
+      <h3>Museum Exhibit</h3>
+      <ul>
+        <li><input type="checkbox" id="c10"><label for="c10">Clear theme (utopian or dystopian extreme)</label></li>
+        <li><input type="checkbox" id="c11"><label for="c11">Exhibit builds from real artifacts to exaggerated future</label></li>
+        <li><input type="checkbox" id="c12"><label for="c12">Designed to represent your field and your theme</label></li>
+        <li><input type="checkbox" id="c13"><label for="c13">Artifacts displayed cohesively</label></li>
+        <li><input type="checkbox" id="c14"><label for="c14">Museum placard for each artifact (author, year, description)</label></li>
+        <li><input type="checkbox" id="c15"><label for="c15">List of all artifacts included</label></li>
+        <li><input type="checkbox" id="c16"><label for="c16">Classified document included in the display</label></li>
+        <li><input type="checkbox" id="c17"><label for="c17">Can set up in 5&ndash;10 minutes</label></li>
+      </ul>
+    </div>
+
+    <div class="checklist-box">
+      <h3>Exhibit Day</h3>
+      <ul>
+        <li><input type="checkbox" id="c18"><label for="c18">Your name is clearly visible on the project</label></li>
+        <li><input type="checkbox" id="c19"><label for="c19">Bags and belongings put away (no trip hazards)</label></li>
+        <li><input type="checkbox" id="c20"><label for="c20">Museum Visitor Report completed</label></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <script src="/nav.js"></script>
+  <script src="/footer.js" defer></script>
+  <script>
+    // Save checkbox state to localStorage
+    (function() {
+      var KEY = "p2-checklist";
+      var boxes = document.querySelectorAll('.checklist-box input[type="checkbox"]');
+      var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
+
+      boxes.forEach(function(cb) {
+        if (saved[cb.id]) cb.checked = true;
+        cb.addEventListener("change", function() {
+          saved[cb.id] = cb.checked;
+          localStorage.setItem(KEY, JSON.stringify(saved));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

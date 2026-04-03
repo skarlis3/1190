@@ -1,6 +1,12 @@
-/* ========== FOR GRADING POLICY AND PROJECT 2 ASSIGNMENT PAGES ========== */ 
+/* ==========================================================================
+   Assignment Page Styles
+   Components: grading schemes, callouts, legends, grade scales,
+               museum placards, checklists
+   Dependencies: style.css (must be linked first)
+   ========================================================================== */
 
-/* ========================= Grading Schemes: Table Layout ==================================== */
+
+/* ==================== Grading Schemes: Table Layout ==================== */
 
 .grading-scheme{
   margin: 2rem 0;
@@ -31,10 +37,10 @@
   width: 60px;
 }
 
-/* Color variations (optional but readable) */
+/* Color variations */
 .symbol-plus  { background: #006f5c; }
 .symbol-check { background: #004739; }
-.symbol-minus { background: #a05f00; }
+.symbol-minus { background: #8a5200; }  /* 5.3:1 contrast with white — AA */
 .symbol-nc    { background: #555;    }
 
 /* Right column cell */
@@ -47,7 +53,8 @@
   line-height: 1.5;
 }
 
-/* ==================== GRADING CALLOUT (Quick Start) ==================== */
+
+/* ==================== Callout (Quick Start / Roadmap cards) ==================== */
 
 .callout{
   background: var(--accent-box-bg);
@@ -71,7 +78,7 @@
 }
 
 
-/* ==================== GRADING LEGEND BLOCK ==================== */
+/* ==================== Grading Legend Block ==================== */
 
 .legend{
   background: var(--sidebar-bg);
@@ -89,7 +96,7 @@
 }
 
 
-/* ==================== GRADING LEGEND TABLES LAYOUT ==================== */
+/* ==================== Grading Legend Tables Layout ==================== */
 
 .legend__tables{
   display: grid;
@@ -114,69 +121,26 @@
 }
 
 
+/* ==================== Table Grade Layout ==================== */
 
-
-
-/* ===== Fix for <table class="grade-table"> layout ===== */
 table.grade-table{
-  /* override the old grid rule */
   display: table !important;
   width: 100%;
   table-layout: auto;
   border-collapse: separate;
-  /* vertical space between rows; horizontal gap comes from padding on the text cell */
   border-spacing: 0 1rem;
 }
 
-/* table.grade-table tbody tr { } */
-
 table.grade-table td{
-  vertical-align: top;
-  padding: 0; /* we'll control spacing per cell */
-}
-
-/* Left column: lock a consistent width and center the symbol */
-table.grade-table td.grade-symbol{
-  width: 60px;            /* matches your original grid column */
-  min-width: 60px;
-  text-align: center;
-  /* keep your existing visual pill styles from .grade-symbol */
-  /* (you already have font-size, padding, background, radius, etc.) */
-}
-
-/* Right column: recreate the old column gap */
-table.grade-table td.grade-text{
-  padding-left: 1.25rem;  /* horizontal gap like your old grid column gap */
-  line-height: 1.5;
-}
-
-/* Optional: keep rows comfy on small screens */
-@media (max-width: 520px){
-  table.grade-table td.grade-text{
-    padding-left: .9rem;
-  }
-}
-
-
-/* === Table grade badge fix === */
-table.grade-table{
-  display: table !important;
-  width: 100%;
-  table-layout: auto;
-  border-collapse: separate;
-  border-spacing: 0 1rem;              /* row gap */
-}
-
-table.grade-table td{
-  padding: 0;                           /* reset */
-  vertical-align: middle;               /* center against text block */
+  padding: 0;
+  vertical-align: middle;
 }
 
 table.grade-table td.grade-symbol{
-  width: 60px;                          /* fixed left column */
+  width: 60px;
   min-width: 60px;
   text-align: center;
-  background: transparent !important;   /* stop the tall green column */
+  background: transparent !important;
   padding: 0;
 }
 
@@ -194,23 +158,18 @@ table.grade-table td.grade-symbol{
   line-height: 1;
 }
 
-/* recreate the old “column gap” to the right */
 table.grade-table td.grade-text{
   padding-left: 1.1rem;
   line-height: 1.5;
 }
 
-/* optional: small-screen comfort */
 @media (max-width: 520px){
   .grade-badge{ width: 46px; height: 46px; font-size: 1.25rem; }
   table.grade-table td.grade-text{ padding-left: .9rem; }
 }
 
 
-
-/* ==========================
-   Standard Grading Scale
-   ========================== */
+/* ==================== Standard Grading Scale ==================== */
 
 .grade-scale-note {
   font-size: 0.9rem;
@@ -225,7 +184,7 @@ table.grade-table td.grade-text{
   border-radius: 8px;
   border: 1px solid var(--border, #e2e3e5);
   background: var(--sidebar-bg, #fafafa);
-  overflow-x: auto; /* safety on very small screens */
+  overflow-x: auto;
 }
 
 .grade-scale-table {
@@ -261,20 +220,18 @@ table.grade-table td.grade-text{
   white-space: nowrap;
 }
 
-/* Small-screen tweak */
 @media (max-width: 600px) {
   .grade-scale-wrapper {
     padding: 0.75rem 0.75rem;
   }
-
   .grade-scale-table {
     font-size: 0.9rem;
   }
 }
 
 
-
 /* ==================== Museum Placard Styles ==================== */
+
 .placard-container {
   display: flex;
   flex-wrap: wrap;
@@ -290,12 +247,12 @@ table.grade-table td.grade-text{
   box-shadow: 3px 3px 8px rgba(0,0,0,0.08);
   padding: 1.5rem;
   width: 100%;
-  max-width: 350px; /* Constrains width to look like a real card */
+  max-width: 350px;
   font-family: "Lato", sans-serif;
 }
 
 .museum-placard h4 {
-  font-family: "Judson", serif; /* Uses your site's heading font */
+  font-family: "Judson", serif;
   font-size: 1.3rem;
   font-weight: 700;
   margin: 0 0 0.5rem 0;
@@ -317,4 +274,69 @@ table.grade-table td.grade-text{
   color: var(--muted);
   font-style: italic;
   margin-top: 0.75rem;
+}
+
+
+/* ==================== Interactive Checklist ==================== */
+
+.checklist-box {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--accent-box-bg);
+  padding: 1.25rem 1.5rem 1rem;
+  margin: 1.5rem 0;
+}
+
+.checklist-box h3 {
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-size: 1.15rem;
+  color: var(--text);
+  padding-bottom: .4rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: .6rem;
+}
+
+.checklist-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.checklist-box li {
+  position: relative;
+  padding: .35rem 0 .35rem 2rem;
+  line-height: 1.5;
+}
+
+.checklist-box li + li {
+  border-top: 1px solid var(--border);
+}
+
+.checklist-box input[type="checkbox"] {
+  position: absolute;
+  left: 0;
+  top: .5rem;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.checklist-box label {
+  cursor: pointer;
+}
+
+/* Checked items get muted text */
+.checklist-box input[type="checkbox"]:checked + label {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--border);
+}
+
+.checklist-note {
+  font-size: .82rem;
+  color: var(--muted);
+  margin-top: .75rem;
+  font-style: italic;
 }
