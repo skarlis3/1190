@@ -86,6 +86,7 @@
           href: "/assignments/p2-overview.html",
           children: [
             { label: "Project 2 Overview", href: "/assignments/p2-overview.html" },
+            { label: "Project Roadmap", href: "/assignments/p2-roadmap.html" },
             { label: "Creating Artifacts", href: "/assignments/p2-artifacts.html" },
             { label: "Building the Exhibit", href: "/assignments/p2-exhibit.html" },
             { label: "Exhibit Day & Visitor Report", href: "/assignments/p2-exhibit-day.html" },
