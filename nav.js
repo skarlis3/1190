@@ -111,8 +111,26 @@
           href: "/resources/index.html",
           children: [
             { label: "In-Class Resources & Handouts", href: "/resources/in-class.html" },
-            { label: "Types of Sources", href: "/resources/source-types.html" },
-            { label: "Finding Scholarly Sources", href: "/resources/find-scholarly.html" },
+            {
+              label: "Research & Annotation",
+              href: "/resources/source-types.html",
+              children: [
+                { label: "Types of Sources", href: "/resources/source-types.html" },
+                { label: "Finding Scholarly Sources", href: "/resources/find-scholarly.html" },
+                { label: "How to Read a Scholarly Article", href: "/resources/read-scholarly.html" },
+                { label: "How to Annotate a PDF", href: "/resources/annotating-pdfs.html" },
+              ]
+            },
+            {
+              label: "APA Style & Citations",
+              href: "/resources/apa-style-citations.html",
+              children: [
+                { label: "APA Style & Citations", href: "/resources/apa-style-citations.html" },
+                { label: "APA Quick & Dirty Guide", href: "/resources/apa-citations.html" },
+                { label: "APA in Action", href: "/resources/apa-in-action.html" },
+              ]
+            },
+            { label: "TED Paragraphs", href: "/resources/ted-paragraphs.html" },
             {
               label: "Technical Help",
               href: "/resources/save-pdf.html",
@@ -121,12 +139,6 @@
                 { label: "How to Save an Email as a PDF", href: "/resources/save-email-pdf.html" },
               ]
             },
-            { label: "How to Annotate a PDF", href: "/resources/annotating-pdfs.html" },
-            { label: "How to Read a Scholarly Article", href: "/resources/read-scholarly.html" },
-            { label: "APA Style & Citations", href: "/resources/apa-style-citations.html" },
-            { label: "APA Quick & Dirty Guide", href: "/resources/apa-citations.html" },
-            { label: "APA in Action", href: "/resources/apa-in-action.html" },
-            { label: "TED Paragraphs", href: "/resources/ted-paragraphs.html" },
           ]
         },
         {
