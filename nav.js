@@ -102,7 +102,8 @@
             { label: "Final Reflection", href: "/assignments/fp-reflection.html" },
             { label: "Submitting Your Portfolio", href: "/assignments/fp-submitting.html" }
           ]
-        }
+        },
+        { label: "Extra Credit", href: "/assignments/extra-credit.html" }
           ]
         },
         {
@@ -112,8 +113,15 @@
             { label: "In-Class Resources & Handouts", href: "/resources/in-class.html" },
             { label: "Types of Sources", href: "/resources/source-types.html" },
             { label: "Finding Scholarly Sources", href: "/resources/find-scholarly.html" },
-            { label: "How to Save a PDF", href: "/resources/save-pdf.html" },
-            { label: "How to Annotate a PDF", href: "/resources/annotating-pdfs.html" },
+            {
+              label: "Technical Help",
+              href: "/resources/save-pdf.html",
+              children: [
+                { label: "How to Save a Web Page as a PDF", href: "/resources/save-pdf.html" },
+                { label: "How to Save an Email as a PDF", href: "/resources/save-email-pdf.html" },
+                { label: "How to Annotate a PDF", href: "/resources/annotating-pdfs.html" },
+              ]
+            },
             { label: "How to Read a Scholarly Article", href: "/resources/read-scholarly.html" },
             { label: "APA Style & Citations", href: "/resources/apa-style-citations.html" },
             { label: "APA Quick & Dirty Guide", href: "/resources/apa-citations.html" },
