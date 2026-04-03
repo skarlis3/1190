@@ -19,7 +19,7 @@
 
 
 <p>ENGL 1190 website and its individual pages, unless otherwise noted, are created by Sarah Karlis and are licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. </p>
-<p><strong>AI Transparency Statement:</strong> Generative AI may have been used for proofreading, creating examples, formatting pages, and helping me think through my messy first drafts. Everything has been reviewed, revised, and/or rewritten by a human (me).</p>
+<p><strong>AI Transparency Statement:</strong> AI tools were used in the design and coding of this site and may have been used for proofreading, brainstorming, or refining course content. <a href="/policies/ai-transparency.html">Learn more.</a></p>
 
     </div>
 
