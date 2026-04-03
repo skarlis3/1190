@@ -230,6 +230,105 @@ table.grade-table td.grade-text{
 }
 
 
+/* ==================== Timeline / Roadmap ==================== */
+
+.timeline {
+  position: relative;
+  padding-left: 3.5rem;
+  margin: 2rem 0;
+}
+
+/* Vertical connecting line */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 1.15rem;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.timeline-step {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.timeline-step:last-child {
+  margin-bottom: 0;
+}
+
+/* Numbered circle */
+.timeline-step::before {
+  content: attr(data-step);
+  position: absolute;
+  left: -3.5rem;
+  top: 0;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-family: "Lato", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  box-shadow: 0 1px 4px rgba(0,0,0,.15);
+}
+
+/* Dark mode: use brighter circle */
+[data-theme="dark"] .timeline-step::before {
+  background: var(--bright);
+  color: #121212;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .timeline-step::before {
+    background: var(--bright);
+    color: #121212;
+  }
+}
+
+/* The card inside the timeline step */
+.timeline-step .callout {
+  margin: 0;
+}
+
+/* Non-link step (e.g., Decision Time on the page itself) */
+.timeline-step .timeline-content {
+  background: var(--accent-box-bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+}
+
+.timeline-step .timeline-content h3 {
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-size: 1.15rem;
+}
+
+/* Responsive: tighten on small screens */
+@media (max-width: 600px) {
+  .timeline {
+    padding-left: 2.75rem;
+  }
+  .timeline-step::before {
+    left: -2.75rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: .85rem;
+  }
+  .timeline::before {
+    left: .9rem;
+  }
+}
+
+
 /* ==================== Museum Placard Styles ==================== */
 
 .placard-container {
