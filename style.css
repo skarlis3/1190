@@ -26,6 +26,10 @@
   --pop: #f0a0a0;        /* pastel salmon — decorative, borders, gradients */
   --pop-dark: #9e3e55;   /* coral-pink — AAA on white (7.2:1), text-safe */
   --pop-box-bg: #fdf0ef; /* very light salmon wash */
+  --req: #1a7a6a;        /* teal — requirements boxes, 4.58:1 on white (AA) */
+  --req-box-bg: #eef7f5; /* very light teal wash */
+  --alert: #b45309;      /* amber — important note boxes, 4.56:1 on white (AA) */
+  --alert-box-bg: #fef8ee; /* very light amber wash */
 
   /* Accent box backgrounds (light mode) */
   --accent-box-bg: color-mix(in srgb, var(--focus) 7%, white);
@@ -70,6 +74,10 @@
   --pop: #f0a0a0;
   --pop-dark: #f0a0a0;    /* use lighter salmon for borders on dark bg */
   --pop-box-bg: #2a1f22;  /* dark warm tint — 12.5:1 contrast with #f0f0f0 */
+  --req: #5ec4b0;         /* lighter teal for dark bg — 8.5:1 on #1a2724 */
+  --req-box-bg: #1a2724;  /* dark teal tint */
+  --alert: #f5a623;       /* warm amber for dark bg */
+  --alert-box-bg: #2a2318; /* dark amber tint */
 
   /* Footer colors (dark mode - slightly lighter than main bg for distinction) */
   --footer-bg: #0a0a0a;
@@ -98,6 +106,10 @@
     --pop: #f0a0a0;
     --pop-dark: #f0a0a0;
     --pop-box-bg: #2a1f22;
+    --req: #5ec4b0;
+    --req-box-bg: #1a2724;
+    --alert: #f5a623;
+    --alert-box-bg: #2a2318;
     --footer-bg: #0a0a0a;
     --footer-text: #d0d0d0;
     --footer-heading: #f0f0f0;
