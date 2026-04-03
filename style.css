@@ -23,6 +23,9 @@
   --accent2: #084080;
   --mark-bg: #ffffcc;
   --mark-text: #141414;
+  --pop: #f0a0a0;        /* pastel salmon — decorative, borders, gradients */
+  --pop-dark: #9e3e55;   /* coral-pink — AAA on white (7.2:1), text-safe */
+  --pop-box-bg: #fdf0ef; /* very light salmon wash */
 
   /* Accent box backgrounds (light mode) */
   --accent-box-bg: color-mix(in srgb, var(--focus) 7%, white);
@@ -64,6 +67,9 @@
   /* Accent box backgrounds (dark mode) - muted blue */
   --accent-box-bg: #1e2329;  /* text 13.5:1, links 7:1 contrast */
   --accent-box-text: #f0f0f0;
+  --pop: #f0a0a0;
+  --pop-dark: #f0a0a0;    /* use lighter salmon for borders on dark bg */
+  --pop-box-bg: #2a1f22;  /* dark warm tint — 12.5:1 contrast with #f0f0f0 */
 
   /* Footer colors (dark mode - slightly lighter than main bg for distinction) */
   --footer-bg: #0a0a0a;
@@ -89,6 +95,9 @@
     --mark-text: #f0f0f0;
     --accent-box-bg: #1e2329;  /* text 13.5:1, links 7:1 contrast */
     --accent-box-text: #f0f0f0;
+    --pop: #f0a0a0;
+    --pop-dark: #f0a0a0;
+    --pop-box-bg: #2a1f22;
     --footer-bg: #0a0a0a;
     --footer-text: #d0d0d0;
     --footer-heading: #f0f0f0;
@@ -344,6 +353,60 @@ label[for="topnav-toggle"],
   font-family: "Judson", serif;
   font-size: 1.2rem;
   color: var(--accent-box-text);
+}
+
+/* ==================== Details / Accordion ================================ */
+details {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin: .75rem 0;
+  background: var(--accent-box-bg);
+}
+
+details summary {
+  padding: .75rem 1rem;
+  font-family: "Judson", serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  color: var(--text);
+  list-style: none;
+}
+
+details summary::-webkit-details-marker { display: none; }
+
+details summary::before {
+  content: "\25B6";
+  display: inline-block;
+  margin-right: .5rem;
+  font-size: .75rem;
+  transition: transform .2s ease;
+}
+
+details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+details .details-content {
+  padding: 0 1rem 1rem;
+}
+
+/* ==================== Pop Accent Box (high-visibility callouts) =========== */
+.pop-accent-box {
+  border: 1px solid var(--pop);
+  border-left: 6px solid var(--pop-dark);
+  background: var(--pop-box-bg);
+  padding: 1rem 1.75rem .8rem;
+  margin: 1rem 0 1.75rem;
+  border-radius: 6px;
+}
+
+.pop-accent-box h2,
+.pop-accent-box h3 {
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-size: 1.2rem;
+  color: var(--text);
 }
 
 /* ==================== Transparency Statement, Licensing, & Sources  ======================== */
