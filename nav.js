@@ -135,6 +135,18 @@
             },
             { label: "TED Paragraphs", href: "/resources/ted-paragraphs.html" },
             {
+              label: "Generative AI",
+              href: "/resources/gen-ai-considerations.html",
+              children: [
+                { label: "Using GenAI", href: "/resources/gen-ai-considerations.html" },
+                { label: "GenAI Brainstorming", href: "/resources/gen-ai-brainstorming.html" },
+                { label: "GenAI for Revision", href: "/resources/gen-ai-revision.html" },
+                { label: "Using AI for Research", href: "/resources/gen-ai-research.html" },
+                { label: "GenAI Tools", href: "/resources/gen-ai-tools.html" },
+                { label: "AI Transparency Statement", href: "/resources/gen-ai-transparency.html" },
+              ]
+            },
+            {
               label: "Technical Help",
               href: "/resources/save-pdf.html",
               children: [
