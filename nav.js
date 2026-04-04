@@ -177,7 +177,8 @@
             { label: "Late Work", href: "/policies/late-policy.html" },
             { label: "Grading", href: "/policies/grading.html" },
             { label: "Academic Integrity", href: "/policies/academic-integrity.html" },
-            { label: "AI Use & Transparency", href: "/policies/genai-policy.html" }
+            { label: "AI Use & Transparency", href: "/policies/genai-policy.html" },
+            { label: "Instructor GenAI Use", href: "/policies/instructor-genai.html" }
           ]
         }
       ];
