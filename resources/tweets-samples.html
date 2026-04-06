@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Genre Sample: Tweets / X Posts</title>
+  <style>
+    @media print {
+      body { margin: 0.5in; }
+      .genre-label { display: none; }
+      .tweet { break-inside: avoid; }
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #0f1419;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      background: #fff;
+    }
+    .genre-label {
+      background: #222;
+      color: #fff;
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: .4rem .75rem;
+      display: inline-block;
+      margin-bottom: 1.25rem;
+      border-radius: 3px;
+    }
+    h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 0 0 1.25rem;
+    }
+    .tweet {
+      border: 1px solid #cfd9de;
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .tweet-header {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: .4rem;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #cfd9de;
+      flex-shrink: 0;
+    }
+    .tweet-name {
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+    .tweet-handle {
+      color: #536471;
+      font-size: 14px;
+    }
+    .tweet-x {
+      margin-left: auto;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #0f1419;
+    }
+    .tweet-body {
+      font-size: 15px;
+      line-height: 1.45;
+      margin-bottom: .6rem;
+    }
+    .tweet-body p {
+      margin: 0 0 .4rem;
+    }
+    .tweet-image {
+      border: 1px solid #cfd9de;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: .6rem;
+    }
+    .tweet-image-inner {
+      background: #f7f9f9;
+      padding: .75rem 1rem;
+      font-size: 13px;
+    }
+    .tweet-image-inner .img-label {
+      font-weight: 700;
+      font-size: .85rem;
+      color: #536471;
+      margin-bottom: .25rem;
+    }
+    .tweet-image-inner .fake-email {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #0f1419;
+    }
+    .tweet-meta {
+      color: #536471;
+      font-size: 13px;
+    }
+    .tweet-stats {
+      display: flex;
+      gap: 1.5rem;
+      color: #536471;
+      font-size: 13px;
+      margin-top: .4rem;
+      padding-top: .5rem;
+      border-top: 1px solid #eff3f4;
+    }
+    .tweet-stats span {
+      font-weight: 700;
+      color: #0f1419;
+    }
+    .tweet-reply {
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+      margin-top: -1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #eff3f4;
+    }
+    .tweet-first {
+      border-radius: 16px 16px 0 0;
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="genre-label">Genre Sample: Tweets / X Posts</div>
+
+  <h1>Tweets / X Posts</h1>
+
+  <!-- Tweet 1: Greg Wyshynski -->
+  <div class="tweet">
+    <div class="tweet-header">
+      <div class="avatar"></div>
+      <div>
+        <div class="tweet-name">Greg Wyshynski</div>
+        <div class="tweet-handle">@wyshynski</div>
+      </div>
+      <div class="tweet-x">&#119831;</div>
+    </div>
+    <div class="tweet-body">
+      <p>The Utah Mammoth and NHL Commissioner Gary Bettman have a news conference at 4 pm MT today at the University of Utah's Rice-Eccles Stadium in Salt Lake City.</p>
+    </div>
+  </div>
+
+  <!-- Tweet 2: Olivia Reed (with embedded image of email) -->
+  <div class="tweet">
+    <div class="tweet-header">
+      <div class="avatar"></div>
+      <div>
+        <div class="tweet-name">Olivia Reed</div>
+        <div class="tweet-handle">@olivia</div>
+      </div>
+      <div class="tweet-x">&#119831;</div>
+    </div>
+    <div class="tweet-body">
+      <p>High school teachers: your college professors won't be nearly as laid back as I am</p>
+      <p>My college professor:</p>
+    </div>
+    <div class="tweet-image">
+      <div class="tweet-image-inner">
+        <div class="img-label">Screenshot of email:</div>
+        <div class="fake-email">
+          <strong>Trail Mix Attack</strong> &nbsp; 43 others<br><br>
+          Dear Students,<br><br>
+          While grading your midterms and eating trailmix, a catastrophic event occurred and trail mix is all over the floor and your notebooks. There may be particulates of said trailmix left. If any of you is allergic to peanuts please let me know and I will do my best to eliminate any remaining peanut or nut-related molecules.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tweet 3: Rodger Sherman (thread) -->
+  <div class="tweet tweet-first">
+    <div class="tweet-header">
+      <div class="avatar"></div>
+      <div>
+        <div class="tweet-name">Rodger Sherman 🏀</div>
+        <div class="tweet-handle">@rodger</div>
+      </div>
+      <div class="tweet-x">&#119831;</div>
+    </div>
+    <div class="tweet-body">
+      <p>1. did you attend a college with squirrels on campus</p>
+      <p>2. did people assert that your school's squirrels were, in some way, different from most squirrels</p>
+    </div>
+    <div class="tweet-meta">1:26 PM · Dec 18, 2018 · Twitter for iPhone</div>
+    <div class="tweet-stats">
+      <div><span>41.7K</span> Retweets</div>
+      <div><span>260.5K</span> Likes</div>
+    </div>
+  </div>
+
+  <div class="tweet tweet-reply">
+    <div class="tweet-header">
+      <div class="avatar"></div>
+      <div>
+        <div class="tweet-name">Rodger Sherman 🏀</div>
+        <div class="tweet-handle">@rodger</div>
+      </div>
+      <div class="tweet-x">&#119831;</div>
+    </div>
+    <div class="tweet-body">
+      <p>Congrats to every college on having the only special squirrels in America, they are definitely not regular-ass squirrels</p>
+    </div>
+    <div class="tweet-meta">2:52 PM · Dec 18, 2018 · Twitter for iPhone</div>
+    <div class="tweet-stats">
+      <div><span>1.1K</span> Retweets</div>
+      <div><span>14.4K</span> Likes</div>
+    </div>
+  </div>
+
+</body>
+</html>
