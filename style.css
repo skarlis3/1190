@@ -30,6 +30,8 @@
   --req-box-bg: #eef7f5; /* very light teal wash */
   --alert: #b45309;      /* amber — important note boxes, 4.56:1 on white (AA) */
   --alert-box-bg: #fef8ee; /* very light amber wash */
+  --aside: #2d6a4f;        /* forest green — aside/info boxes, 5.5:1 on white (AA) */
+  --aside-box-bg: #eef5f0; /* very light sage wash */
 
   /* Accent box backgrounds (light mode) */
   --accent-box-bg: color-mix(in srgb, var(--focus) 7%, white);
@@ -78,6 +80,8 @@
   --req-box-bg: #1a2724;  /* dark teal tint */
   --alert: #f5a623;       /* warm amber for dark bg */
   --alert-box-bg: #2a2318; /* dark amber tint */
+  --aside: #6dbf8b;        /* lighter forest green for dark bg — 8.8:1 on #1a2620 */
+  --aside-box-bg: #1a2620; /* dark green tint */
 
   /* Footer colors (dark mode - slightly lighter than main bg for distinction) */
   --footer-bg: #0a0a0a;
@@ -110,6 +114,8 @@
     --req-box-bg: #1a2724;
     --alert: #f5a623;
     --alert-box-bg: #2a2318;
+    --aside: #6dbf8b;
+    --aside-box-bg: #1a2620;
     --footer-bg: #0a0a0a;
     --footer-text: #d0d0d0;
     --footer-heading: #f0f0f0;
@@ -365,6 +371,60 @@ label[for="topnav-toggle"],
   font-family: "Judson", serif;
   font-size: 1.2rem;
   color: var(--accent-box-text);
+}
+
+/* ==================== Aside / Info Box ==================================== */
+
+.aside-box {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--aside);
+  border-radius: 8px;
+  background: var(--aside-box-bg);
+  margin: 1.25rem 0 1.75rem;
+  overflow: hidden;
+}
+
+/* "i" sidebar */
+.aside-box::before {
+  content: "i";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 3.25rem;
+  background: var(--aside);
+  color: #fff;
+  font-family: "Judson", serif;
+  font-size: 1.75rem;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.aside-box-content {
+  padding: 1rem 1.5rem;
+}
+
+.aside-box-content h3 {
+  margin-top: 0;
+  font-family: "Judson", serif;
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.aside-box-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Dark mode: dark text on lighter green sidebar */
+[data-theme="dark"] .aside-box::before {
+  color: #121212;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .aside-box::before {
+    color: #121212;
+  }
 }
 
 /* ==================== Details / Accordion ================================ */
