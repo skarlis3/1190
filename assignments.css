@@ -387,9 +387,9 @@ table.grade-table td.grade-text{
 .important-note {
   display: flex;
   align-items: stretch;
-  border: 1px solid var(--alert);
+  border: 1px solid var(--pop);
   border-radius: 8px;
-  background: var(--alert-box-bg);
+  background: var(--pop-box-bg);
   margin: 1.25rem 0 1.75rem;
   overflow: hidden;
 }
@@ -402,7 +402,7 @@ table.grade-table td.grade-text{
   justify-content: center;
   flex-shrink: 0;
   width: 3.25rem;
-  background: var(--alert);
+  background: var(--pop-dark);
   color: #fff;
   font-family: "Judson", serif;
   font-size: 2rem;
