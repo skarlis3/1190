@@ -75,7 +75,7 @@
                 { label: "Rough Draft", href: "/assignments/rough-draft.html" },
                 { label: "Peer Review", href: "/assignments/peer-review.html" },
                 { label: "Revised Draft", href: "/assignments/revised-draft.html" },
-                { label: "Self-Eval & Reflection", href: "/assignments/reflection.html" },
+                { label: "Reflection & Checklist", href: "/assignments/reflection.html" },
                 { label: "Individual Conferences", href: "/assignments/conferences.html" },
                 { label: "Example Organization", href: "/assignments/example-organization.html" },
                 { label: "APA Style & Citations", href: "/assignments/apa-style.html" }
