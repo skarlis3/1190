@@ -58,6 +58,7 @@
           label: "Assignments",
           href: "/assignments/index.html",
           children: [
+            { label: "Example Assignments", href: "/assignments/example-assignments.html" },
             { label: "Introduction Assignment", href: "/assignments/introduction.html" },
             {
               label: "Weekly Writing",
