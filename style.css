@@ -717,11 +717,20 @@ details .details-content {
     border-bottom:1px solid rgba(255,255,255,.15);
   }
   .sidenav__title{ font:700 1rem "Lato", system-ui, sans-serif; }
+  /* Now a real <button> (was a <label>) — reset the UA button chrome, or it
+     renders on the browser default light background and the white label
+     disappears into it. */
   .sidenav-close{
     display:inline-flex; align-items:center; gap:.5rem;
     padding:.35rem .65rem; border-radius:999px;
     color:var(--drawer-header-fg); border:2px solid rgba(255,255,255,.55);
+    background:transparent; cursor:pointer;
     text-decoration:none; font:600 .95rem "Lato", system-ui, sans-serif;
+  }
+  .sidenav-close:focus-visible,
+  .open-sidenav-btn:focus-visible{
+    outline:3px solid var(--focus-ring);
+    outline-offset:2px;
   }
 
   .sidenav{ padding:0; background:var(--sidebar-bg); }

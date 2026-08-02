@@ -412,47 +412,13 @@
 
       const main = document.querySelector("main.content");
       const explicit = document.getElementById("page-content");
-      if (explicit && explicit.parentElement !== main) main.appendChild(explicit);
+      // explicit !== main matters: index.html supplies its own
+      // <main class="content" id="page-content">, so both lookups find the SAME
+      // element. Without this guard the line below appends a node to itself,
+      // which throws HierarchyRequestError and aborts the rest of init inside
+      // the catch — silently, on the home page only.
+      if (explicit && explicit !== main && explicit.parentElement !== main) main.appendChild(explicit);
 
-      // -------------------- Theme Toggle --------------------
-      // Lives in the top bar, laid out rather than floated, so it can't collide
-      // with page content or the mobile drawer's Close button. All appearance is
-      // in style.css — inline styles here beat the stylesheet and make that rule
-      // dead code, which is exactly what used to happen.
-      if (!document.querySelector('.theme-toggle')) {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'theme-toggle';
-        btn.innerHTML = `
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-`;
-        const syncLabel = () => {
-          btn.setAttribute('aria-label', themeLabel());
-          btn.setAttribute('title', themeLabel());
-        };
-        syncLabel();
-        btn.addEventListener('click', () => { toggleTheme(); syncLabel(); });
-        const host = document.querySelector('.topnav-inner');
-        if (host) {
-          host.appendChild(btn);
-        } else {
-          btn.classList.add('theme-toggle--floating');
-          document.body.appendChild(btn);
-        }
-      }
 
       // -------------------- Behavior --------------------
       const sidenavEl = document.querySelector(".sidenav");
@@ -588,6 +554,50 @@
 
     } catch (err) {
       console.error("nav.js initialization error:", err);
+    }
+
+    // Deliberately outside the try/catch above: the toggle is independent of the
+    // nav, so an error while rendering the nav must not take the theme button
+    // down with it. That is what the two deleted fallback copies were nominally
+    // for; this does the same job with one implementation.
+    // -------------------- Theme Toggle --------------------
+    // Lives in the top bar, laid out rather than floated, so it can't collide
+    // with page content or the mobile drawer's Close button. All appearance is
+    // in style.css — inline styles here beat the stylesheet and make that rule
+    // dead code, which is exactly what used to happen.
+    if (!document.querySelector('.theme-toggle')) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'theme-toggle';
+      btn.innerHTML = `
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+`;
+      const syncLabel = () => {
+        btn.setAttribute('aria-label', themeLabel());
+        btn.setAttribute('title', themeLabel());
+      };
+      syncLabel();
+      btn.addEventListener('click', () => { toggleTheme(); syncLabel(); });
+      const host = document.querySelector('.topnav-inner');
+      if (host) {
+        host.appendChild(btn);
+      } else {
+        btn.classList.add('theme-toggle--floating');
+        document.body.appendChild(btn);
+      }
     }
 
   });
