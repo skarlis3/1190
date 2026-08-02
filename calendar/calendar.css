@@ -24,11 +24,11 @@
 
 /* ===== Dark Mode Overrides ===== */
 [data-theme="dark"] {
-  --cal-today-bg: color-mix(in srgb, var(--accent) 20%, #121212);
+  --cal-today-bg: color-mix(in srgb, var(--accent) 20%, #090a0c);
   --cal-event-bg: var(--accent);
   --cal-event-text: #ffffff;
   --cal-due-bg: #1d4ed8;
-  --cal-other-month: #1a1a1a;
+  --cal-other-month: #101416;
 
   /* Urgency backgrounds (dark mode) */
   --cal-urgent-bg: #2d1515;
@@ -39,11 +39,11 @@
 /* System preference detection (when no explicit preference is set) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    --cal-today-bg: color-mix(in srgb, var(--accent) 20%, #121212);
+    --cal-today-bg: color-mix(in srgb, var(--accent) 20%, #090a0c);
     --cal-event-bg: var(--accent);
     --cal-event-text: #ffffff;
     --cal-due-bg: #1d4ed8;
-    --cal-other-month: #1a1a1a;
+    --cal-other-month: #101416;
     --cal-urgent-bg: #2d1515;
     --cal-soon-bg: #2d2815;
     --cal-later-bg: #152d1f;
@@ -886,7 +886,7 @@
 
 [data-theme="dark"] .cal-btn--view:hover {
   background: var(--bright);
-  color: #121212;
+  color: #090a0c;
 }
 
 /* Panel title */
@@ -958,6 +958,6 @@
   }
   :root:not([data-theme="light"]):not([data-theme="dark"]) .cal-btn--view:hover {
     background: var(--bright);
-    color: #121212;
+    color: #090a0c;
   }
 }

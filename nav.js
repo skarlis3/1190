@@ -35,6 +35,11 @@
     setTheme(next);
   };
 
+  // Says what the button will DO, not what it is — and is re-read after every
+  // toggle, which the old fixed "Toggle dark mode" label never was.
+  const themeLabel = () =>
+    getCurrentEffectiveTheme() === "dark" ? "Switch to light mode" : "Switch to dark mode";
+
   // Apply stored theme immediately to prevent flash
   const storedTheme = getStoredTheme();
   if (storedTheme) {
@@ -256,12 +261,12 @@
       const renderSkipLink = () => `<a href="#page-content" class="skip-link">Skip to main content</a>`;
 
       // -------------------- Renderers --------------------
+      // No top-nav hamburger: the checkbox and label that used to live here were
+      // rendered on every page and then hidden outright by style.css.
       const renderTopNav = () => `
-        <input type="checkbox" id="topnav-toggle" class="nav-toggle" />
         <nav class="topnav" role="navigation" aria-label="Main navigation">
           <div class="topnav-inner">
             <a class="brand" href="/index.html">ENGL 1190</a>
-            <label for="topnav-toggle" class="hamburger" aria-label="Toggle main menu">☰</label>
             <ul class="menu">
               ${TOP_NAV.map(i => `
                 <li><a href="${esc(i.href)}"${isNavActive(i.href) ? ' aria-current="page"' : ''}>${esc(i.label)}</a></li>
@@ -360,18 +365,18 @@
       };
 
       const renderSideNav = (items, title = "Section Menu") => `
-        <input type="checkbox" id="sidenav-toggle" class="nav-toggle" />
-        <nav class="sidenav sidenav--fullscreen" role="navigation" aria-label="${esc(title)}">
+        <input type="checkbox" id="sidenav-toggle" class="nav-toggle" tabindex="-1" aria-hidden="true" />
+        <nav id="sidenav" class="sidenav sidenav--fullscreen" role="navigation" aria-label="${esc(title)}">
           <div class="sidenav__bar">
             <div class="sidenav__title">${esc(title)}</div>
-            <label for="sidenav-toggle" class="sidenav-close" aria-label="Close ${esc(title)}">
+            <button type="button" class="sidenav-close" aria-label="Close ${esc(title)}">
               <span class="x" aria-hidden="true">×</span>
               <span>Close</span>
-            </label>
+            </button>
           </div>
           <ul class="nav-level-1">${items.map(renderSideGroup).join("")}</ul>
         </nav>
-        <label for="sidenav-toggle" class="sidenav-scrim" aria-hidden="true"></label>`;
+        <div class="sidenav-scrim"></div>`;
 
       // -------------------- Injection --------------------
       // Top nav first, then skip link (afterbegin prepends, so skip-link ends up first in DOM)
@@ -400,7 +405,7 @@
       if (!noSidenav && itemsForSidenav && !document.querySelector(".sidenav"))
         layout.insertAdjacentHTML("beforeend", renderSideNav(itemsForSidenav, sectionTitle));
       if (!document.querySelector("main.content")) {
-        const openBtn = itemsForSidenav ? `<label for="sidenav-toggle" class="open-sidenav-btn">☰ ${esc(sectionTitle)}</label>` : "";
+        const openBtn = itemsForSidenav ? `<button type="button" class="open-sidenav-btn" aria-controls="sidenav" aria-expanded="false"><span aria-hidden="true">☰</span> ${esc(sectionTitle)}</button>` : "";
         layout.insertAdjacentHTML("beforeend", `<main class="content">${openBtn}</main>`);
       }
       if (!itemsForSidenav) layout.classList.add("centered-layout");
@@ -409,13 +414,15 @@
       const explicit = document.getElementById("page-content");
       if (explicit && explicit.parentElement !== main) main.appendChild(explicit);
 
-      // -------------------- Floating Theme Toggle Button --------------------
+      // -------------------- Theme Toggle --------------------
+      // Lives in the top bar, laid out rather than floated, so it can't collide
+      // with page content or the mobile drawer's Close button. All appearance is
+      // in style.css — inline styles here beat the stylesheet and make that rule
+      // dead code, which is exactly what used to happen.
       if (!document.querySelector('.theme-toggle')) {
         const btn = document.createElement('button');
+        btn.type = 'button';
         btn.className = 'theme-toggle';
-        btn.setAttribute('aria-label', 'Toggle dark mode');
-        btn.setAttribute('title', 'Toggle dark mode');
-        btn.style.cssText = 'z-index:99999 !important; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); box-shadow:0 2px 10px rgba(0,0,0,.3);';
         btn.innerHTML = `
           <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -431,9 +438,20 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-        `;
-        btn.addEventListener('click', toggleTheme);
-        document.body.appendChild(btn);
+`;
+        const syncLabel = () => {
+          btn.setAttribute('aria-label', themeLabel());
+          btn.setAttribute('title', themeLabel());
+        };
+        syncLabel();
+        btn.addEventListener('click', () => { toggleTheme(); syncLabel(); });
+        const host = document.querySelector('.topnav-inner');
+        if (host) {
+          host.appendChild(btn);
+        } else {
+          btn.classList.add('theme-toggle--floating');
+          document.body.appendChild(btn);
+        }
       }
 
       // -------------------- Behavior --------------------
@@ -460,16 +478,65 @@
         document.body.style.width = "";
         window.scrollTo(0, lockedY);
       };
-      if (checkbox) {
-        const syncLock = () => (checkbox.checked && mm.matches ? lockBody() : unlockBody());
-        checkbox.addEventListener("change", syncLock);
-        mm.addEventListener("change", () => { if (!mm.matches) unlockBody(); });
-      }
+      // -------------------- Drawer open/close + focus management --------------------
+      // Opened and closed here rather than by the checkbox's own label clicks, so
+      // focus can move into the drawer on open and back to the opening button on
+      // close. Without this, focus stays on the page behind the overlay and Tab
+      // walks through content the user can't see.
+      (function initDrawer() {
+        if (!checkbox) return;
+        const drawer = document.getElementById("sidenav");
+        const openBtnEl = document.querySelector(".open-sidenav-btn");
+        const closeBtnEl = drawer && drawer.querySelector(".sidenav-close");
+        const scrimEl = document.querySelector(".sidenav-scrim");
+        if (!drawer) return;
 
-      // Escape closes drawer
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && checkbox && checkbox.checked) checkbox.checked = false;
-      });
+        let lastFocus = null;
+        const focusables = () =>
+          Array.from(drawer.querySelectorAll('a[href], button:not([disabled])'))
+            .filter((el) => el.offsetParent !== null);
+
+        const setDrawer = (open) => {
+          if (checkbox.checked === open) return;
+          checkbox.checked = open;
+          if (openBtnEl) openBtnEl.setAttribute("aria-expanded", open ? "true" : "false");
+          if (open) {
+            lastFocus = document.activeElement;
+            lockBody();
+            requestAnimationFrame(() => {
+              const target = closeBtnEl || focusables()[0];
+              if (target) target.focus();
+            });
+          } else {
+            unlockBody();
+            const usable = lastFocus && lastFocus.isConnected && lastFocus.offsetParent !== null;
+            const back = usable ? lastFocus : openBtnEl;
+            lastFocus = null;
+            if (back && back.focus) back.focus();
+          }
+        };
+
+        if (openBtnEl) openBtnEl.addEventListener("click", () => setDrawer(true));
+        if (closeBtnEl) closeBtnEl.addEventListener("click", () => setDrawer(false));
+        if (scrimEl) scrimEl.addEventListener("click", () => setDrawer(false));
+        drawer.addEventListener("click", (e) => {
+          if (e.target.closest("a[href]")) setDrawer(false);
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (!checkbox.checked || !mm.matches) return;
+          if (e.key === "Escape") { e.preventDefault(); setDrawer(false); return; }
+          if (e.key !== "Tab") return;
+          const f = focusables();
+          if (!f.length) return;
+          const first = f[0], last = f[f.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          else if (!drawer.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+        });
+
+        mm.addEventListener("change", () => { if (!mm.matches && checkbox.checked) setDrawer(false); });
+      })();
 
       // Group toggles
       if (!noSidenav && sidenavEl) {
@@ -523,60 +590,6 @@
       console.error("nav.js initialization error:", err);
     }
 
-    // Fallback toggle creation in case main code failed
-    if (!document.querySelector('.theme-toggle')) {
-      const btn = document.createElement('button');
-      btn.className = 'theme-toggle';
-      btn.setAttribute('aria-label', 'Toggle dark mode');
-      btn.setAttribute('title', 'Toggle dark mode');
-      btn.style.cssText = 'z-index:99999 !important; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); box-shadow:0 2px 10px rgba(0,0,0,.3);';
-      btn.innerHTML = `
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-      `;
-      btn.addEventListener('click', toggleTheme);
-      document.body.appendChild(btn);
-    }
   });
 
-  // Additional fallback on window load
-  window.addEventListener('load', () => {
-    if (!document.querySelector('.theme-toggle')) {
-      const btn = document.createElement('button');
-      btn.className = 'theme-toggle';
-      btn.setAttribute('aria-label', 'Toggle dark mode');
-      btn.setAttribute('title', 'Toggle dark mode');
-      btn.style.cssText = 'z-index:99999 !important; border:2px solid var(--bright, #8ecbff); background:var(--bg, #fff); color:var(--text, #333); box-shadow:0 2px 10px rgba(0,0,0,.3);';
-      btn.innerHTML = `
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-      `;
-      btn.addEventListener('click', toggleTheme);
-      document.body.appendChild(btn);
-    }
-  });
 })();

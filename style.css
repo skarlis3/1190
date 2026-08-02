@@ -38,6 +38,13 @@
   --accent-box-text: #000;
   --interactive-hint: #404850;
 
+  /* Top bar chrome, named separately from --accent so dark mode can leave it
+     alone. Matches the convention on 1170 and 1181. */
+  /* Lifted from #001324 (lightness 7% -> 13%). At 7% the bar sat at almost the
+     same darkness as the page — fine on one laptop, too dark to read as a bar on
+     an iPad. Same correction applied to 1181. */
+  --navbar-bg:#002342;
+
   --topnav-h:56px;
   --sidenav-w:clamp(272px,24vw,340px);
   --maxw:100%;
@@ -58,24 +65,24 @@
 /* ==================== Dark Mode Tokens ==================== */
 /* WCAG AAA compliant: 7:1 contrast for normal text, 4.5:1 for large text */
 [data-theme="dark"] {
-  --bg: #121212;
-  --sidebar-bg: #1a1a1a;
-  --text: #f0f0f0;  /* 17:1 contrast on #121212 */
-  --muted: #b8b8b8;  /* 8.3:1 contrast on #121212 */
-  --border: #3a3a3a;
-  --hover: #2a2a2a;
-  --focus-ring: #6db3f2;  /* bright blue for visible focus indicators */
-  --bright: #8ecbff;  /* lighter blue, 9.5:1 contrast on #1a1a1a */
-  --accent2: #a8d8ff;
+  --bg: #090a0c;
+  --sidebar-bg: #101416;
+  --text: #e9ebec;  /* 16.6:1 on --bg - AAA ✓ */
+  --muted: #afb8c0;  /* 9.9:1 on --bg - AAA ✓ */
+  --border: #212930;
+  --hover: #1b2227;
+  --focus-ring: #9cbfde;  /* bright blue for visible focus indicators */
+  --bright: #9cbfde;  /* 10.3:1 on --bg, 9.6:1 on the sidebar - AAA ✓ */
+  --accent2: #c2d6e8;
   --mark-bg: #4a4a00;
-  --mark-text: #f0f0f0;
+  --mark-text: #e9ebec;
 
   /* Accent box backgrounds (dark mode) - muted blue */
-  --accent-box-bg: #1e2329;  /* text 13.5:1, links 7:1 contrast */
-  --accent-box-text: #f0f0f0;
+  --accent-box-bg: #161b1f;  /* text 13.5:1, links 7:1 contrast */
+  --accent-box-text: #e9ebec;
   --pop: #f0a0a0;
   --pop-dark: #f0a0a0;    /* use lighter salmon for borders on dark bg */
-  --pop-box-bg: #2a1f22;  /* dark warm tint — 12.5:1 contrast with #f0f0f0 */
+  --pop-box-bg: #2a1f22;  /* dark warm tint */
   --req: #5ec4b0;         /* lighter teal for dark bg — 8.5:1 on #1a2724 */
   --req-box-bg: #1a2724;  /* dark teal tint */
   --alert: #f5a623;       /* warm amber for dark bg */
@@ -84,9 +91,9 @@
   --aside-box-bg: #1a2620; /* dark green tint */
 
   /* Footer colors (dark mode - slightly lighter than main bg for distinction) */
-  --footer-bg: #0a0a0a;
-  --footer-text: #d0d0d0;
-  --footer-heading: #f0f0f0;
+  --footer-bg: #050607;
+  --footer-text: #cdd4da;
+  --footer-heading: #e9ebec;
   --footer-link: #8ac4f8;
   --footer-link-hover: #b8d8fc;
 }
@@ -94,19 +101,19 @@
 /* System preference detection (when no explicit preference is set) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    --bg: #121212;
-    --sidebar-bg: #1a1a1a;
-    --text: #f0f0f0;
-    --muted: #b8b8b8;  /* WCAG AAA: 8.3:1 contrast on #121212 */
-    --border: #3a3a3a;
-    --hover: #2a2a2a;
-    --focus-ring: #6db3f2;  /* bright blue for visible focus indicators */
-    --bright: #8ecbff;  /* lighter blue, 9.5:1 contrast on #1a1a1a */
-    --accent2: #a8d8ff;
+    --bg: #090a0c;
+    --sidebar-bg: #101416;
+    --text: #e9ebec;
+    --muted: #afb8c0;  /* 9.9:1 on --bg - AAA ✓ */
+    --border: #212930;
+    --hover: #1b2227;
+    --focus-ring: #9cbfde;  /* bright blue for visible focus indicators */
+    --bright: #9cbfde;  /* 10.3:1 on --bg, 9.6:1 on the sidebar - AAA ✓ */
+    --accent2: #c2d6e8;
     --mark-bg: #4a4a00;
-    --mark-text: #f0f0f0;
-    --accent-box-bg: #1e2329;  /* text 13.5:1, links 7:1 contrast */
-    --accent-box-text: #f0f0f0;
+    --mark-text: #e9ebec;
+    --accent-box-bg: #161b1f;  /* text 13.5:1, links 7:1 contrast */
+    --accent-box-text: #e9ebec;
     --pop: #f0a0a0;
     --pop-dark: #f0a0a0;
     --pop-box-bg: #2a1f22;
@@ -116,9 +123,9 @@
     --alert-box-bg: #2a2318;
     --aside: #6dbf8b;
     --aside-box-bg: #1a2620;
-    --footer-bg: #0a0a0a;
-    --footer-text: #d0d0d0;
-    --footer-heading: #f0f0f0;
+    --footer-bg: #050607;
+    --footer-text: #cdd4da;
+    --footer-heading: #e9ebec;
     --footer-link: #8ac4f8;
     --footer-link-hover: #b8d8fc;
   }
@@ -207,8 +214,30 @@ body{
 /* ==================== Top Navigation (desktop default) ==================== */
 .topnav{
   position:sticky; top:0; z-index:1000;
-  background: var(--accent); color:#fff;
+  color:#fff;
   font-weight:400; font-size:1.05em;
+
+  /* Frosted bar: the brand colour goes slightly translucent over a blur, so page
+     content diffuses under it instead of stopping at a hard line. Opacity stays
+     high on purpose — the glass reads through the blur and the sheen, not by
+     lightening, so the bar is as deep as it ever was. */
+  background: color-mix(in srgb, var(--navbar-bg) 94%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  backdrop-filter: blur(12px) saturate(150%);
+}
+[data-theme="dark"] .topnav{
+  background: color-mix(in srgb, var(--navbar-bg) 92%, transparent);
+}
+.topnav::before{
+  content:""; position:absolute; inset:0 0 auto; height:2px; pointer-events:none;
+  background:linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,0));
+}
+.topnav::after{
+  content:""; position:absolute; left:0; right:0; top:100%; height:16px; pointer-events:none;
+  background:linear-gradient(180deg, rgba(0,0,0,.09), transparent);
+}
+[data-theme="dark"] .topnav::after{
+  background:linear-gradient(180deg, rgba(0,0,0,.30), transparent);
 }
 .topnav-inner{
   display:flex; align-items:center; gap:1rem;
@@ -216,7 +245,7 @@ body{
   max-width:var(--maxw); margin-inline:auto;
 }
 .topnav .brand{ color:#fff; font-weight:400; font-size:1.20em; }
-.topnav .menu{ list-style:none; display:flex; gap:.5rem; margin:0 0 0 auto; padding:0;}
+.topnav .menu{ list-style:none; display:flex; align-items:center; gap:.5rem; margin:0 0 0 auto; padding:0;}
 .topnav .menu > li > a{ display:block; padding:.6rem .9rem; border-radius:.4rem; color:#fff; text-decoration: none;}
 .topnav .menu > li > a:hover{ outline:1px solid #fff; }
 .topnav .menu > li > a:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
@@ -226,12 +255,8 @@ body{
 .topnav .brand{ margin-right:auto; }   /* pushes everything else (the menu) to the right */
 .topnav .menu{ margin:0; }             /* remove the old shorthand if present */
 
-/* Kill the TOP-NAV hamburger only  */
-label[for="topnav-toggle"],
-.topnav label[for="topnav-toggle"],
-.topnav .open-topnav-btn { 
-  display: none !important;
-}
+/* A rule killing a top-nav hamburger used to sit here. nav.js no longer renders
+   one — the checkbox and label were emitted on every page and then hidden. */
 
 
 /* ==================== Layout ==================== */
@@ -419,11 +444,11 @@ label[for="topnav-toggle"],
 
 /* Dark mode: dark text on lighter green sidebar */
 [data-theme="dark"] .aside-box::before {
-  color: #121212;
+  color: #090a0c;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) .aside-box::before {
-    color: #121212;
+    color: #090a0c;
   }
 }
 
@@ -839,78 +864,48 @@ mark {
   .layout, .content { overflow: visible; }
 }
 
-/* ===================================================================== */
-/* ===== DESKTOP RESTORE (≥741px): normal top bar & no bottom space ===== */
-/* ===================================================================== */
-@media (min-width: 741px) {
-  :root { --topnav-h: 56px !important; }
-
-  .topnav {
-    position: sticky !important;
-    top: 0 !important;
-    background: var(--accent) !important;
-    height: auto !important;
-    min-height: var(--topnav-h) !important;
-    padding: 0 !important;
-    border: 0 !important;
-    overflow: visible !important;
-  }
-
-  .topnav-inner {
-    display: flex !important;
-    min-height: var(--topnav-h) !important;
-    padding-inline: 1rem !important;
-  }
-  .topnav .brand { display: inline !important; }
-
-  .topnav .menu {
-    display: flex !important;
-    position: static !important;
-    left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
-    height: auto !important;
-    margin: 0 !important; padding: 0 !important;
-    background: transparent !important;
-    z-index: auto !important;
-    flex-direction: row !important;
-    justify-content: flex-end !important;
-    align-items: center !important;
-    gap: .5rem !important;
-  }
-
-  body { padding-bottom: 0 !important; }
-}
+/* A "DESKTOP RESTORE (≥741px)" block used to sit here, ~20 !important
+   declarations re-asserting the top bar's normal appearance, written as though
+   the ≤740px mobile block leaked upward. It doesn't — a max-width query stops
+   applying above its breakpoint, so the base rules were already in force and
+   every line was a no-op. Verified nothing outside those two blocks styles
+   .topnav. align-items:center moved into the base .topnav .menu rule. Removing
+   it also cleared a background:var(--accent)!important that would have blocked
+   the frosted bar at desktop widths. Matches 1170 and 1181. */
 /* ===================================================================== */
 /* ===== MOBILE MODE (≤740px): use dedicated .bottomnav component ======= */
 /* ===================================================================== */
 @media (max-width: 740px) {
-  :root { --topnav-h: 0px !important; }
+  /* A slim course bar. This used to collapse to 0 and hide .topnav outright,
+     which left the theme button positioning against a bar that wasn't there —
+     it landed on top of the drawer's Close control. The bar carries the course
+     name and the theme button; page navigation is the .bottomnav's job. */
+  :root { --topnav-h: 48px; }
 
-  /* collapse the top header area */
-  .topnav {
-    background: transparent !important;
-    box-shadow: none !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    position: static !important;
-    overflow: hidden !important;
-  }
-  .topnav-inner,
-  .topnav .brand { display: none !important; }
+  .topnav-inner { padding-inline: .75rem; gap: .5rem; }
+  .topnav .brand { font-size: 1.05em; }
 
   /* IMPORTANT: hide the desktop <ul class="menu"> entirely on mobile
      (we'll use the injected .bottomnav instead) */
-  .topnav .menu { display: none !important; }
-
-  /* Hide desktop theme toggle on mobile */
-  .topnav .theme-toggle { display: none !important; }
+  .topnav .menu { display: none; }
 
   /* show the real bottom nav injected by nav.js */
   .bottomnav { display: block !important; }
 
   /* reserve space so content/footer aren’t covered by bottom bar */
-  body { padding-bottom: calc(var(--bottomnav-h, 78px) + env(safe-area-inset-bottom)) !important; }
+  body { padding-bottom: calc(var(--bottomnav-h, 78px) + env(safe-area-inset-bottom)); }
+}
+
+/* ===================================================================== */
+/* ===== Top bar is FIXED wherever the drawer exists (≤900px) =========== */
+/* ===================================================================== */
+/* Opening the drawer freezes the page with body{position:fixed;top:-Npx}. A
+   sticky bar has no scroll container to stick to once that happens, so it rides
+   the frozen body off the top and leaves a gap above the drawer. Fixed is
+   measured against the viewport and is unaffected. */
+@media (max-width: 900px) {
+  .topnav { position: fixed; top: 0; left: 0; right: 0; }
+  body { padding-top: var(--topnav-h); }
 }
 
 
@@ -1005,40 +1000,27 @@ html {
 }
 
 /* ==================== Dark Mode Toggle Button ==================== */
+/* nav.js appends this to .topnav-inner, so it is laid out inside the top bar
+   rather than floating over the page. nav.js sets no inline styles — everything
+   about how it looks lives here. The bar is --navbar-bg with white text in BOTH
+   themes, so this is styled once and needs no dark-mode variant. */
 .theme-toggle {
-  position: fixed !important;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 9999 !important;
-  width: 48px;
-  height: 48px;
+  flex: none;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 2px solid var(--border, #e2e3e5);
-  background: var(--bg, #ffffff);
-  color: var(--text, #141414);
+  border: 2px solid rgba(255,255,255,.55);
+  background: transparent;
+  color: #fff;
   cursor: pointer;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,.25);
-  transition: transform 0.2s, box-shadow 0.2s;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: background-color .2s, border-color .2s;
 }
-
-.theme-toggle:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0,0,0,.2);
-}
-
-.theme-toggle:focus-visible {
-  outline: 3px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-
-.theme-toggle svg {
-  width: 24px;
-  height: 24px;
-  transition: transform 0.3s;
-}
+.theme-toggle:hover { background: rgba(255,255,255,.14); border-color: #fff; }
+.theme-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.theme-toggle svg { width: 19px; height: 19px; }
 
 /* Sun icon (shown in dark mode) */
 .theme-toggle .icon-sun { display: none; }
@@ -1047,9 +1029,17 @@ html {
 [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
 [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
-[data-theme="dark"] .theme-toggle {
-  border-color: var(--border);
-  box-shadow: 0 2px 10px rgba(0,0,0,.4);
+/* Degraded fallback only: if nav.js failed to build the top bar there is no bar
+   to sit in, so the button floats rather than disappearing entirely. */
+.theme-toggle--floating {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  border-color: var(--border, #e2e3e5);
+  background: var(--bg, #ffffff);
+  color: var(--text, #141414);
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
 }
 
 /* System preference shows sun when dark */
@@ -1058,20 +1048,7 @@ html {
   :root:not([data-theme="light"]):not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
 }
 
-/* Mobile: position in upper right to avoid bottom nav */
-@media (max-width: 740px) {
-  .theme-toggle {
-    bottom: auto;
-    top: calc(var(--topnav-h, 56px) + 0.75rem);
-    right: 1rem;
-    width: 44px;
-    height: 44px;
-  }
-  .theme-toggle svg {
-    width: 22px;
-    height: 22px;
-  }
-}
+
 
 /* ==================== Dark Mode Additional Overrides ==================== */
 /* Ensure h3 accent color works in dark mode */
@@ -1092,7 +1069,7 @@ html {
 
 /* ==================== Sidenav Dark Mode Overrides ==================== */
 /* Sidenav links use --accent (#041f44) which has poor contrast on dark backgrounds */
-/* Override to use --bright (#6db3f2) for AAA compliance (7.1:1 on #1a1a1a) */
+/* Override to use --bright for AAA compliance */
 
 [data-theme="dark"] .nav-level-2 > li > a,
 [data-theme="dark"] .sub-toggle {

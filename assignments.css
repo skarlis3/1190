@@ -283,12 +283,12 @@ table.grade-table td.grade-text{
 /* Dark mode: use brighter circle */
 [data-theme="dark"] .timeline-step::before {
   background: var(--bright);
-  color: #121212;
+  color: #090a0c;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) .timeline-step::before {
     background: var(--bright);
-    color: #121212;
+    color: #090a0c;
   }
 }
 
@@ -373,11 +373,11 @@ table.grade-table td.grade-text{
 
 /* Dark mode: use dark text on the lighter teal tag */
 [data-theme="dark"] .requirements-box::before {
-  color: #121212;
+  color: #090a0c;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) .requirements-box::before {
-    color: #121212;
+    color: #090a0c;
   }
 }
 

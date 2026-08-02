@@ -114,7 +114,7 @@
 }
 
 .hex-cell.hex-center .hex-brief {
-  color: #f0f0f0;
+  color: #e9ebec;
 }
 
 /* ========== Hexagon Positioning (Absolute, Flat-Top with Gaps) ========== */
@@ -236,7 +236,7 @@
 }
 
 .hex-modal.modal-center .modal-examples {
-  color: #f0f0f0;
+  color: #e9ebec;
 }
 
 .hex-modal-content .modal-examples strong {
