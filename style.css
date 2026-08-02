@@ -40,10 +40,10 @@
 
   /* Top bar chrome, named separately from --accent so dark mode can leave it
      alone. Matches the convention on 1170 and 1181. */
-  /* Lifted from #001324 (lightness 7% -> 13%). At 7% the bar sat at almost the
-     same darkness as the page — fine on one laptop, too dark to read as a bar on
-     an iPad. Same correction applied to 1181. */
-  --navbar-bg:#002342;
+  /* The original bar colour, unchanged. This is what .topnav read via
+     var(--accent) before the token was split out — the split exists so dark mode
+     can leave the bar alone, not to restyle it. */
+  --navbar-bg:#041f44;
 
   --topnav-h:56px;
   --sidenav-w:clamp(272px,24vw,340px);
