@@ -57,3 +57,26 @@ Located at `/resources/handout.css`. Used on standalone handout/resource pages.
 - Post-it note style (Shadows Into Light Two font)
 - Print stylesheet built in
 - Floating glass-style "Back to Class Site" button
+
+## Write in full sentences
+
+Every sentence needs a subject and a verb. **This is a live failure mode, named 13 Aug 2026** after it
+turned up across several unrelated projects: recent models drift into a clipped, promotional register even
+in plain documents.
+
+The tell is the **verbless headline fragment** — *"Three projects plus a final reflection, scaffolded by
+nine writing activities."* That is a caption, not a sentence. Write *"There are three projects and a final
+reflection. Nine writing activities scaffold them."*
+
+Same problem in other clothes: em-dash appositives standing in for clauses; bulleted lists of fragments
+where prose belongs; bolded lead-ins that replace the verb (*"**Project 2: Rhetorical Analysis** — 1,000
+words on one article"*). Bullets are for genuinely parallel enumerable items, and even then each bullet
+should be a complete sentence unless it is a bare name, number, or label.
+
+Applies to page copy, planning docs, READMEs, and change logs alike. Does not apply to tables, headings,
+filenames, or short labels.
+
+Related but distinct: **no marketing copy** — don't sell the course back to students, don't write
+atmospheric openers, don't explain what a reading is *doing* for the class on a student-facing page. That
+rule is about not saying it at all; this one is about how to write what does belong. Full statement of both:
+`~/MEGA/work-with-claude-code/CLAUDE.md`, under Communication Style.
