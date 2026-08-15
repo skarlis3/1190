@@ -187,11 +187,29 @@ const CALENDAR_API_KEY = 'AIzaSyAv4RBdi3zx-8hCIXBpzYLb7oT9XTUL6tY';
 
       const template = [];
       let headRow = '';
+      let activeCols = 0;
       for (let i = 0; i < 7; i++) {
         const ghost = !active.has(i);
+        if (!ghost) activeCols++;
         template.push(ghost ? 'var(--cal-ghost-w)' : 'minmax(0, 1fr)');
         headRow += `<div class="wk-head${ghost ? ' is-ghost' : ''}">${dayNames[(WEEK_START_DOW + i) % 7]}</div>`;
       }
+
+      // Cap how wide the whole week can get. The active columns share the space
+      // as 1fr each, so a week with only one day carrying anything stretched
+      // that single column across the entire width and a three-word event
+      // became a card the width of the page. Most likely in 1170, which meets
+      // once a week, but any sparse week does it.
+      //
+      // The cap is on the grid rather than on the cards, so the squeezed days
+      // stay tucked against the days that have content instead of being pushed
+      // out to a far edge with a gulf in between. It only bites when there is
+      // spare room: with three or more active days the columns are already
+      // narrower than the maximum and nothing changes.
+      const ghostCols = 7 - activeCols;
+      const gridMax = `calc(${activeCols} * var(--cal-col-max)` +
+        ` + ${ghostCols} * var(--cal-ghost-w)` +
+        ` + 6 * var(--cal-col-gap))`;
 
       const currentWeek = getWeekStart(new Date());
       let bodyHtml = '';
@@ -243,7 +261,7 @@ const CALENDAR_API_KEY = 'AIzaSyAv4RBdi3zx-8hCIXBpzYLb7oT9XTUL6tY';
           '<button class="next-week-btn" aria-label="Next week">\u2192</button>' +
           '<button class="wk-today-btn">Today</button>' +
         '</div>' +
-        `<div class="week-grid" style="grid-template-columns:${template.join(' ')}">${bodyHtml}</div>`;
+        `<div class="week-grid" style="grid-template-columns:${template.join(' ')};max-width:${gridMax}">${bodyHtml}</div>`;
 
       // Arrows step one week, which is what they always looked like they did.
       weeklyContainer.querySelector('.prev-week-btn').addEventListener('click', () => {
