@@ -10,44 +10,161 @@
   --cal-event-text: #ffffff;
   --cal-due-bg: var(--bright, var(--accent));
   --cal-other-month: #f9fafb;
-  
-  /* Urgency colors for countdown cards - keep consistent across sites */
-  --cal-urgent: #dc2626;
-  --cal-soon: #f59e0b;
-  --cal-later: #10b981;
-  
+  --cal-other-month-text: #767676;  /* AAA compliant: 4.5:1 on other-month bg, previously #ccc at 1.6:1 */
+
+  /* Urgency colors - AAA compliant with white text (7:1+) */
+  --cal-urgent: #b91c1c;     /* was #dc2626 (4.5:1), now ~7.2:1 */
+  --cal-soon: #92400e;       /* was #f59e0b (2.8:1), now ~7.5:1 - dark amber */
+  --cal-later: #047857;      /* was #10b981 (3.3:1), now ~7.1:1 */
+
   /* Urgency backgrounds (light mode) */
   --cal-urgent-bg: #fef2f2;
   --cal-soon-bg: #fffbeb;
   --cal-later-bg: #f0fdf4;
+
+  /* Three-week view: squeezed (ghost) day width + event-type colours.
+     Kept consistent across sites, like the urgency colours above.
+     Light-mode contrast, all measured against the wash each colour sits on:
+     kind labels 7.50-7.55:1, quiet text 7.50:1, body text 16.3-17.7:1,
+     ghost dates --muted on --bg at 7.13:1. Everything clears AAA (7:1).
+     The kind colours were darkened 15 Aug 2026 — they were 4.75-6.98:1. */
+  --cal-ghost-w: 2.6rem;
+  --cal-ghost-bg: color-mix(in srgb, var(--text) 4%, var(--bg));
+  --cal-kind-class: var(--accent);
+  --cal-wash-class: color-mix(in srgb, var(--accent) 7%, var(--bg));
+  --cal-kind-due: #833d07;
+  --cal-wash-due: #fef8ee;
+  --cal-kind-read: #2a4b88;
+  --cal-wash-read: #eef1f8;
+  --cal-kind-async: #13594e;
+  --cal-wash-async: #eef7f5;
+  --cal-kind-off: #6b7075;
+  --cal-wash-off: #f3f3f3;
+
+  /* Quiet text on the "no class" card. --muted reaches only 6.43:1 on the
+     off-wash, so this sits in its place there. */
+  --cal-quiet: #4b4e56;
+
+  /* Card edges. The event cards are clickable, and their washes sit at about
+     1.1:1 against the page, so the border is what makes a card perceivable —
+     which puts it under WCAG 1.4.11 and its 3:1 floor. These percentages are
+     what reaches 3.25-3.36:1 against the page in this theme; dark mode needs
+     lower ones and sets its own. Don't tune these by eye. */
+  --cal-edge-class: color-mix(in srgb, var(--cal-kind-class) 56%, var(--bg));
+  --cal-edge-due:   color-mix(in srgb, var(--cal-kind-due)   64%, var(--bg));
+  --cal-edge-read:  color-mix(in srgb, var(--cal-kind-read)  62%, var(--bg));
+  --cal-edge-async: color-mix(in srgb, var(--cal-kind-async) 64%, var(--bg));
+  --cal-edge-off:   color-mix(in srgb, var(--cal-kind-off)   78%, var(--bg));
+
+  /* Background for the "This week" chip and the today pill. A token because
+     dark mode has to swap it: --accent on a dark ground is invisible. */
+  --cal-accent-fill: var(--accent);
+
+  /* --accent used as *ink* rather than as a fill. Same reason: it is a very
+     dark teal, so it reads on a white ground and disappears on a dark one.
+     Anything in this view that paints text or a border in the accent colour
+     should take it from here. */
+  --cal-accent-ink: var(--accent);
 }
 
 /* ===== Dark Mode Overrides ===== */
 [data-theme="dark"] {
-  --cal-today-bg: color-mix(in srgb, var(--accent) 20%, #090a0c);
-  --cal-event-bg: var(--accent);
-  --cal-event-text: #ffffff;
-  --cal-due-bg: #1d4ed8;
-  --cal-other-month: #101416;
+  --cal-today-bg: #1e2a26;
+  --cal-event-bg: var(--bright);       /* Use bright teal for better contrast */
+  --cal-event-text: #121417;           /* Dark text on bright teal - AAA ✓ */
+  --cal-due-bg: var(--bright);
+  --cal-other-month: #1a1d21;
+  --cal-other-month-text: #8a8a8a;     /* AAA compliant on dark backgrounds */
 
-  /* Urgency backgrounds (dark mode) */
-  --cal-urgent-bg: #2d1515;
-  --cal-soon-bg: #2d2815;
-  --cal-later-bg: #152d1f;
+  /* Urgency backgrounds (dark mode) - elevated surfaces */
+  --cal-urgent-bg: #2d1a1a;
+  --cal-soon-bg: #2d2515;
+  --cal-later-bg: #1a2d22;
+
+  /* Three-week view (dark). Kind labels 7.07-7.66:1 on their washes,
+     body text 12.3-14.7:1. Without these the washes fall back to the light
+     values and dark mode renders light cards under light text. */
+  --cal-ghost-bg: color-mix(in srgb, var(--text) 6%, var(--bg));
+  --cal-kind-due: #f5a623;
+  --cal-wash-due: #2a2318;
+  --cal-kind-read: #7badea;
+  --cal-wash-read: #1a1f2a;
+  --cal-kind-async: #5ec4b0;
+  --cal-wash-async: #1a2724;
+  --cal-kind-off: #9aa5a2;
+  --cal-wash-off: color-mix(in srgb, var(--text) 7%, var(--bg));
+
+  /* --muted already clears AAA on the dark off-wash at 8.62:1. */
+  --cal-quiet: var(--muted);
+
+  /* The plain "class" event derives its wash and its edge from --accent, which
+     the site does not override in dark mode. Left alone, its card edge came out
+     at 1.18:1 against the page — an invisible border on the one event type that
+     has no kind label to identify it either. --bright is the dark counterpart
+     everywhere else on the site, so it is the counterpart here too.
+     Edge 3.44:1, body text on the wash 13.98:1. */
+  --cal-kind-class: var(--bright);
+  --cal-wash-class: color-mix(in srgb, var(--bright) 7%, var(--bg));
+
+  /* Card edges, dark. Lower percentages than light mode reach the same place,
+     because these kind colours are already light against a dark ground.
+     Measured 3.32-3.46:1 against the page. */
+  /* 48% rather than 46%: this file is shared with 1170 and 1190, whose accents
+     are a lighter purple and blue. 46% cleared 3:1 here but landed at 2.88 and
+     2.93 there. 48% clears on all three (3.64, 3.07, 3.10). */
+  --cal-edge-class: color-mix(in srgb, var(--cal-kind-class) 48%, var(--bg));
+  --cal-edge-due:   color-mix(in srgb, var(--cal-kind-due)   54%, var(--bg));
+  --cal-edge-read:  color-mix(in srgb, var(--cal-kind-read)  56%, var(--bg));
+  --cal-edge-async: color-mix(in srgb, var(--cal-kind-async) 54%, var(--bg));
+  --cal-edge-off:   color-mix(in srgb, var(--cal-kind-off)   60%, var(--bg));
+
+  /* Was --accent, which put the week range at 1.56:1 against the page and the
+     Today button at 1.23:1 — both effectively invisible. Now 12.41:1 and
+     9.76:1. */
+  --cal-accent-ink: var(--bright);
+
+  /* The fix for the badge that was unreadable in dark mode. --accent is
+     #003e32, which against the dark page gave 1.52:1 on the chip and 1.56:1
+     on the today outline. --bright carries --cal-event-text at 12.12:1. */
+  --cal-accent-fill: var(--bright);
 }
 
-/* System preference detection (when no explicit preference is set) */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    --cal-today-bg: color-mix(in srgb, var(--accent) 20%, #090a0c);
-    --cal-event-bg: var(--accent);
-    --cal-event-text: #ffffff;
-    --cal-due-bg: #1d4ed8;
-    --cal-other-month: #101416;
-    --cal-urgent-bg: #2d1515;
-    --cal-soon-bg: #2d2815;
-    --cal-later-bg: #152d1f;
-  }
+/* ===== Clickable cards are real buttons =====
+   The event cards, the month chips, the countdown cards and the "+N more"
+   link are <button> elements, so the keyboard can reach them. They were
+   <div>s with click handlers, which Tab skips entirely — there was no way to
+   open one without a mouse. A button brings its own font, alignment, border
+   and background, so this strips all of that back and lets the existing card
+   rules do the work. Nothing here changes how any of them look.
+   Do not "simplify" these back into divs. */
+.wk-event,
+.event-chip,
+.countdown-card,
+.more-events {
+  font: inherit;
+  font-family: inherit;
+  text-align: left;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  width: 100%;
+}
+
+/* The focus ring has to clear the card's own edge, so it sits outside. */
+.wk-event:focus-visible,
+.event-chip:focus-visible,
+.countdown-card:focus-visible,
+.more-events:focus-visible {
+  outline: 3px solid var(--focus-outline, var(--focus));
+  outline-offset: 2px;
+}
+
+/* Inside a button, these are spans rather than divs — a button may only hold
+   phrasing content — so they need their box behaviour back. */
+.countdown-info,
+.countdown-title,
+.countdown-date {
+  display: block;
 }
 
 /* ===== Tab Navigation ===== */
@@ -78,8 +195,8 @@
 }
 
 .calendar-tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+  color: var(--cal-accent-ink);
+  border-bottom-color: var(--cal-accent-ink);
   font-weight: 700;
 }
 
@@ -102,13 +219,15 @@
 
 .cal-btn--view {
   background: transparent;
-  border: 1px solid var(--accent);
-  color: var(--accent);
+  border: 1px solid var(--cal-accent-ink);
+  color: var(--cal-accent-ink);
 }
 
+/* --cal-event-text rather than --accent-contrast: the latter is white in both
+   themes, and the hover fill goes light in dark mode. */
 .cal-btn--view:hover {
-  background: var(--accent);
-  color: var(--accent-contrast);
+  background: var(--cal-accent-fill);
+  color: var(--cal-event-text);
 }
 
 .calendar-tabs .cal-btn--view {
@@ -131,7 +250,7 @@
   font-family: "Judson", serif;
   font-size: 1.4rem;
   font-weight: 400;
-  color: var(--accent);
+  color: var(--cal-accent-ink);
   margin: 0 0 1rem;
 }
 
@@ -146,6 +265,7 @@
   line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 4;
+  line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 3px;
@@ -170,184 +290,227 @@
   color: #b91c1c;
 }
 
-[data-theme="dark"] .calendar-error {
-  background: #2d1515;
-  border-color: #dc2626;
-  color: #fca5a5;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .calendar-error {
-    background: #2d1515;
-    border-color: #dc2626;
-    color: #fca5a5;
-  }
-}
-
 /* =========================================================
-   WEEKLY VIEW: Mini Month + Expanded Week
+   WEEKLY VIEW: three weeks, empty weekdays squeezed
+
+   A weekday gets a full column if it carries an event in ANY of the
+   three visible weeks. Every other weekday still renders, squeezed to
+   --cal-ghost-w with its date intact -- never dropped. Omitting them
+   entirely made a week like 19 Oct (Monday only) read as a four-day
+   week, which is worse than the wasted space it saved.
    ========================================================= */
-.mini-plus-week {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+.three-week-view {
+  overflow-x: auto;
 }
 
-.mini-month {
-  width: 200px;
-  flex-shrink: 0;
-}
-
-.mini-month-nav {
+.week-controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
 }
 
-.mini-month-nav button {
+.week-controls button {
   background: none;
   border: 1px solid var(--border);
   border-radius: 4px;
-  padding: 0.2rem 0.5rem;
+  padding: 0.25rem 0.6rem;
   cursor: pointer;
   color: var(--muted);
   font-size: 0.9rem;
+  font-family: inherit;
 }
 
-.mini-month-nav button:hover {
+.week-controls button:hover {
   background: var(--hover);
   color: var(--text);
 }
 
-.mini-month-header {
+.week-controls button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.week-range {
+  font-family: "Judson", serif;
+  font-size: 1.05rem;
+  color: var(--cal-accent-ink);
+  margin-right: auto;
+}
+
+.week-controls .wk-today-btn {
+  background: var(--cal-today-bg);
+  border-color: var(--cal-accent-ink);
+  color: var(--cal-accent-ink);
+}
+
+/* The column gap is deliberately much larger than the row gap. Space is what
+   separates one day from the next now that the day boxes are gone, so it has
+   to beat the 3px that separates two events stacked inside a single day. When
+   the two gaps matched, a day and its contents grouped identically and the
+   grid read as texture rather than structure. */
+.week-grid {
+  display: grid;
+  column-gap: 10px;
+  row-gap: 3px;
+  align-items: stretch;
+  min-width: 34rem;
+}
+
+/* Repeated above every week, and left-aligned to sit directly over the cell
+   content below it. A single header row at the top of three weeks left the
+   day names too far from the events they label. */
+.wk-head {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 0.35rem 0.3rem 0.15rem;
+}
+
+.wk-head.is-ghost {
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.04em;
   text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.wk-weeklabel {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
   font-family: "Judson", serif;
   font-size: 0.95rem;
-  color: var(--accent);
-}
-
-.mini-month-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
-  font-size: 0.75rem;
-  text-align: center;
-}
-
-.mini-month-grid .mini-header {
-  color: var(--muted);
-  font-size: 0.65rem;
-  padding: 0.25rem 0;
-}
-
-.mini-month-grid .mini-day {
-  padding: 0.3rem 0;
-  cursor: pointer;
-  border-radius: 4px;
-  position: relative;
-}
-
-.mini-month-grid .mini-day:hover {
-  background: var(--hover);
-}
-
-.mini-month-grid .mini-day.other-month {
-  color: #ccc;
-}
-
-.mini-month-grid .mini-day.today {
-  background: var(--accent);
-  color: white;
-  font-weight: 700;
-}
-
-.mini-month-grid .mini-day.in-selected-week {
-  background: var(--cal-today-bg);
-}
-
-.mini-month-grid .mini-day.today.in-selected-week {
-  background: var(--accent);
-}
-
-.mini-month-grid .mini-day.has-events::after {
-  content: '';
-  position: absolute;
-  bottom: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  background: var(--cal-due-bg);
-  border-radius: 50%;
-}
-
-.mini-month-grid .mini-day.today.has-events::after {
-  background: white;
-}
-
-.expanded-week {
-  flex: 1;
-  min-width: 280px;
-}
-
-.expanded-week-header {
-  font-family: "Judson", serif;
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
   color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0 0.25rem;
 }
 
-.expanded-week-days {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.expanded-day {
-  display: flex;
-  gap: 0.75rem;
-  padding: 0.6rem 0.75rem;
-  background: var(--sidebar-bg);
-  border-radius: 6px;
-  border-left: 3px solid var(--border);
-}
-
-.expanded-day.today {
-  border-left-color: var(--accent);
-  background: var(--cal-today-bg);
-}
-
-.expanded-day.has-due {
-  border-left-color: var(--cal-due-bg);
-}
-
-.expanded-day-label {
-  min-width: 55px;
-  font-size: 0.85rem;
-}
-
-.expanded-day-label .dow {
+.wk-now {
+  font-family: "Lato", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.6rem;
   font-weight: 700;
-  color: var(--text);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  background: var(--cal-accent-fill);
+  color: var(--cal-event-text);
+  border-radius: 3px;
+  padding: 0.1rem 0.35rem;
 }
 
-.expanded-day-label .date {
-  color: var(--muted);
-  font-size: 0.75rem;
-}
-
-.expanded-day-events {
-  flex: 1;
+/* A day is no longer a box. It was one until 15 Aug 2026, and a box around a
+   day holding boxed events at almost the same size and faintness meant the
+   eye could not tell container from content. The event cards below are now
+   the only boxes in the view; the column gap does the grouping. */
+.wk-cell {
+  border: none;
+  background: transparent;
+  padding: 0.15rem 0;
   display: flex;
   flex-direction: column;
   gap: 3px;
+  min-width: 0;
 }
 
-.expanded-day-events .no-events {
-  color: var(--muted);
-  font-size: 0.85rem;
+/* Today is marked on the date itself rather than by tinting the whole day,
+   which no longer has an edge to tint. */
+.wk-cell.is-today {
+  background: transparent;
 }
+
+.wk-date {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.wk-cell.is-today .wk-date {
+  background: var(--cal-accent-fill);
+  color: var(--cal-event-text);
+  border-radius: 999px;
+  padding: 0.05rem 0.45rem;
+  align-self: flex-start;
+}
+
+.wk-none {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Squeezed days keep their column and their date, but lose the dashed box.
+   The column is still there — the day has not vanished — it simply stopped
+   competing with the cards for attention. */
+.wk-ghost {
+  border: none;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.15rem 0.1rem 0;
+  min-width: 0;
+}
+
+.wk-ghost-date {
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+/* The washes sit at roughly 1.1:1 against the page, which was fine while a
+   day border held the card in place. With that border gone the fill alone is
+   too faint to read as a card, so each one carries a hairline mixed from its
+   own kind colour. This is a full 1px edge in a muted tint, not the 3px
+   coloured left bar removed on 11 Aug 2026 for being too busy. */
+.wk-event {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  padding: 0.3rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid var(--cal-edge-class);
+  background: var(--cal-wash-class);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.wk-event.is-due {
+  background: var(--cal-wash-due);
+  border-color: var(--cal-edge-due);
+}
+
+.wk-event.is-read {
+  background: var(--cal-wash-read);
+  border-color: var(--cal-edge-read);
+}
+
+.wk-event.is-async {
+  background: var(--cal-wash-async);
+  border-color: var(--cal-edge-async);
+}
+
+.wk-event.is-off {
+  background: var(--cal-wash-off);
+  border-color: var(--cal-edge-off);
+  color: var(--cal-quiet);
+  font-style: italic;
+  cursor: default;
+}
+
+.wk-event-kind {
+  display: block;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.wk-event.is-due   .wk-event-kind { color: var(--cal-kind-due); }
+.wk-event.is-read  .wk-event-kind { color: var(--cal-kind-read); }
+.wk-event.is-async .wk-event-kind { color: var(--cal-kind-async); }
 
 /* =========================================================
    UPCOMING VIEW: Countdown Cards
@@ -480,7 +643,7 @@
 
 .month-controls button:hover {
   background: var(--hover);
-  border-color: var(--accent);
+  border-color: var(--cal-accent-ink);
 }
 
 .month-controls .current-month {
@@ -491,9 +654,9 @@
 }
 
 .month-controls .today-btn {
-  background: var(--accent);
-  color: var(--accent-contrast);
-  border-color: var(--accent);
+  background: var(--cal-accent-fill);
+  color: var(--cal-event-text);
+  border-color: var(--cal-accent-fill);
   margin-left: auto;
 }
 
@@ -510,8 +673,8 @@
 }
 
 .calendar-grid .day-header {
-  background: var(--accent);
-  color: var(--accent-contrast);
+  background: var(--cal-accent-fill);
+  color: var(--cal-event-text);
   padding: 0.6rem 0.25rem;
   text-align: center;
   font-size: 0.85rem;
@@ -548,8 +711,8 @@
 }
 
 .day-cell.today .day-number {
-  background: var(--accent);
-  color: var(--accent-contrast);
+  background: var(--cal-accent-fill);
+  color: var(--cal-event-text);
   border-radius: 50%;
   width: 1.7rem;
   height: 1.7rem;
@@ -560,7 +723,7 @@
 }
 
 .day-cell.other-month .day-number {
-  color: #ccc;
+  color: var(--cal-other-month-text);  /* AAA compliant: was #ccc */
 }
 
 .day-events {
@@ -584,25 +747,20 @@
 }
 
 /* ===== Popups ===== */
-.popup-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.3);
-  z-index: 999;
-}
-
-.popup-backdrop.active {
-  display: block;
-}
-
+/* These are real <dialog> elements opened with showModal(), which is what
+   makes them usable without a mouse. The browser then moves focus into the
+   dialog, keeps Tab inside it while it is open, closes it on Escape, and makes
+   the page behind it inert. None of that was happening when these were divs
+   toggled with an .active class — focus stayed on the page underneath, so a
+   keyboard user tabbed through the page behind the dialog.
+   The old .popup-backdrop divs are gone; ::backdrop replaces them. */
 .day-popup {
-  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: var(--bg);
+  color: var(--text);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem;
@@ -611,11 +769,10 @@
   max-height: 400px;
   overflow-y: auto;
   box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-  z-index: 1000;
 }
 
-.day-popup.active {
-  display: block;
+.day-popup::backdrop {
+  background: rgba(0, 0, 0, 0.45);
 }
 
 .day-popup h3 {
@@ -629,6 +786,7 @@
   display: block;
   margin-bottom: 0.5rem;
   -webkit-line-clamp: unset;
+  line-clamp: unset;
 }
 
 /* Event detail popup */
@@ -666,12 +824,8 @@
 
 /* ===== Mobile Adjustments ===== */
 @media (max-width: 600px) {
-  .mini-plus-week {
-    flex-direction: column;
-  }
-  
-  .mini-month {
-    width: 100%;
+  .week-grid {
+    min-width: 30rem;
   }
   
   .calendar-grid .day-cell {
@@ -702,11 +856,6 @@
   border-color: var(--border);
 }
 
-[data-theme="dark"] .calendar-grid .day-header {
-  background: var(--accent);
-  color: var(--cal-event-text);
-}
-
 [data-theme="dark"] .calendar-grid .day-cell {
   background: var(--bg);
   border-color: var(--border);
@@ -725,12 +874,7 @@
 }
 
 [data-theme="dark"] .day-cell.other-month .day-number {
-  color: #555;
-}
-
-[data-theme="dark"] .day-cell.today .day-number {
-  background: var(--accent);
-  color: var(--cal-event-text);
+  color: #8a8a8a;  /* AAA compliant on dark backgrounds */
 }
 
 /* Event chips */
@@ -743,76 +887,7 @@
   background: var(--cal-due-bg);
 }
 
-/* Mini month */
-[data-theme="dark"] .mini-month-nav button {
-  border-color: var(--border);
-  color: var(--muted);
-}
-
-[data-theme="dark"] .mini-month-nav button:hover {
-  background: var(--hover);
-  color: var(--text);
-}
-
-[data-theme="dark"] .mini-month-grid .mini-day {
-  color: var(--text);
-}
-
-[data-theme="dark"] .mini-month-grid .mini-day.other-month {
-  color: #555;
-}
-
-[data-theme="dark"] .mini-month-grid .mini-day:hover {
-  background: var(--hover);
-}
-
-[data-theme="dark"] .mini-month-grid .mini-day.today {
-  background: var(--accent);
-  color: var(--cal-event-text);
-}
-
-[data-theme="dark"] .mini-month-grid .mini-day.in-selected-week {
-  background: var(--cal-today-bg);
-}
-
-[data-theme="dark"] .mini-month-grid .mini-day.today.in-selected-week {
-  background: var(--accent);
-}
-
-[data-theme="dark"] .mini-month-grid .mini-day.has-events::after {
-  background: var(--cal-due-bg);
-}
-
-[data-theme="dark"] .mini-month-grid .mini-day.today.has-events::after {
-  background: var(--cal-event-text);
-}
-
-/* Expanded week */
-[data-theme="dark"] .expanded-day {
-  background: var(--sidebar-bg);
-  border-left-color: var(--border);
-}
-
-[data-theme="dark"] .expanded-day.today {
-  background: var(--cal-today-bg);
-  border-left-color: var(--accent);
-}
-
-[data-theme="dark"] .expanded-day.has-due {
-  border-left-color: var(--cal-due-bg);
-}
-
-[data-theme="dark"] .expanded-day-label .dow {
-  color: var(--text);
-}
-
-[data-theme="dark"] .expanded-day-label .date {
-  color: var(--muted);
-}
-
-[data-theme="dark"] .expanded-day-events .no-events {
-  color: var(--muted);
-}
+/* The three-week view is entirely token-driven, so it needs no dark overrides. */
 
 /* Countdown cards */
 [data-theme="dark"] .countdown-card {
@@ -842,17 +917,6 @@
   background: var(--bg);
   border-color: var(--border);
   color: var(--text);
-}
-
-[data-theme="dark"] .month-controls button:hover {
-  background: var(--hover);
-  border-color: var(--accent);
-}
-
-[data-theme="dark"] .month-controls .today-btn {
-  background: var(--accent);
-  color: var(--cal-event-text);
-  border-color: var(--accent);
 }
 
 [data-theme="dark"] .month-controls .today-btn:hover {
@@ -886,16 +950,11 @@
 
 [data-theme="dark"] .cal-btn--view:hover {
   background: var(--bright);
-  color: #090a0c;
+  color: #121417;
 }
 
 /* Panel title */
 [data-theme="dark"] .panel-title {
-  color: var(--bright);
-}
-
-/* Mini month header */
-[data-theme="dark"] .mini-month-header {
   color: var(--bright);
 }
 
@@ -936,28 +995,4 @@
 
 [data-theme="dark"] .event-popup-desc a {
   color: var(--bright);
-}
-
-/* =========================================================
-   System Preference Detection for Calendar Elements
-   ========================================================= */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .panel-title {
-    color: var(--bright);
-  }
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .mini-month-header {
-    color: var(--bright);
-  }
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .calendar-tab.active {
-    color: var(--bright);
-    border-bottom-color: var(--bright);
-  }
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .cal-btn--view {
-    border-color: var(--bright);
-    color: var(--bright);
-  }
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .cal-btn--view:hover {
-    background: var(--bright);
-    color: #090a0c;
-  }
 }

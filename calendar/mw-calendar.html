@@ -19,7 +19,7 @@
       
       <!-- Tab Navigation -->
       <div class="calendar-tabs" role="tablist">
-        <button class="calendar-tab active" role="tab" aria-selected="true" data-tab="weekly">Weekly</button>
+        <button class="calendar-tab active" role="tab" aria-selected="true" data-tab="weekly">Next 3 Weeks</button>
         <button class="calendar-tab" role="tab" aria-selected="false" data-tab="upcoming">Upcoming</button>
         <button class="calendar-tab" role="tab" aria-selected="false" data-tab="monthly">Monthly</button>
         
@@ -36,8 +36,8 @@
 
       <!-- WEEKLY TAB -->
       <div class="tab-panel active" id="panel-weekly" role="tabpanel">
-        <h2 class="panel-title">Week at a Glance</h2>
-        <div class="mini-plus-week" id="weeklyView">
+        <h2 class="panel-title">The Next Three Weeks</h2>
+        <div class="three-week-view" id="weeklyView">
           <div class="calendar-loading">Loading...</div>
         </div>
       </div>
@@ -65,21 +65,19 @@
       </div>
 
       <!-- Day Popup -->
-      <div class="popup-backdrop" id="popupBackdrop"></div>
-      <div class="day-popup" id="dayPopup">
-        <button class="popup-close" aria-label="Close">×</button>
+      <dialog class="day-popup" id="dayPopup" aria-labelledby="dayPopupTitle">
+        <button type="button" class="popup-close" aria-label="Close">×</button>
         <h3 id="dayPopupTitle">Events</h3>
         <div id="dayPopupEvents"></div>
-      </div>
+      </dialog>
       
       <!-- Event Detail Popup -->
-      <div class="popup-backdrop" id="eventPopupBackdrop"></div>
-      <div class="day-popup" id="eventPopup">
-        <button class="popup-close" aria-label="Close">×</button>
+      <dialog class="day-popup" id="eventPopup" aria-labelledby="eventPopupTitle">
+        <button type="button" class="popup-close" aria-label="Close">×</button>
         <h3 id="eventPopupTitle">Event</h3>
         <div class="event-popup-time" id="eventPopupTime"></div>
         <div class="event-popup-desc" id="eventPopupDescription"></div>
-      </div>
+      </dialog>
       
     </div>
   </div>
