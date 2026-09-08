@@ -563,6 +563,11 @@ details .details-content {
   margin: 0.6rem 0;
 }
 
+/* Nested TOC group: sits closer to the label it belongs to */
+.toc ul ul {
+  margin: 0.4rem 0 0.2rem;
+}
+
 .toc a {
   text-decoration: none;
   font-size: 1.05rem;
