@@ -1,3 +1,5 @@
+> **For human readers:** This file gives Claude, an AI coding assistant, instructions for helping me with the technical work on this website: coding, page layout, accessibility, the class calendar, and keeping links current. The course content is written by me. Any revision suggestions Claude makes are reviewed by me before anything changes.
+
 # 1190 Site Repo
 
 ## Read these first, before doing any work in this repo
